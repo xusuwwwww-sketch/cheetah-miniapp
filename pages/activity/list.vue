@@ -192,14 +192,14 @@ export default {
 .placeholder { color: #bbb; }
 
 /* 列表 */
-.list { padding: 8px 16px 8px; }
+.list { padding: 8px 0 8px; }
 
 /* 卡片 */
 .card {
   background: #fff;
   border-radius: 12px;
   overflow: hidden;
-  margin-bottom: 12px;
+  margin: 0 16px 12px 16px;
   box-shadow: 0 2px 8px rgba(0,0,0,.06);
 }
 
