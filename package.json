@@ -1,0 +1,15 @@
+{
+  "name": "cheetah-toolbox",
+  "version": "1.0.0",
+  "scripts": {
+    "dev:mp-weixin": "uni -p mp-weixin",
+    "build:mp-weixin": "uni build -p mp-weixin",
+    "dev:h5": "uni -p h5"
+  },
+  "dependencies": {
+    "@dcloudio/uni-app": "3.0.0-3080920231114001",
+    "@dcloudio/uni-mp-weixin": "3.0.0-3080920231114001",
+    "vue": "^3.3.4",
+    "@vue/runtime-core": "^3.3.4"
+  }
+}
