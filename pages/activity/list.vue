@@ -95,6 +95,11 @@ export default {
     }
   },
   onLoad() { this.load() },
+  onShow() {
+    if (typeof this.$scope !== 'undefined' && this.$scope.getTabBar) {
+      this.$scope.getTabBar().setData({ active: 1 })
+    }
+  },
   methods: {
     async load(reset = true) {
       if (reset) { this.page = 1; this.activities = [] }

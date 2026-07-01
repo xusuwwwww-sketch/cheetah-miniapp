@@ -120,6 +120,11 @@ export default {
     }
   },
   onLoad() { this.loadData() },
+  onShow() {
+    if (typeof this.$scope !== 'undefined' && this.$scope.getTabBar) {
+      this.$scope.getTabBar().setData({ active: 0 })
+    }
+  },
   methods: {
     async loadData() {
       try {
@@ -160,7 +165,7 @@ export default {
 }
 .nav-title { font-size: 16px; font-weight: 700; color: #1a1a1a; }
 
-.scroll-content { height: calc(100vh - 44px); padding-bottom: 60px; }
+.scroll-content { height: calc(100vh - 44px); padding-bottom: 80px; }
 
 .banner-section { padding: 12px 16px 0; }
 .banner-swiper { height: 150px; border-radius: 12px; overflow: hidden; }
