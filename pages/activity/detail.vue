@@ -1,68 +1,112 @@
 <template>
   <view class="page">
-    <view class="back-bar">
-      <button class="back" @tap="back">‹</button>
-      <text class="bar-title">活动详情</text>
+    <!-- Nav -->
+    <view class="nav-bar" @tap="goBack">
+      <uni-icons type="back" size="20" color="#1a1a2e" />
+      <text class="nav-title">活动详情</text>
+      <view style="width: 20px;"></view>
     </view>
-    <scroll-view scroll-y class="scroll" v-if="activity">
-      <view class="cover" :style="{background: activity.gradient||'linear-gradient(135deg,#ff6b35,#ff9a5c)'}">
-        <text class="cover-text">{{ activity.icon||'LIVE' }}</text>
-        <text class="cover-title">{{ activity.title }}</text>
+
+    <scroll-view scroll-y class="content" v-if="detail">
+      <!-- 头图 -->
+      <view class="cover" :style="{ background: detail.gradient || 'linear-gradient(135deg, #ff6b35, #ff9a5c)' }">
+        <text class="cover-title">{{ detail.title }}</text>
+        <text class="cover-tag" v-if="detail.type_name">{{ detail.type_name }}</text>
       </view>
-      <view class="info">
-        <text class="detail-title">{{ activity.title }}</text>
-        <view class="tags">
-          <text class="tag">{{ formatTime(activity.start_time) }}</text>
-          <text class="tag">{{ activity.location }}</text>
-          <text class="tag">{{ activity.organizer }}</text>
-          <text class="tag">已报{{ activity.signup_count }}人</text>
+
+      <!-- 信息 -->
+      <view class="info-card">
+        <view class="info-row">
+          <uni-icons type="calendar" size="16" color="#ff6b35" />
+          <text class="info-label">时间</text>
+          <text class="info-value">{{ detail.start_time }}</text>
+        </view>
+        <view class="info-row" v-if="detail.location">
+          <uni-icons type="location" size="16" color="#ff6b35" />
+          <text class="info-label">地点</text>
+          <text class="info-value">{{ detail.location }}</text>
+        </view>
+        <view class="info-row" v-if="detail.organizer">
+          <uni-icons type="staff" size="16" color="#ff6b35" />
+          <text class="info-label">主办方</text>
+          <text class="info-value">{{ detail.organizer }}</text>
+        </view>
+        <view class="info-row" v-if="detail.signup_deadline">
+          <uni-icons type="clock" size="16" color="#ff6b35" />
+          <text class="info-label">报名截止</text>
+          <text class="info-value">{{ detail.signup_deadline }}</text>
+        </view>
+        <view class="info-row">
+          <uni-icons type="person" size="16" color="#ff6b35" />
+          <text class="info-label">名额</text>
+          <text class="info-value">{{ detail.signup_count || 0 }}/{{ detail.max_quota || '不限' }}</text>
         </view>
       </view>
-      <view class="content" v-if="activity.description">
-        <text class="content-title">活动介绍</text>
-        <text class="content-text">{{ activity.description }}</text>
+
+      <!-- 描述 -->
+      <view class="desc-card" v-if="detail.description">
+        <text class="desc-title">活动详情</text>
+        <rich-text class="desc-content" :nodes="detail.description" />
       </view>
+
+      <view style="height: 80px;"></view>
     </scroll-view>
-    <view class="cta" v-if="activity">
-      <button class="cta-btn" @tap="signup">{{ isFull ? '已满额' : '立即报名' }}</button>
+
+    <view v-if="!detail && loading" class="empty"><text class="empty-text">加载中...</text></view>
+    <view v-if="!detail && !loading" class="empty"><text class="empty-text">活动不存在</text></view>
+
+    <!-- 底部按钮 -->
+    <view class="bottom-bar" v-if="detail">
+      <view :class="['btn', { disabled: detail.status === 'ended' || detail.status === 'full' }]" @tap="onSignup">
+        <text class="btn-text">{{ detail.status === 'ended' ? '已结束' : detail.status === 'full' ? '已满员' : '立即报名' }}</text>
+      </view>
     </view>
   </view>
 </template>
+
 <script>
-import { api } from '../../utils/api.js'
+import { api } from '@/utils/api.js'
+
 export default {
-  data() { return { activity: null } },
-  computed: { isFull() { return this.activity && this.activity.quota>0 && this.activity.signup_count>=this.activity.quota } },
-  onLoad(opts) { if(opts.id) this.load(opts.id) },
+  data() { return { id: '', detail: null, loading: true } },
+  onLoad(e) { this.id = e.id; this.loadDetail() },
   methods: {
-    async load(id) {
-      try { const r = await api.getActivityDetail(id); if(r.code===0) this.activity=r.data } catch(e) { console.error(e) }
+    loadDetail() {
+      this.loading = true
+      api.getActivityDetail(this.id).then(r => { if (r.code === 0) this.detail = r.data }).catch(() => {}).finally(() => { this.loading = false })
     },
-    back() { uni.navigateBack() },
-    formatTime(t) { return t ? t.replace('T',' ').substring(0,16) : '' },
-    signup() {
-      if(this.isFull) { uni.showToast({title:'名额已满',icon:'none'}); return }
-      uni.showToast({title:'报名成功！',icon:'success'})
-    }
+    onSignup() {
+      if (!this.detail || this.detail.status === 'ended' || this.detail.status === 'full') return
+      api.signupActivity(this.id).then(r => {
+        if (r.code === 0) { uni.showToast({ title: '报名成功', icon: 'success' }); this.loadDetail() }
+        else uni.showToast({ title: r.msg || '报名失败', icon: 'none' })
+      }).catch(() => { uni.showToast({ title: '网络异常', icon: 'none' }) })
+    },
+    goBack() { uni.navigateBack() }
   }
 }
 </script>
+
 <style scoped>
-.page{background:#f6f7fb;min-height:100vh;display:flex;flex-direction:column}
-.back-bar{position:fixed;top:0;left:0;right:0;z-index:99;height:54px;padding:12px 14px;background:rgba(255,255,255,.96);border-bottom:0.5px solid #e5e7eb;display:flex;align-items:center}
-.back{width:28px;height:28px;border-radius:8px;background:#f3f4f6;color:#1a1a2e;font-size:28px;line-height:26px;display:flex;align-items:center;justify-content:center;border:none;padding:0}
-.bar-title{position:absolute;left:50%;transform:translateX(-50%);font-size:16px;font-weight:700;color:#1a1a2e}
-.scroll{margin-top:54px;padding-bottom:70px}
-.cover{height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
-.cover-text{font-size:28px;font-weight:800;color:#fff}
-.cover-title{font-size:16px;font-weight:700;color:rgba(255,255,255,.9);text-align:center;padding:0 20px}
-.info{background:#fff;padding:16px 14px}
-.detail-title{display:block;font-size:20px;font-weight:800;color:#1a1a2e;line-height:1.4}
-.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.tag{padding:4px 10px;border-radius:5px;background:#f6f7fb;color:#64748b;font-size:12px}
-.content{margin:10px 14px;padding:16px;background:#fff;border-radius:8px;border:0.5px solid #e5e7eb}
-.content-title{display:block;font-size:16px;font-weight:800;color:#1a1a2e;margin-bottom:10px}
-.content-text{display:block;font-size:14px;color:#6b7280;line-height:1.8}
-.cta{position:fixed;bottom:0;left:0;right:0;padding:12px 14px;background:rgba(255,255,255,.96);border-top:0.5px solid #e5e7eb}
-.cta-btn{width:100%;height:48px;border-radius:10px;background:#ff6b35;color:#fff;font-size:16px;font-weight:800;border:none;display:flex;align-items:center;justify-content:center}
+.page { background: #f6f7fb; min-height: 100vh; }
+.nav-bar { padding: 16px; padding-top: 50px; display: flex; align-items: center; justify-content: space-between; }
+.nav-title { font-size: 17px; font-weight: 600; color: #1a1a2e; }
+.content { height: calc(100vh - 90px); }
+.cover { padding: 30px 20px; }
+.cover-title { font-size: 20px; font-weight: 700; color: #fff; }
+.cover-tag { font-size: 12px; color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px; display: inline-block; margin-top: 8px; }
+.info-card { background: #fff; margin: -12px 16px 12px; border-radius: 12px; padding: 16px; }
+.info-row { display: flex; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid #f3f4f6; }
+.info-row:last-child { border-bottom: none; }
+.info-label { font-size: 13px; color: #6b7280; width: 70px; flex-shrink: 0; }
+.info-value { font-size: 14px; color: #1a1a2e; flex: 1; }
+.desc-card { background: #fff; margin: 12px 16px; border-radius: 12px; padding: 16px; }
+.desc-title { font-size: 16px; font-weight: 600; color: #1a1a2e; margin-bottom: 12px; }
+.desc-content { font-size: 14px; color: #6b7280; line-height: 1.8; }
+.bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; padding: 12px 16px; background: #fff; border-top: 1px solid #e5e7eb; padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
+.btn { background: #ff6b35; border-radius: 8px; padding: 14px; text-align: center; }
+.btn.disabled { background: #d1d5db; }
+.btn-text { color: #fff; font-size: 16px; font-weight: 600; }
+.empty { padding: 80px; text-align: center; }
+.empty-text { font-size: 14px; color: #9ca3af; }
 </style>

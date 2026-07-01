@@ -1,50 +1,87 @@
 <template>
   <view class="page">
-    <view class="header"><text class="title">服务</text></view>
-    <view class="list">
-      <view v-for="item in services" :key="item.key" class="item" @tap="go(item)">
-        <view class="icon-wrap" :style="{background: item.bg}"><text class="icon">{{ item.icon }}</text></view>
-        <view class="info">
-          <text class="name">{{ item.title }}</text>
-          <text class="desc">{{ item.desc }}</text>
-        </view>
-        <text class="arrow">›</text>
-      </view>
+    <view class="nav-bar" @tap="goBack">
+      <uni-icons type="back" size="20" color="#1a1a2e" />
+      <text class="nav-title">资料库</text>
+      <view style="width: 20px;"></view>
     </view>
+
+    <!-- 分类 tabs -->
+    <scroll-view scroll-x class="tabs">
+      <view class="tab-list">
+        <view :class="['tab-item', { active: currentCat === '' }]" @tap="currentCat = ''; loadData()">
+          <text :class="['tab-text', { active: currentCat === '' }]">全部</text>
+        </view>
+        <view :class="['tab-item', { active: currentCat === c }]" v-for="c in categories" :key="c" @tap="currentCat = c; loadData()">
+          <text :class="['tab-text', { active: currentCat === c }]">{{ c }}</text>
+        </view>
+      </view>
+    </scroll-view>
+
+    <scroll-view scroll-y class="list" @scrolltolower="loadMore" refresher-enabled :refresher-triggered="refreshing" @refresherrefresh="onRefresh">
+      <view class="card" v-for="m in list" :key="m.id" @tap="goDetail(m.id)">
+        <view class="card-cover" :style="{ background: m.gradient || 'linear-gradient(135deg, #7c3aed, #a78bfa)' }">
+          <uni-icons type="folder" size="24" color="rgba(255,255,255,0.8)" />
+        </view>
+        <view class="card-body">
+          <text class="card-title">{{ m.title }}</text>
+          <view class="card-meta-row">
+            <text class="card-meta">{{ m.author || '未知' }}</text>
+            <text class="card-meta" v-if="m.file_size">{{ m.file_size }}</text>
+          </view>
+        </view>
+      </view>
+      <view v-if="!list.length && !loading" class="empty"><text class="empty-text">暂无资料</text></view>
+      <view v-if="loading" class="empty"><text class="empty-text">加载中...</text></view>
+      <view style="height: 70px;"></view>
+    </scroll-view>
+
+    <tab-bar current="/pages/material/list" />
   </view>
 </template>
+
 <script>
+import { api } from '@/utils/api.js'
+import tabBar from '@/components/tab-bar.vue'
+
 export default {
-  data() {
-    return {
-      services: [
-        { key: 'report', title: '行业报告', desc: '海量报告，市场洞察一键查阅', icon: '📄', bg: '#ecf3ff', path: '/pages/report/list' },
-        { key: 'consult', title: '约咨询', desc: '1对1专家咨询，定制出海方案', icon: '💬', bg: '#fffaec', path: '/pages/consult/index' },
-        { key: 'case', title: '案例库', desc: '精选出海成功案例', icon: '💼', bg: '#ecfff3', path: '' },
-        { key: 'material', title: '资料库', desc: '产品手册、媒体指南', icon: '📁', bg: '#f3ecff', path: '' },
-        { key: 'diagnose', title: '市场诊断', desc: '快速评估目标市场机会', icon: '🔍', bg: '#ffecec', path: '' },
-      ]
-    }
-  },
+  components: { tabBar },
+  data() { return { categories: [], currentCat: '', list: [], page: 1, hasMore: true, loading: false, refreshing: false } },
+  onShow() { this.loadCategories(); this.page = 1; this.list = []; this.loadData() },
   methods: {
-    go(item) {
-      if (!item.path) { uni.showToast({ title: '功能建设中', icon: 'none' }); return }
-      uni.navigateTo({ url: item.path })
-    }
+    loadCategories() {
+      api.getMaterialCategories().then(r => { if (r.code === 0) this.categories = r.data }).catch(() => {})
+    },
+    onRefresh() { this.refreshing = true; this.page = 1; this.list = []; this.hasMore = true; this.loadData().then(() => { this.refreshing = false }) },
+    loadMore() { if (this.hasMore && !this.loading) { this.page++; this.loadData() } },
+    loadData() {
+      this.loading = true
+      return api.getMaterials({ category: this.currentCat, page: this.page, size: 10 }).then(r => {
+        if (r.code === 0) { this.list = this.page === 1 ? r.data : [...this.list, ...r.data]; this.hasMore = r.data.length >= 10 }
+      }).catch(() => {}).finally(() => { this.loading = false })
+    },
+    goDetail(id) { uni.navigateTo({ url: `/pages/material/detail?id=${id}` }) },
+    goBack() { uni.navigateBack() }
   }
 }
 </script>
+
 <style scoped>
-.page { background: #f7f7f7; min-height: 100vh; }
-.header { height: 44px; background: #fff; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; padding: 0 16px; }
-.title { font-size: 16px; font-weight: 700; color: #1a1a1a; }
-.list { margin: 10px 16px; background: #fff; border-radius: 12px; overflow: hidden; }
-.item { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-bottom: 1px solid #f5f5f5; }
-.item:last-child { border-bottom: none; }
-.icon-wrap { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.icon { font-size: 20px; }
-.info { flex: 1; }
-.name { display: block; font-size: 15px; font-weight: 600; color: #1a1a1a; }
-.desc { display: block; font-size: 12px; color: #aaa; margin-top: 2px; }
-.arrow { color: #ccc; font-size: 18px; }
+.page { background: #f6f7fb; min-height: 100vh; }
+.nav-bar { padding: 16px; padding-top: 50px; display: flex; align-items: center; justify-content: space-between; }
+.nav-title { font-size: 17px; font-weight: 600; color: #1a1a2e; }
+.tabs { white-space: nowrap; }
+.tab-list { display: flex; padding: 0 16px; gap: 16px; }
+.tab-item { padding: 8px 0; }
+.tab-text { font-size: 14px; color: #6b7280; }
+.tab-text.active { color: #ff6b35; font-weight: 600; }
+.list { height: calc(100vh - 200px); }
+.card { background: #fff; border-radius: 12px; margin: 8px 16px; overflow: hidden; }
+.card-cover { height: 80px; display: flex; align-items: center; justify-content: center; }
+.card-body { padding: 12px 16px; }
+.card-title { font-size: 15px; font-weight: 500; color: #1a1a2e; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+.card-meta-row { display: flex; justify-content: space-between; margin-top: 6px; }
+.card-meta { font-size: 12px; color: #9ca3af; }
+.empty { padding: 40px; text-align: center; }
+.empty-text { font-size: 14px; color: #9ca3af; }
 </style>

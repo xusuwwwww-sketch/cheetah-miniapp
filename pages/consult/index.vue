@@ -1,100 +1,145 @@
 <template>
   <view class="page">
-    <view class="header"><text class="title">约咨询</text></view>
-    <scroll-view scroll-y :show-scrollbar="false" class="scroll">
-      <view class="hero">
-        <text class="hero-title">专家一对一诊断</text>
-        <text class="hero-sub">猎豹出海资深顾问，为您量身定制出海方案</text>
-        <view class="hero-tags">
-          <text class="hero-tag">✓ 市场分析</text>
-          <text class="hero-tag">✓ 竞品策略</text>
-          <text class="hero-tag">✓ 投放方案</text>
+    <view class="nav-bar">
+      <uni-icons type="back" size="20" color="#1a1a2e" @tap="goBack" />
+      <text class="nav-title">约咨询</text>
+      <view style="width: 20px;"></view>
+    </view>
+
+    <scroll-view scroll-y class="content">
+      <!-- 服务亮点 -->
+      <view class="intro-card">
+        <text class="intro-title">猎豹出海专业咨询</text>
+        <text class="intro-desc">为企业出海提供全链路解决方案</text>
+      </view>
+
+      <view class="features">
+        <view class="feature-item" v-for="f in features" :key="f.title">
+          <view class="feature-icon" :style="{ background: f.bg }">
+            <uni-icons :type="f.icon" size="22" color="#fff" />
+          </view>
+          <view class="feature-info">
+            <text class="feature-title">{{ f.title }}</text>
+            <text class="feature-desc">{{ f.desc }}</text>
+          </view>
         </view>
       </view>
-      <view class="form-card">
-        <view class="field">
-          <text class="label">姓名 <text class="required">*</text></text>
-          <input class="input" v-model="form.name" placeholder="请输入您的姓名" placeholder-class="ph" />
-        </view>
-        <view class="divider"></view>
-        <view class="field">
-          <text class="label">手机号 <text class="required">*</text></text>
-          <input class="input" v-model="form.phone" type="number" placeholder="请输入手机号" placeholder-class="ph" />
-        </view>
-        <view class="divider"></view>
-        <view class="field">
-          <text class="label">公司名称</text>
-          <input class="input" v-model="form.company" placeholder="选填" placeholder-class="ph" />
-        </view>
-        <view class="divider"></view>
-        <view class="field">
-          <text class="label">咨询主题</text>
-          <picker :range="topics" @change="e=>form.topic=topics[e.detail.value]">
-            <view class="input picker-row">
-              <text :class="{ph: !form.topic}">{{ form.topic || '请选择' }}</text>
-              <text class="picker-arrow">›</text>
-            </view>
-          </picker>
+
+      <!-- 服务流程 -->
+      <view class="section">
+        <text class="section-title">服务流程</text>
+        <view class="steps">
+          <view class="step-item" v-for="(s, i) in steps" :key="i">
+            <view class="step-num">{{ i + 1 }}</view>
+            <text class="step-title">{{ s }}</text>
+          </view>
         </view>
       </view>
-      <view class="submit-wrap">
-        <view class="submit-btn" @tap="submit">
-          <text>{{ submitting ? '提交中...' : '预约咨询' }}</text>
-        </view>
-        <text class="tip">提交后顾问将在24小时内联系您</text>
-      </view>
+      <view style="height: 90px;"></view>
     </scroll-view>
+
+    <!-- 底部按钮 -->
+    <view class="bottom-bar">
+      <view class="btn" @tap="showModal = true">
+        <uni-icons type="chat" size="18" color="#fff" />
+        <text class="btn-text">  立即预约</text>
+      </view>
+    </view>
+
+    <!-- 表单弹窗 -->
+    <view class="modal-mask" v-if="showModal" @tap="showModal = false">
+      <view class="modal" @tap.stop>
+        <view class="modal-header">
+          <text class="modal-title">预约咨询</text>
+          <uni-icons type="close" size="20" color="#9ca3af" @tap="showModal = false" />
+        </view>
+        <view class="form">
+          <view class="form-item">
+            <text class="form-label">姓名</text>
+            <input class="form-input" placeholder="请输入姓名" v-model="form.name" />
+          </view>
+          <view class="form-item">
+            <text class="form-label">手机号</text>
+            <input class="form-input" type="number" placeholder="请输入手机号" v-model="form.phone" />
+          </view>
+          <view class="form-item">
+            <text class="form-label">公司</text>
+            <input class="form-input" placeholder="请输入公司名称" v-model="form.company" />
+          </view>
+          <view class="form-item">
+            <text class="form-label">咨询主题</text>
+            <input class="form-input" placeholder="如：东南亚市场进入策略" v-model="form.topic" />
+          </view>
+          <view class="form-item">
+            <text class="form-label">备注</text>
+            <textarea class="form-textarea" placeholder="补充说明（选填）" v-model="form.remark" />
+          </view>
+          <view class="btn" @tap="onSubmit"><text class="btn-text">提交预约</text></view>
+        </view>
+      </view>
+    </view>
   </view>
 </template>
+
 <script>
-import { api } from '../../utils/api.js'
+import { api } from '@/utils/api.js'
+
 export default {
   data() {
     return {
-      submitting: false,
-      form: { name: '', phone: '', company: '', topic: '' },
-      topics: ['市场进入策略', '广告投放优化', '产品本地化', '合规与政策', '其他']
+      showModal: false,
+      form: { name: '', phone: '', company: '', topic: '', remark: '' },
+      features: [
+        { title: '市场分析', desc: '目标市场洞察与机会评估', icon: 'chart', bg: '#ff6b35' },
+        { title: '竞品对标', desc: '竞争格局深度拆解', icon: 'eye', bg: '#2563eb' },
+        { title: '广告策略', desc: '获客渠道与投放优化', icon: 'flag', bg: '#059669' },
+        { title: '内容营销', desc: '品牌内容与社媒运营', icon: 'compose', bg: '#d97706' }
+      ],
+      steps: ['需求沟通', '方案定制', '深度咨询', '持续跟踪']
     }
   },
   methods: {
-    async submit() {
-      if (!this.form.name || !this.form.phone) { uni.showToast({ title: '请填写姓名和手机号', icon: 'none' }); return }
-      this.submitting = true
-      try {
-        const r = await api.submitConsult(this.form)
-        if (r.code === 0) {
-          uni.showToast({ title: '预约成功！', icon: 'success', duration: 2000 })
-          this.form = { name: '', phone: '', company: '', topic: '' }
-        } else {
-          uni.showToast({ title: r.msg || '提交失败', icon: 'none' })
-        }
-      } catch (e) { uni.showToast({ title: '网络错误', icon: 'none' }) }
-      finally { this.submitting = false }
-    }
+    onSubmit() {
+      const { name, phone, company, topic } = this.form
+      if (!name || !phone || !topic) return uni.showToast({ title: '请填写必填项', icon: 'none' })
+      api.submitConsult(this.form).then(r => {
+        if (r.code === 0) { uni.showToast({ title: '预约成功', icon: 'success' }); this.showModal = false; this.form = { name: '', phone: '', company: '', topic: '', remark: '' } }
+        else uni.showToast({ title: r.msg || '提交失败', icon: 'none' })
+      }).catch(() => { uni.showToast({ title: '网络异常', icon: 'none' }) })
+    },
+    goBack() { uni.navigateBack() }
   }
 }
 </script>
+
 <style scoped>
-.page { background: #f7f7f7; min-height: 100vh; }
-.header { height: 44px; background: #fff; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; padding: 0 16px; }
-.title { font-size: 16px; font-weight: 700; color: #1a1a1a; }
-.scroll { padding-bottom: 80px; }
-.hero { background: linear-gradient(135deg, #fa5714, #ff8c42); padding: 28px 20px; color: #fff; }
-.hero-title { display: block; font-size: 22px; font-weight: 800; }
-.hero-sub { display: block; font-size: 13px; color: rgba(255,255,255,.85); margin-top: 6px; line-height: 1.5; }
-.hero-tags { display: flex; gap: 10px; margin-top: 14px; }
-.hero-tag { background: rgba(255,255,255,.2); color: #fff; font-size: 12px; padding: 4px 10px; border-radius: 12px; }
-.form-card { margin: 12px 16px; background: #fff; border-radius: 12px; overflow: hidden; }
-.field { padding: 14px 16px; display: flex; align-items: center; }
-.label { font-size: 14px; color: #1a1a1a; width: 90px; flex-shrink: 0; }
-.required { color: #fa5714; }
-.input { flex: 1; font-size: 14px; color: #1a1a1a; text-align: right; }
-.picker-row { flex: 1; display: flex; justify-content: flex-end; align-items: center; gap: 4px; }
-.picker-arrow { color: #ccc; font-size: 16px; }
-.ph { color: #bbb; }
-.divider { height: 1px; background: #f5f5f5; margin: 0 16px; }
-.submit-wrap { margin: 16px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
-.submit-btn { width: 100%; height: 48px; background: #fa5714; border-radius: 24px; display: flex; align-items: center; justify-content: center; }
-.submit-btn text { color: #fff; font-size: 16px; font-weight: 700; }
-.tip { font-size: 12px; color: #aaa; }
+.page { background: #f6f7fb; min-height: 100vh; }
+.nav-bar { padding: 16px; padding-top: 50px; display: flex; align-items: center; justify-content: space-between; }
+.nav-title { font-size: 17px; font-weight: 600; color: #1a1a2e; }
+.content { height: calc(100vh - 110px); }
+.intro-card { background: linear-gradient(135deg, #ff6b35, #ff9a5c); margin: 8px 16px; border-radius: 12px; padding: 24px 20px; }
+.intro-title { font-size: 20px; font-weight: 700; color: #fff; }
+.intro-desc { font-size: 13px; color: rgba(255,255,255,0.8); margin-top: 6px; }
+.features { display: flex; flex-wrap: wrap; padding: 12px 16px; gap: 10px; }
+.feature-item { width: calc(50% - 5px); background: #fff; border-radius: 12px; padding: 16px; display: flex; align-items: flex-start; gap: 10px; }
+.feature-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.feature-title { font-size: 14px; font-weight: 600; color: #1a1a2e; }
+.feature-desc { font-size: 12px; color: #6b7280; margin-top: 2px; }
+.section { margin: 12px 16px; }
+.section-title { font-size: 16px; font-weight: 600; color: #1a1a2e; margin-bottom: 12px; }
+.steps { display: flex; justify-content: space-between; background: #fff; border-radius: 12px; padding: 16px; }
+.step-item { flex: 1; display: flex; flex-direction: column; align-items: center; }
+.step-num { width: 28px; height: 28px; border-radius: 50%; background: #ff6b35; color: #fff; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; margin-bottom: 6px; }
+.step-title { font-size: 12px; color: #1a1a2e; }
+.bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; padding: 12px 16px; background: #fff; border-top: 1px solid #e5e7eb; padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
+.btn { background: #ff6b35; border-radius: 8px; padding: 14px; text-align: center; display: flex; align-items: center; justify-content: center; margin-top: 16px; }
+.btn-text { color: #fff; font-size: 16px; font-weight: 600; }
+.modal-mask { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; display: flex; align-items: flex-end; }
+.modal { background: #fff; border-radius: 16px 16px 0 0; width: 100%; padding: 20px; padding-bottom: calc(20px + env(safe-area-inset-bottom)); max-height: 85vh; overflow-y: auto; }
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.modal-title { font-size: 18px; font-weight: 600; color: #1a1a2e; }
+.form-item { margin-bottom: 16px; }
+.form-label { font-size: 13px; color: #1a1a2e; font-weight: 500; margin-bottom: 6px; display: block; }
+.form-input { background: #f6f7fb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px 12px; font-size: 14px; }
+.form-textarea { background: #f6f7fb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px 12px; font-size: 14px; height: 80px; width: 100%; }
 </style>

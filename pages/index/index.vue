@@ -1,244 +1,139 @@
 <template>
   <view class="page">
-    <!-- 顶部导航 -->
-    <view class="nav-bar">
-      <text class="nav-title">🐆 猎豹出海工具箱</text>
-      <view class="nav-right"></view>
+    <!-- 顶部品牌 -->
+    <view class="header">
+      <text class="brand">猎豹出海工具箱</text>
     </view>
 
-    <scroll-view scroll-y class="scroll-content" :show-scrollbar="false">
-      <!-- 轮播图 -->
-      <view class="banner-section">
-        <swiper
-          class="banner-swiper"
-          circular
-          :autoplay="true"
-          :interval="4000"
-          indicator-dots
-          indicator-color="rgba(255,255,255,.4)"
-          indicator-active-color="#fff"
-        >
-          <swiper-item v-for="item in banners" :key="item.id">
-            <view class="banner-item" :style="{background: item.gradient || 'linear-gradient(135deg,#fa5714,#ff8c42)'}">
-              <view class="banner-content">
-                <text class="banner-tag" v-if="item.tag">{{ item.tag }}</text>
-                <text class="banner-title">{{ item.title }}</text>
-                <text class="banner-desc" v-if="item.description">{{ item.description }}</text>
-              </view>
-            </view>
-          </swiper-item>
-        </swiper>
-      </view>
+    <scroll-view scroll-y class="content">
+      <!-- 轮播 -->
+      <swiper class="banner" autoplay circular :interval="4000" indicator-dots indicator-color="rgba(255,255,255,0.4)" indicator-active-color="#fff">
+        <swiper-item v-for="(b, i) in banners" :key="i">
+          <view class="banner-item" :style="{ background: b.gradient || 'linear-gradient(135deg, #ff6b35, #ff9a5c)' }">
+            <text class="banner-tag">{{ b.tag }}</text>
+            <text class="banner-title">{{ b.title }}</text>
+            <text class="banner-desc">{{ b.description }}</text>
+          </view>
+        </swiper-item>
+      </swiper>
 
       <!-- 功能入口 -->
-      <view class="section">
-        <view class="entry-grid">
-          <view
-            v-for="e in entries" :key="e.key"
-            class="entry-item"
-            @tap="goPage(e)"
-          >
-            <view class="entry-icon-wrap" :style="{background: e.bg}">
-              <view class="entry-icon-img" :style="{backgroundImage: e.icon}"></view>
-            </view>
-            <text class="entry-label">{{ e.label }}</text>
+      <view class="grid">
+        <view class="grid-item" v-for="(g, i) in grids" :key="i" @tap="onGrid(g)">
+          <view class="grid-icon" :style="{ background: g.bg }">
+            <uni-icons :type="g.icon" size="28" color="#fff" />
           </view>
+          <text class="grid-text">{{ g.text }}</text>
         </view>
       </view>
 
       <!-- 热门社群 -->
-      <view class="section" v-if="communities.length > 0">
-        <view class="section-header">
-          <text class="section-title">热门社群</text>
-          <text class="section-more">查看全部 ›</text>
-        </view>
-        <scroll-view scroll-x class="community-scroll" :show-scrollbar="false">
+      <view class="section">
+        <view class="section-head"><text class="section-title">热门社群</text></view>
+        <scroll-view scroll-x class="community-scroll">
           <view class="community-list">
-            <view
-              v-for="item in communities" :key="item.id"
-              class="community-card"
-            >
-              <view class="community-icon" :style="{background: item.icon_color || '#fff3ec'}">
-                <text class="community-emoji">👥</text>
+            <view class="community-card" v-for="c in communities" :key="c.id">
+              <view class="community-avatar" :style="{ background: c.icon_color || '#ff6b35' }">
+                <uni-icons type="staff" size="20" color="#fff" />
               </view>
-              <text class="community-name">{{ item.title }}</text>
-              <text class="community-count">{{ item.description }}</text>
+              <text class="community-name">{{ c.title }}</text>
+              <text class="community-count">{{ c.member_count || 0 }}人</text>
             </view>
           </view>
         </scroll-view>
       </view>
 
       <!-- 精选报告 -->
-      <view class="section" v-if="reports.length > 0">
-        <view class="section-header">
+      <view class="section">
+        <view class="section-head">
           <text class="section-title">精选报告</text>
-          <text class="section-more" @tap="goPage({path:'/pages/report/list'})">更多 ›</text>
+          <text class="section-more" @tap="goReports">查看更多</text>
         </view>
-        <view
-          v-for="item in reports" :key="item.id"
-          class="report-card"
-          @tap="goPage({path:'/pages/report/detail', query: '?id='+item.id})"
-        >
-          <view class="report-cover" :style="{background: item.gradient || 'linear-gradient(135deg,#1a3a5f,#2d6a9f)'}">
-            <text class="report-cover-text">REPORT</text>
-            <view class="report-badge-wrap">
-              <text class="report-badge" :class="item.is_free ? 'free' : 'paid'">
-                {{ item.is_free ? '免费' : '付费' }}
-              </text>
-            </view>
+        <view class="report-card" v-for="r in reports" :key="r.id" @tap="goReportDetail(r.id)">
+          <view class="report-thumb" :style="{ background: r.gradient || 'linear-gradient(135deg, #2563eb, #60a5fa)' }">
+            <uni-icons type="bars" size="24" color="rgba(255,255,255,0.8)" />
           </view>
           <view class="report-info">
-            <text class="report-title">{{ item.title }}</text>
-            <view class="report-meta">
-              <text class="report-source">{{ item.source }}</text>
-              <text class="report-date">{{ item.created_at ? item.created_at.substring(0,10) : '' }}</text>
-            </view>
+            <text class="report-title">{{ r.title }}</text>
+            <text class="report-meta">{{ r.source || '' }} · {{ r.year || '' }}</text>
           </view>
         </view>
+        <view v-if="!reports.length" class="empty"><text class="empty-text">暂无报告</text></view>
       </view>
 
-      <view style="height: 20px;"></view>
+      <view style="height: 70px;"></view>
     </scroll-view>
+
+    <tab-bar current="/pages/index/index" />
   </view>
 </template>
 
 <script>
-import { api } from '../../utils/api.js'
-
-const SVG = {
-  activity: `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff6b35' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M7 3v4'/><path d='M17 3v4'/><rect x='4' y='5' width='16' height='16' rx='3'/><path d='M4 10h16'/><path d='M8 14h3'/><path d='M13 14h3'/><path d='M8 17h3'/></svg>")`,
-  report:   `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M7 3h7l4 4v14H7a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3Z'/><path d='M14 3v5h5'/><path d='M8 17v-4'/><path d='M12 17v-7'/><path d='M16 17v-3'/></svg>")`,
-  case:     `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23059669' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M9 18h6'/><path d='M10 22h4'/><path d='M8.5 14.5A6 6 0 1 1 15.5 14c-.8.7-1.5 1.6-1.5 3h-4c0-1.1-.5-1.9-1.5-2.5Z'/></svg>")`,
-  material: `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237c3aed' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M4 6.5A2.5 2.5 0 0 1 6.5 4H10l2 3h5.5A2.5 2.5 0 0 1 20 9.5v8A2.5 2.5 0 0 1 17.5 20h-11A2.5 2.5 0 0 1 4 17.5Z'/></svg>")`,
-  consult:  `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d97706' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z'/></svg>")`,
-}
+import { api } from '@/utils/api.js'
+import tabBar from '@/components/tab-bar.vue'
 
 export default {
+  components: { tabBar },
   data() {
     return {
       banners: [],
       communities: [],
       reports: [],
-      entries: [
-        { key: 'activity', label: '报活动', icon: SVG.activity, bg: '#fff3ec', isTab: true, path: '/pages/activity/list' },
-        { key: 'report', label: '查报告', icon: SVG.report, bg: '#ecf3ff', path: '/pages/report/list' },
-        { key: 'case', label: '案例库', icon: SVG.case, bg: '#ecfff3', path: '' },
-        { key: 'material', label: '资料库', icon: SVG.material, bg: '#f3ecff', path: '' },
-        { key: 'consult', label: '约咨询', icon: SVG.consult, bg: '#fffaec', path: '/pages/consult/index' },
+      grids: [
+        { text: '报活动', icon: 'calendar', bg: '#ff6b35', url: '/pages/activity/list' },
+        { text: '查报告', icon: 'bars', bg: '#2563eb', url: '/pages/report/list' },
+        { text: '案例库', icon: 'star', bg: '#059669', url: '' },
+        { text: '资料库', icon: 'folder', bg: '#7c3aed', url: '/pages/material/list' },
+        { text: '约咨询', icon: 'chat', bg: '#d97706', url: '/pages/consult/index' }
       ]
     }
   },
-  onLoad() { this.loadData() },
-  onShow() {
-    if (typeof this.$scope !== 'undefined' && this.$scope.getTabBar) {
-      this.$scope.getTabBar().setData({ active: 0 })
-    }
-  },
+  onShow() { this.loadData() },
   methods: {
-    async loadData() {
-      try {
-        const [b, c, r] = await Promise.all([
-          api.getBanners(),
-          api.getCommunities(),
-          api.getReports({ page: 1, size: 3 })
-        ])
-        if (b.code === 0) this.banners = b.data
-        if (c.code === 0) this.communities = c.data.slice(0, 5)
-        if (r.code === 0) this.reports = r.data.list
-      } catch (e) { console.error(e) }
+    loadData() {
+      api.getBanners().then(r => { if (r.code === 0) this.banners = r.data }).catch(() => {})
+      api.getCommunities().then(r => { if (r.code === 0) this.communities = r.data }).catch(() => {})
+      api.getReports({ page: 1, size: 3 }).then(r => { if (r.code === 0) this.reports = r.data }).catch(() => {})
     },
-    goPage(item) {
-      if (!item.path) { uni.showToast({ title: '功能建设中', icon: 'none' }); return }
-      if (item.isTab) {
-        uni.switchTab({ url: item.path })
-      } else {
-        const url = item.query ? item.path + item.query : item.path
-        uni.navigateTo({ url })
-      }
-    }
+    onGrid(g) {
+      if (!g.url) return uni.showToast({ title: '开发中，敬请期待', icon: 'none' })
+      uni.navigateTo({ url: g.url })
+    },
+    goReports() { uni.navigateTo({ url: '/pages/report/list' }) },
+    goReportDetail(id) { uni.navigateTo({ url: `/pages/report/detail?id=${id}` }) }
   }
 }
 </script>
 
 <style scoped>
-.page { background: #f7f7f7; min-height: 100vh; }
-
-.nav-bar {
-  height: 44px;
-  background: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-bottom: 1px solid #f0f0f0;
-  padding: 0 16px;
-}
-.nav-title { font-size: 16px; font-weight: 700; color: #1a1a1a; }
-
-.scroll-content { height: calc(100vh - 44px); padding-bottom: 80px; }
-
-.banner-section { padding: 12px 16px 0; }
-.banner-swiper { height: 150px; border-radius: 12px; overflow: hidden; }
-.banner-item { height: 150px; padding: 20px; display: flex; align-items: flex-end; }
-.banner-content { flex: 1; }
-.banner-tag {
-  display: inline-block;
-  background: rgba(255,255,255,.25);
-  color: #fff;
-  font-size: 11px;
-  padding: 2px 8px;
-  border-radius: 10px;
-  margin-bottom: 6px;
-}
-.banner-title { display: block; color: #fff; font-size: 18px; font-weight: 700; line-height: 1.3; }
-.banner-desc { display: block; color: rgba(255,255,255,.8); font-size: 12px; margin-top: 4px; }
-
-.section { background: #fff; margin: 10px 0; padding: 16px; }
-.section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
-.section-title { font-size: 16px; font-weight: 700; color: #1a1a1a; }
-.section-more { font-size: 12px; color: #fa5714; }
-
-.entry-grid { display: flex; justify-content: space-between; }
-.entry-item { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 20%; }
-.entry-icon-wrap { width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; }
-.entry-icon-img { width: 28px; height: 28px; background-size: contain; background-repeat: no-repeat; background-position: center; }
-.entry-label { font-size: 12px; color: #555; font-weight: 500; }
-
-.community-scroll { overflow: hidden; }
-.community-list { display: flex; gap: 10px; padding: 0 2px; white-space: nowrap; }
-.community-card {
-  display: inline-flex;
-  flex-direction: column;
-  width: 110px;
-  padding: 12px;
-  background: #fafafa;
-  border-radius: 10px;
-  border: 1px solid #f0f0f0;
-  flex-shrink: 0;
-}
-.community-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; }
-.community-emoji { font-size: 18px; }
-.community-name { font-size: 13px; font-weight: 600; color: #1a1a1a; line-height: 1.4; }
-.community-count { font-size: 11px; color: #aaa; margin-top: 3px; }
-
-.report-card { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f5f5f5; }
-.report-card:last-child { border-bottom: none; padding-bottom: 0; }
-.report-cover {
-  width: 90px;
-  height: 70px;
-  border-radius: 8px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-.report-cover-text { color: rgba(255,255,255,.3); font-size: 11px; font-weight: 700; }
-.report-badge-wrap { position: absolute; top: 5px; right: 5px; }
-.report-badge { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; }
-.free { background: #e8f7ef; color: #2ecc71; }
-.paid { background: #fff3ec; color: #fa5714; }
-.report-info { flex: 1; display: flex; flex-direction: column; justify-content: center; }
-.report-title { font-size: 14px; font-weight: 600; color: #1a1a1a; line-height: 1.5; }
-.report-meta { display: flex; gap: 8px; margin-top: 6px; }
-.report-source, .report-date { font-size: 11px; color: #aaa; }
+.page { background: #f6f7fb; min-height: 100vh; }
+.header { padding: 16px 16px 8px; }
+.brand { font-size: 20px; font-weight: 700; color: #1a1a2e; }
+.content { height: calc(100vh - 60px); }
+.banner { height: 160px; margin: 8px 16px; border-radius: 12px; overflow: hidden; }
+.banner-item { height: 100%; padding: 20px; display: flex; flex-direction: column; justify-content: center; }
+.banner-tag { font-size: 11px; color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px; align-self: flex-start; margin-bottom: 6px; }
+.banner-title { font-size: 18px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+.banner-desc { font-size: 12px; color: rgba(255,255,255,0.8); }
+.grid { display: flex; flex-wrap: wrap; padding: 12px 16px; }
+.grid-item { width: 20%; display: flex; flex-direction: column; align-items: center; margin-bottom: 12px; }
+.grid-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 6px; }
+.grid-text { font-size: 12px; color: #1a1a2e; }
+.section { margin: 8px 16px; }
+.section-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.section-title { font-size: 16px; font-weight: 600; color: #1a1a2e; }
+.section-more { font-size: 12px; color: #ff6b35; }
+.community-scroll { white-space: nowrap; }
+.community-list { display: flex; gap: 12px; }
+.community-card { width: 100px; background: #fff; border-radius: 12px; padding: 12px 8px; display: flex; flex-direction: column; align-items: center; }
+.community-avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 6px; }
+.community-name { font-size: 13px; color: #1a1a2e; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 80px; }
+.community-count { font-size: 11px; color: #9ca3af; margin-top: 2px; }
+.report-card { background: #fff; border-radius: 12px; padding: 12px; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; }
+.report-thumb { width: 60px; height: 60px; border-radius: 8px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.report-info { flex: 1; min-width: 0; }
+.report-title { font-size: 14px; color: #1a1a2e; font-weight: 500; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.report-meta { font-size: 11px; color: #9ca3af; margin-top: 4px; }
+.empty { padding: 30px; text-align: center; }
+.empty-text { font-size: 14px; color: #9ca3af; }
 </style>

@@ -1,85 +1,24 @@
 {
-  "pages": [
-    {
-      "path": "pages/index/index",
-      "style": {
-        "navigationStyle": "custom"
-      }
-    },
-    {
-      "path": "pages/activity/list",
-      "style": {
-        "navigationBarTitleText": "活动",
-        "navigationStyle": "custom"
-      }
-    },
-    {
-      "path": "pages/activity/detail",
-      "style": {
-        "navigationBarTitleText": "活动详情",
-        "navigationStyle": "custom"
-      }
-    },
-    {
-      "path": "pages/report/list",
-      "style": {
-        "navigationBarTitleText": "行业报告",
-        "navigationStyle": "custom"
-      }
-    },
-    {
-      "path": "pages/report/detail",
-      "style": {
-        "navigationBarTitleText": "报告详情",
-        "navigationStyle": "custom"
-      }
-    },
-    {
-      "path": "pages/material/list",
-      "style": {
-        "navigationBarTitleText": "资料库",
-        "navigationStyle": "custom"
-      }
-    },
-    {
-      "path": "pages/consult/index",
-      "style": {
-        "navigationBarTitleText": "约咨询",
-        "navigationStyle": "custom"
-      }
-    },
-    {
-      "path": "pages/profile/index",
-      "style": {
-        "navigationBarTitleText": "我的",
-        "navigationStyle": "custom"
-      }
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      "uni-icons": "@dcloudio/uni-ui/lib/uni-icons/uni-icons.vue"
     }
-  ],
-  "tabBar": {
-    "custom": true,
-    "list": [
-      {
-        "pagePath": "pages/index/index",
-        "text": "首页"
-      },
-      {
-        "pagePath": "pages/activity/list",
-        "text": "活动"
-      },
-      {
-        "pagePath": "pages/material/list",
-        "text": "服务"
-      },
-      {
-        "pagePath": "pages/profile/index",
-        "text": "我的"
-      }
-    ]
   },
+  "pages": [
+    { "path": "pages/index/index", "style": { "navigationStyle": "custom" } },
+    { "path": "pages/activity/list", "style": { "navigationStyle": "custom" } },
+    { "path": "pages/activity/detail", "style": { "navigationStyle": "custom" } },
+    { "path": "pages/report/list", "style": { "navigationStyle": "custom" } },
+    { "path": "pages/report/detail", "style": { "navigationStyle": "custom" } },
+    { "path": "pages/material/list", "style": { "navigationStyle": "custom" } },
+    { "path": "pages/material/detail", "style": { "navigationStyle": "custom" } },
+    { "path": "pages/consult/index", "style": { "navigationStyle": "custom" } },
+    { "path": "pages/profile/index", "style": { "navigationStyle": "custom" } }
+  ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarBackgroundColor": "#ffffff",
-    "backgroundColor": "#f5f5f7"
+    "backgroundColor": "#f6f7fb"
   }
 }
