@@ -114,7 +114,7 @@ export default {
 .search-input { flex: 1; height: 40px; font-size: 14px; color: #1a1a2e; }
 .ph { color: #c4c9d4; }
 
-.list { height: calc(100vh - 54px - 56px - 62px); padding: 0 14px 20px; }
+.list { height: calc(100vh - 54px - 56px - 62px - 50px); padding: 0 14px 100px; }
 
 .card { background: #fff; border-radius: 14px; overflow: hidden; margin-bottom: 14px; box-shadow: 0 4px 16px rgba(0,0,0,.06); }
 .cover { height: 130px; position: relative; display: flex; align-items: center; justify-content: center; }

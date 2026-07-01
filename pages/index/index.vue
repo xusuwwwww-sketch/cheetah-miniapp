@@ -72,7 +72,7 @@
         <text class="tab-icon">🏠</text>
         <text class="tab-label">首页</text>
       </view>
-      <view class="tab" @tap="goPage('/pages/activity/list')">
+      <view class="tab" @tap="switchToActivity">
         <text class="tab-icon">📅</text>
         <text class="tab-label">活动</text>
       </view>
@@ -97,7 +97,7 @@ export default {
       communities: [],
       reports: [],
       entries: [
-        { key: 'activity', label: '报活动', icon: '📅', color: 'linear-gradient(135deg,#ff6b35,#ff8b5f)', path: '/pages/activity/list' },
+        { key: 'activity', label: '报活动', icon: '📅', color: 'linear-gradient(135deg,#ff6b35,#ff8b5f)', path: '/pages/activity/list', isTab: true },
         { key: 'report', label: '查报告', icon: '📄', color: 'linear-gradient(135deg,#2563eb,#4f9dff)', path: '/pages/report/list' },
         { key: 'case', label: '案例库', icon: '💼', color: 'linear-gradient(135deg,#059669,#2dd4bf)', path: '/pages/material/list' },
         { key: 'material', label: '资料库', icon: '📁', color: 'linear-gradient(135deg,#7c3aed,#a78bfa)', path: '/pages/material/list' },
@@ -122,6 +122,9 @@ export default {
       } catch(e) {
         console.error('加载数据失败:', e)
       }
+    },
+    switchToActivity() {
+      uni.switchTab({ url: '/pages/activity/list' })
     },
     goPage(path) {
       const tabPaths = ['/pages/index/index', '/pages/activity/list', '/pages/material/list', '/pages/profile/index']
