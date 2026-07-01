@@ -43,6 +43,26 @@
       <view v-if="!loading && activities.length===0" class="empty"><text>暂无相关活动</text></view>
       <view v-if="activities.length>0 && activities.length>=total && total>0" class="end"><text>· 已全部加载 ·</text></view>
     </scroll-view>
+
+    <!-- 底部 Tab -->
+    <view class="tab-bar">
+      <view class="btab" @tap="goHome">
+        <text class="btab-icon">🏠</text>
+        <text class="btab-label">首页</text>
+      </view>
+      <view class="btab active">
+        <text class="btab-icon">📅</text>
+        <text class="btab-label">活动</text>
+      </view>
+      <view class="btab" @tap="goService">
+        <text class="btab-icon">⚡</text>
+        <text class="btab-label">服务</text>
+      </view>
+      <view class="btab" @tap="goProfile">
+        <text class="btab-icon">👤</text>
+        <text class="btab-label">我的</text>
+      </view>
+    </view>
   </view>
 </template>
 
@@ -92,6 +112,9 @@ export default {
       uni.navigateTo({url:`/pages/activity/detail?id=${item.id}`})
     },
     isFull(item) { return item.quota>0 && item.signup_count>=item.quota },
+    goHome() { uni.switchTab({url:'/pages/index/index'}) },
+    goService() { uni.switchTab({url:'/pages/material/list'}) },
+    goProfile() { uni.switchTab({url:'/pages/profile/index'}) },
     formatTime(t) {
       if(!t) return '时间待定'
       return t.replace('T',' ').substring(0,16)
@@ -114,7 +137,7 @@ export default {
 .search-input { flex: 1; height: 40px; font-size: 14px; color: #1a1a2e; }
 .ph { color: #c4c9d4; }
 
-.list { height: calc(100vh - 54px - 56px - 62px - 50px); padding: 0 14px 100px; }
+.list { height: calc(100vh - 54px - 56px - 62px - 56px); padding: 0 14px 20px; }
 
 .card { background: #fff; border-radius: 14px; overflow: hidden; margin-bottom: 14px; box-shadow: 0 4px 16px rgba(0,0,0,.06); }
 .cover { height: 130px; position: relative; display: flex; align-items: center; justify-content: center; }
@@ -135,4 +158,9 @@ export default {
 
 .empty { padding: 40px 0; text-align: center; color: #9ca3af; font-size: 14px; }
 .end { padding: 16px 0; text-align: center; color: #c4c9d4; font-size: 12px; }
+.tab-bar { position: fixed; bottom: 0; left: 0; right: 0; height: 56px; background: rgba(255,255,255,.96); border-top: 0.5px solid #e5e7eb; display: flex; align-items: center; justify-content: space-around; padding: 4px 0; }
+.btab { display: flex; flex-direction: column; align-items: center; gap: 2px; flex: 1; padding: 4px 0; }
+.btab.active .btab-icon, .btab.active .btab-label { color: #ff6b35; }
+.btab-icon { font-size: 20px; }
+.btab-label { font-size: 10px; color: #9ca3af; }
 </style>
