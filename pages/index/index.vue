@@ -39,7 +39,7 @@
             @tap="goPage(e)"
           >
             <view class="entry-icon-wrap" :style="{background: e.bg}">
-              <text class="entry-icon">{{ e.icon }}</text>
+              <image class="entry-icon-img" :src="e.icon" mode="aspectFit"/>
             </view>
             <text class="entry-label">{{ e.label }}</text>
           </view>
@@ -111,11 +111,11 @@ export default {
       communities: [],
       reports: [],
       entries: [
-        { key: 'activity', label: '报活动', icon: '📅', bg: '#fff3ec', isTab: true, path: '/pages/activity/list' },
-        { key: 'report', label: '查报告', icon: '📄', bg: '#ecf3ff', path: '/pages/report/list' },
-        { key: 'case', label: '案例库', icon: '💼', bg: '#ecfff3', path: '' },
-        { key: 'material', label: '资料库', icon: '📁', bg: '#f3ecff', path: '' },
-        { key: 'consult', label: '约咨询', icon: '💬', bg: '#fffaec', path: '/pages/consult/index' },
+        { key: 'activity', label: '报活动', icon: '/static/icons/entry-activity.svg', bg: '#fff3ec', isTab: true, path: '/pages/activity/list' },
+        { key: 'report', label: '查报告', icon: '/static/icons/entry-report.svg', bg: '#ecf3ff', path: '/pages/report/list' },
+        { key: 'case', label: '案例库', icon: '/static/icons/entry-case.svg', bg: '#ecfff3', path: '' },
+        { key: 'material', label: '资料库', icon: '/static/icons/entry-material.svg', bg: '#f3ecff', path: '' },
+        { key: 'consult', label: '约咨询', icon: '/static/icons/entry-consult.svg', bg: '#fffaec', path: '/pages/consult/index' },
       ]
     }
   },
@@ -191,7 +191,7 @@ export default {
 .entry-grid { display: flex; justify-content: space-between; }
 .entry-item { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 20%; }
 .entry-icon-wrap { width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; }
-.entry-icon { font-size: 22px; }
+.entry-icon-img { width: 28px; height: 28px; }
 .entry-label { font-size: 12px; color: #555; font-weight: 500; }
 
 .community-scroll { overflow: hidden; }
