@@ -111,11 +111,11 @@ export default {
       communities: [],
       reports: [],
       entries: [
-        { key: 'activity', label: '报活动', icon: '/static/icons-png/entry-activity.png', bg: '#fff3ec', isTab: true, path: '/pages/activity/list' },
-        { key: 'report', label: '查报告', icon: '/static/icons-png/entry-report.png', bg: '#ecf3ff', path: '/pages/report/list' },
-        { key: 'case', label: '案例库', icon: '/static/icons-png/entry-case.png', bg: '#ecfff3', path: '' },
-        { key: 'material', label: '资料库', icon: '/static/icons-png/entry-material.png', bg: '#f3ecff', path: '' },
-        { key: 'consult', label: '约咨询', icon: '/static/icons-png/entry-consult.png', bg: '#fffaec', path: '/pages/consult/index' },
+        { key: 'activity', label: '报活动', icon: '/static/icons-png/calendar-orange.png', bg: '#fff3ec', isTab: true, path: '/pages/activity/list' },
+        { key: 'report', label: '查报告', icon: '/static/icons-png/report-blue.png', bg: '#ecf3ff', path: '/pages/report/list' },
+        { key: 'case', label: '案例库', icon: '/static/icons-png/case-green.png', bg: '#ecfff3', path: '' },
+        { key: 'material', label: '资料库', icon: '/static/icons-png/folder-purple.png', bg: '#f3ecff', path: '' },
+        { key: 'consult', label: '约咨询', icon: '/static/icons-png/consult-amber.png', bg: '#fffaec', path: '/pages/consult/index' },
       ]
     }
   },
