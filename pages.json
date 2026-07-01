@@ -57,34 +57,23 @@
     }
   ],
   "tabBar": {
-    "color": "#9ca3af",
-    "selectedColor": "#ff6b35",
-    "backgroundColor": "#ffffff",
-    "borderStyle": "white",
+    "custom": true,
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "首页",
-        "iconPath": "static/icons-png/home-gray.png",
-        "selectedIconPath": "static/icons-png/home-orange.png"
+        "text": "首页"
       },
       {
         "pagePath": "pages/activity/list",
-        "text": "活动",
-        "iconPath": "static/icons-png/calendar-gray.png",
-        "selectedIconPath": "static/icons-png/calendar-orange.png"
+        "text": "活动"
       },
       {
         "pagePath": "pages/material/list",
-        "text": "服务",
-        "iconPath": "static/icons-png/grid-gray.png",
-        "selectedIconPath": "static/icons-png/grid-orange.png"
+        "text": "服务"
       },
       {
         "pagePath": "pages/profile/index",
-        "text": "我的",
-        "iconPath": "static/icons-png/user-gray.png",
-        "selectedIconPath": "static/icons-png/user-orange.png"
+        "text": "我的"
       }
     ]
   },
