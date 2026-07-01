@@ -39,7 +39,7 @@
             @tap="goPage(e)"
           >
             <view class="entry-icon-wrap" :style="{background: e.bg}">
-              <image class="entry-icon-img" :src="e.icon" mode="aspectFit"/>
+              <view class="entry-icon-img" :style="{backgroundImage: e.icon}"></view>
             </view>
             <text class="entry-label">{{ e.label }}</text>
           </view>
@@ -104,11 +104,15 @@
 
 <script>
 import { api } from '../../utils/api.js'
-const imgActivity = require('@/static/icons-png/calendar-orange.png')
-const imgReport = require('@/static/icons-png/report-blue.png')
-const imgCase = require('@/static/icons-png/case-green.png')
-const imgMaterial = require('@/static/icons-png/folder-purple.png')
-const imgConsult = require('@/static/icons-png/consult-amber.png')
+
+const SVG = {
+  activity: `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff6b35' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M7 3v4'/><path d='M17 3v4'/><rect x='4' y='5' width='16' height='16' rx='3'/><path d='M4 10h16'/><path d='M8 14h3'/><path d='M13 14h3'/><path d='M8 17h3'/></svg>")`,
+  report:   `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M7 3h7l4 4v14H7a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3Z'/><path d='M14 3v5h5'/><path d='M8 17v-4'/><path d='M12 17v-7'/><path d='M16 17v-3'/></svg>")`,
+  case:     `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23059669' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M9 18h6'/><path d='M10 22h4'/><path d='M8.5 14.5A6 6 0 1 1 15.5 14c-.8.7-1.5 1.6-1.5 3h-4c0-1.1-.5-1.9-1.5-2.5Z'/></svg>")`,
+  material: `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237c3aed' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M4 6.5A2.5 2.5 0 0 1 6.5 4H10l2 3h5.5A2.5 2.5 0 0 1 20 9.5v8A2.5 2.5 0 0 1 17.5 20h-11A2.5 2.5 0 0 1 4 17.5Z'/></svg>")`,
+  consult:  `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d97706' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z'/></svg>")`,
+}
+
 export default {
   data() {
     return {
@@ -116,11 +120,11 @@ export default {
       communities: [],
       reports: [],
       entries: [
-        { key: 'activity', label: '报活动', icon: imgActivity, bg: '#fff3ec', isTab: true, path: '/pages/activity/list' },
-        { key: 'report', label: '查报告', icon: imgReport, bg: '#ecf3ff', path: '/pages/report/list' },
-        { key: 'case', label: '案例库', icon: imgCase, bg: '#ecfff3', path: '' },
-        { key: 'material', label: '资料库', icon: imgMaterial, bg: '#f3ecff', path: '' },
-        { key: 'consult', label: '约咨询', icon: imgConsult, bg: '#fffaec', path: '/pages/consult/index' },
+        { key: 'activity', label: '报活动', icon: SVG.activity, bg: '#fff3ec', isTab: true, path: '/pages/activity/list' },
+        { key: 'report', label: '查报告', icon: SVG.report, bg: '#ecf3ff', path: '/pages/report/list' },
+        { key: 'case', label: '案例库', icon: SVG.case, bg: '#ecfff3', path: '' },
+        { key: 'material', label: '资料库', icon: SVG.material, bg: '#f3ecff', path: '' },
+        { key: 'consult', label: '约咨询', icon: SVG.consult, bg: '#fffaec', path: '/pages/consult/index' },
       ]
     }
   },
@@ -196,7 +200,7 @@ export default {
 .entry-grid { display: flex; justify-content: space-between; }
 .entry-item { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 20%; }
 .entry-icon-wrap { width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; }
-.entry-icon-img { width: 28px; height: 28px; }
+.entry-icon-img { width: 28px; height: 28px; background-size: contain; background-repeat: no-repeat; background-position: center; }
 .entry-label { font-size: 12px; color: #555; font-weight: 500; }
 
 .community-scroll { overflow: hidden; }
