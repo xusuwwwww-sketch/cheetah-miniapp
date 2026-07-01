@@ -64,7 +64,7 @@ export default {
     loadData() {
       this.loading = true
       return api.getReports({ ...this.filter, page: this.page, size: 10 }).then(r => {
-        if (r.code === 0) { this.list = this.page === 1 ? r.data : [...this.list, ...r.data]; this.hasMore = r.data.length >= 10 }
+        if (r.code === 0) { const items = r.data.list || []; this.list = this.page === 1 ? items : [...this.list, ...items]; this.hasMore = items.length >= 10 }
       }).catch(() => {}).finally(() => { this.loading = false })
     },
     goDetail(id) { uni.navigateTo({ url: `/pages/report/detail?id=${id}` }) },

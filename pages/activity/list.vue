@@ -83,8 +83,9 @@ export default {
       this.loading = true
       return api.getActivities({ type_slug: this.typeSlug, keyword: this.keyword, page: this.page, size: 10 }).then(r => {
         if (r.code === 0) {
-          this.list = this.page === 1 ? r.data : [...this.list, ...r.data]
-          this.hasMore = r.data.length >= 10
+          const items = r.data.list || []
+          this.list = this.page === 1 ? items : [...this.list, ...items]
+          this.hasMore = items.length >= 10
         }
       }).catch(() => {}).finally(() => { this.loading = false })
     },
