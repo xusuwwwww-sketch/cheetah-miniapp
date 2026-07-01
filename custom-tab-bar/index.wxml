@@ -1,18 +1,26 @@
 <view class="tab-bar">
   <view class="tab {{active===0?'active':''}}" data-index="0" bindtap="switchTab">
-    <text class="icon">🏠</text>
+    <view class="tab-icon">
+      <view class="icon-home {{active===0?'icon-active':''}}"></view>
+    </view>
     <text class="label">首页</text>
   </view>
   <view class="tab {{active===1?'active':''}}" data-index="1" bindtap="switchTab">
-    <text class="icon">📅</text>
+    <view class="tab-icon">
+      <view class="icon-calendar {{active===1?'icon-active':''}}"></view>
+    </view>
     <text class="label">活动</text>
   </view>
   <view class="tab {{active===2?'active':''}}" data-index="2" bindtap="switchTab">
-    <text class="icon">⚡</text>
+    <view class="tab-icon">
+      <view class="icon-service {{active===2?'icon-active':''}}"></view>
+    </view>
     <text class="label">服务</text>
   </view>
   <view class="tab {{active===3?'active':''}}" data-index="3" bindtap="switchTab">
-    <text class="icon">👤</text>
+    <view class="tab-icon">
+      <view class="icon-person {{active===3?'icon-active':''}}"></view>
+    </view>
     <text class="label">我的</text>
   </view>
 </view>
