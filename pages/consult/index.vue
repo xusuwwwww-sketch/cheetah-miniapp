@@ -72,7 +72,7 @@
           </view>
           <view class="form-item">
             <text class="form-label">备注</text>
-            <textarea class="form-textarea" placeholder="补充说明（选填）" v-model="form.remark" />
+            <textarea class="form-textarea" placeholder="补充说明（选填）" v-model="form.note" />
           </view>
           <view class="btn" @tap="onSubmit"><text class="btn-text">提交预约</text></view>
         </view>
@@ -88,7 +88,7 @@ export default {
   data() {
     return {
       showModal: false,
-      form: { name: '', phone: '', company: '', topic: '', remark: '' },
+      form: { name: '', phone: '', company: '', topic: '', note: '' },
       features: [
         { title: '市场分析', desc: '目标市场洞察与机会评估', icon: 'chart', bg: '#ff6b35' },
         { title: '竞品对标', desc: '竞争格局深度拆解', icon: 'eye', bg: '#2563eb' },
@@ -103,7 +103,7 @@ export default {
       const { name, phone, company, topic } = this.form
       if (!name || !phone || !topic) return uni.showToast({ title: '请填写必填项', icon: 'none' })
       api.submitConsult(this.form).then(r => {
-        if (r.code === 0) { uni.showToast({ title: '预约成功', icon: 'success' }); this.showModal = false; this.form = { name: '', phone: '', company: '', topic: '', remark: '' } }
+        if (r.code === 0) { uni.showToast({ title: '预约成功', icon: 'success' }); this.showModal = false; this.form = { name: '', phone: '', company: '', topic: '', note: '' } }
         else uni.showToast({ title: r.msg || '提交失败', icon: 'none' })
       }).catch(() => { uni.showToast({ title: '网络异常', icon: 'none' }) })
     },

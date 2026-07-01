@@ -39,7 +39,7 @@
         <view class="info-row">
           <uni-icons type="person" size="16" color="#ff6b35" />
           <text class="info-label">名额</text>
-          <text class="info-value">{{ detail.signup_count || 0 }}/{{ detail.max_quota || '不限' }}</text>
+          <text class="info-value">{{ detail.signup_count || 0 }}/{{ detail.quota || '不限' }}</text>
         </view>
       </view>
 
