@@ -93,7 +93,7 @@ export default {
     loadData() {
       api.getBanners().then(r => { if (r.code === 0) this.banners = r.data }).catch(() => {})
       api.getCommunities().then(r => { if (r.code === 0) this.communities = r.data }).catch(() => {})
-      api.getReports({ page: 1, size: 3 }).then(r => { if (r.code === 0) this.reports = r.data }).catch(() => {})
+      api.getReports({ page: 1, size: 3 }).then(r => { if (r.code === 0) this.reports = r.data.list || [] }).catch(() => {})
     },
     onGrid(g) {
       if (!g.url) return uni.showToast({ title: '开发中，敬请期待', icon: 'none' })

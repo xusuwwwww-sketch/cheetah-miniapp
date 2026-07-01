@@ -27,15 +27,15 @@
       <!-- 统计 -->
       <view class="stats" v-if="profile">
         <view class="stat-item">
-          <text class="stat-num">{{ profile.signup_count || 0 }}</text>
+          <text class="stat-num">{{ stats.signups }}</text>
           <text class="stat-label">已报名</text>
         </view>
         <view class="stat-item">
-          <text class="stat-num">{{ profile.favorite_count || 0 }}</text>
+          <text class="stat-num">{{ stats.favorites }}</text>
           <text class="stat-label">已收藏</text>
         </view>
         <view class="stat-item">
-          <text class="stat-num">{{ profile.consult_count || 0 }}</text>
+          <text class="stat-num">{{ stats.consults }}</text>
           <text class="stat-label">咨询记录</text>
         </view>
       </view>
@@ -64,6 +64,7 @@ export default {
   data() {
     return {
       profile: null,
+      stats: { signups: 0, favorites: 0, consults: 0 },
       menus: [
         { label: '个人信息', icon: 'person', color: '#ff6b35', action: '' },
         { label: '我的报名', icon: 'calendar', color: '#2563eb', action: '' },
@@ -77,7 +78,17 @@ export default {
   onShow() { this.loadProfile() },
   methods: {
     loadProfile() {
-      api.getProfile().then(r => { this.profile = r.code === 0 ? r.data : null }).catch(() => { this.profile = null })
+      const token = uni.getStorageSync('token')
+      if (!token) { this.profile = null; return }
+      api.getProfile().then(r => {
+        this.profile = r.code === 0 ? r.data : null
+        if (this.profile) this.loadStats()
+      }).catch(() => { this.profile = null })
+    },
+    loadStats() {
+      api.getSignups().then(r => { this.stats.signups = r.code === 0 ? (r.data || []).length : 0 }).catch(() => {})
+      api.getFavorites().then(r => { this.stats.favorites = r.code === 0 ? (r.data || []).length : 0 }).catch(() => {})
+      api.getConsults().then(r => { this.stats.consults = r.code === 0 ? (r.data || []).length : 0 }).catch(() => {})
     },
     doLogin() {
       uni.login({ provider: 'weixin', success: (res) => {

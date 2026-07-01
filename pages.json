@@ -16,6 +16,18 @@
     { "path": "pages/consult/index", "style": { "navigationStyle": "custom" } },
     { "path": "pages/profile/index", "style": { "navigationStyle": "custom" } }
   ],
+  "tabBar": {
+    "color": "#9ca3af",
+    "selectedColor": "#ff6b35",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      { "pagePath": "pages/index/index", "text": "首页" },
+      { "pagePath": "pages/activity/list", "text": "活动" },
+      { "pagePath": "pages/material/list", "text": "服务" },
+      { "pagePath": "pages/profile/index", "text": "我的" }
+    ]
+  },
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarBackgroundColor": "#ffffff",

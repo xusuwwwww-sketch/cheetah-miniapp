@@ -36,7 +36,7 @@
             <text class="card-meta">{{ a.location }}</text>
           </view>
           <view class="card-footer">
-            <text class="card-count">{{ a.signup_count || 0 }}/{{ a.max_quota || '不限' }}人</text>
+            <text class="card-count">{{ a.signup_count || 0 }}/{{ a.quota || '不限' }}人</text>
             <text :class="['card-status', statusClass(a)]">{{ statusText(a) }}</text>
           </view>
         </view>

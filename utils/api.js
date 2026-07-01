@@ -60,6 +60,16 @@ export const api = {
   updateBasic: (data) => post('/api/user/update-basic', data),
   updateDeep: (data) => post('/api/user/update-deep', data),
   getProfile: () => get('/api/user/profile'),
+  getFavorites: (params = {}) => get('/api/user/favorites', params),
+  toggleFavorite: (data) => post('/api/user/favorites/toggle', data),
+  getDownloads: (params = {}) => get('/api/user/downloads', params),
+  getSignups: () => get('/api/user/signups'),
+  getConsults: () => get('/api/user/consults'),
+  // 资料下载
+  downloadMaterial: (id) => post(`/api/materials/${id}/download`),
+  // 社群
+  joinCommunity: (data) => post('/api/config/communities/join', data),
+  getTags: (params = {}) => get('/api/config/tags', params),
 }
 
 export default api
