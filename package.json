@@ -7,9 +7,12 @@
     "dev:h5": "uni -p h5"
   },
   "dependencies": {
-    "@dcloudio/uni-app": "3.0.0-3080920231114001",
-    "@dcloudio/uni-mp-weixin": "3.0.0-3080920231114001",
-    "vue": "^3.3.4",
-    "@vue/runtime-core": "^3.3.4"
+    "@dcloudio/uni-app": "3.0.0-alpha-3090920231124001",
+    "@dcloudio/uni-mp-weixin": "3.0.0-alpha-3090920231124001",
+    "vue": "^3.3.4"
+  },
+  "devDependencies": {
+    "@dcloudio/types": "*",
+    "@vue/tsconfig": "*"
   }
 }
