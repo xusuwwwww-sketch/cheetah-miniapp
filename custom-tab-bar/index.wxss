@@ -4,8 +4,8 @@
   left: 0;
   right: 0;
   height: 56px;
-  background: rgba(255,255,255,.96);
-  border-top: 0.5px solid #e5e7eb;
+  background: #fff;
+  border-top: 1px solid #f0f0f0;
   display: flex;
   align-items: center;
   z-index: 999;
@@ -16,9 +16,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
+  gap: 3px;
   padding: 4px 0;
 }
-.tab.active .label { color: #ff6b35; }
-.icon { font-size: 20px; line-height: 1; }
-.label { font-size: 10px; color: #9ca3af; }
+.tab.active .label { color: #fa5714; }
+.icon { font-size: 22px; line-height: 1; }
+.label { font-size: 10px; color: #999; font-weight: 500; }

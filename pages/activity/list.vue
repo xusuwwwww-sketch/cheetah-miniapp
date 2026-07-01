@@ -1,68 +1,77 @@
 <template>
   <view class="page">
-    <view class="header"><text class="title">活动</text></view>
-
-    <scroll-view scroll-x class="tabs" :show-scrollbar="false">
-      <view v-for="tab in tabs" :key="tab.key" class="tab" :class="{active: activeTab===tab.key}" @tap="switchTab(tab.key)">
+    <!-- Tab 切换 -->
+    <view class="tabs">
+      <view
+        v-for="tab in tabs" :key="tab.key"
+        class="tab" :class="{active: activeTab===tab.key}"
+        @tap="switchTab(tab.key)"
+      >
         <text>{{ tab.label }}</text>
       </view>
-    </scroll-view>
-
-    <view class="search">
-      <text class="search-icon">🔍</text>
-      <input v-model="keyword" placeholder="搜索活动..." @confirm="doSearch" class="search-input" placeholder-class="ph" />
     </view>
 
-    <scroll-view scroll-y class="list" @scrolltolower="loadMore" :show-scrollbar="false">
-      <view v-if="loading && activities.length===0" class="empty"><text>加载中...</text></view>
+    <!-- 搜索框 -->
+    <view class="search-box">
+      <text class="search-icon-text">搜索</text>
+      <input
+        v-model="keyword"
+        placeholder="搜索活动名称"
+        placeholder-class="placeholder"
+        @confirm="doSearch"
+        class="search-input"
+      />
+    </view>
 
-      <view v-for="item in activities" :key="item.id" class="card" @tap="goDetail(item.id)">
-        <view class="cover" :style="{background: item.gradient || 'linear-gradient(135deg,#ff6b35,#ff9a5c)'}">
-          <text class="icon-text">{{ item.icon || 'LIVE' }}</text>
-          <view class="cover-overlay">
-            <text class="cover-title">{{ item.title }}</text>
+    <!-- 列表 -->
+    <scroll-view scroll-y class="list" @scrolltolower="loadMore" :show-scrollbar="false">
+      <!-- 加载中 -->
+      <view v-if="loading && activities.length===0" class="loading">
+        <text>加载中...</text>
+      </view>
+
+      <!-- 活动卡片 -->
+      <view
+        v-for="item in activities" :key="item.id"
+        class="card"
+        @tap="goDetail(item.id)"
+      >
+        <!-- 封面 -->
+        <view class="card-cover" :style="{background: item.gradient || 'linear-gradient(135deg,#ff6b35,#ff9a5c)'}">
+          <text class="card-cover-type">{{ typeLabel(item.type) }}</text>
+          <view class="card-cover-mask">
+            <text class="card-cover-title">{{ item.title }}</text>
           </view>
         </view>
-        <view class="body">
-          <view class="info-row">
-            <text class="time">🕐 {{ formatTime(item.start_time) }}</text>
-            <text class="loc">📍 {{ item.location }}</text>
+
+        <!-- 内容 -->
+        <view class="card-body">
+          <view class="card-meta">
+            <text class="meta-item">📅 {{ formatTime(item.start_time) }}</text>
+            <text class="meta-item">📍 {{ item.location || '待定' }}</text>
           </view>
-          <view class="info-row">
-            <text class="count">已报名 {{ item.signup_count }} 人</text>
-            <view class="quota-tag" v-if="item.quota > 0">
-              <text>限额 {{ item.quota }}</text>
+          <view class="card-footer">
+            <text class="signup-count">{{ item.signup_count }} 人已报名</text>
+            <view class="btn-wrap">
+              <view class="signup-btn" :class="{disabled: isFull(item)}" @tap.stop="signup(item)">
+                <text>{{ isFull(item) ? '已满额' : '报名' }}</text>
+              </view>
             </view>
           </view>
-          <button class="btn" :class="{full: isFull(item)}" @tap.stop="signup(item)">
-            {{ isFull(item) ? '名额已满' : '立即报名 →' }}
-          </button>
         </view>
       </view>
 
-      <view v-if="!loading && activities.length===0" class="empty"><text>暂无相关活动</text></view>
-      <view v-if="activities.length>0 && activities.length>=total && total>0" class="end"><text>· 已全部加载 ·</text></view>
-    </scroll-view>
+      <!-- 空状态 -->
+      <view v-if="!loading && activities.length===0" class="empty-state">
+        <text class="empty-icon">📭</text>
+        <text class="empty-text">暂无相关活动</text>
+      </view>
 
-    <!-- 底部 Tab -->
-    <view class="tab-bar">
-      <view class="btab" @tap="goHome">
-        <text class="btab-icon">🏠</text>
-        <text class="btab-label">首页</text>
+      <!-- 加载完毕 -->
+      <view v-if="activities.length>0 && activities.length>=total" class="load-end">
+        <text>已全部加载</text>
       </view>
-      <view class="btab active">
-        <text class="btab-icon">📅</text>
-        <text class="btab-label">活动</text>
-      </view>
-      <view class="btab" @tap="goService">
-        <text class="btab-icon">⚡</text>
-        <text class="btab-label">服务</text>
-      </view>
-      <view class="btab" @tap="goProfile">
-        <text class="btab-icon">👤</text>
-        <text class="btab-label">我的</text>
-      </view>
-    </view>
+    </scroll-view>
   </view>
 </template>
 
@@ -71,96 +80,185 @@ import { api } from '../../utils/api.js'
 export default {
   data() {
     return {
-      activeTab: 'live', keyword: '',
-      loading: false, activities: [], page: 1, total: 0,
+      activeTab: 'live',
+      keyword: '',
+      loading: false,
+      activities: [],
+      page: 1,
+      total: 0,
       tabs: [
-        {key:'live', label:'🎙 直播'},
-        {key:'closed', label:'🔒 闭门会'},
-        {key:'salon', label:'☕ 线下沙龙'},
-        {key:'camp', label:'🚀 训练营'}
+        { key: 'live', label: '直播' },
+        { key: 'closed', label: '闭门会' },
+        { key: 'salon', label: '线下沙龙' },
+        { key: 'camp', label: '训练营' }
       ]
     }
   },
   onLoad() { this.load() },
   methods: {
-    async load(reset=true) {
-      if(reset) { this.page=1; this.activities=[] }
+    async load(reset = true) {
+      if (reset) { this.page = 1; this.activities = [] }
       this.loading = true
       try {
         const params = { type: this.activeTab, page: this.page, size: 20 }
-        if(this.keyword) params.keyword = this.keyword
+        if (this.keyword) params.keyword = this.keyword
         const res = await api.getActivities(params)
-        if(res && res.code===0) {
+        if (res && res.code === 0) {
           const list = res.data?.list || []
-          if(reset) this.activities = list
+          if (reset) this.activities = list
           else this.activities.push(...list)
           this.total = res.data?.total || 0
         }
-      } catch(e) { console.error('活动加载失败:', e) }
-      finally { this.loading=false }
+      } catch (e) { console.error(e) }
+      finally { this.loading = false }
     },
-    async switchTab(key) { this.activeTab=key; await this.load() },
+    async switchTab(key) { this.activeTab = key; await this.load() },
     async doSearch() { await this.load() },
     async loadMore() {
-      if(!this.loading && this.activities.length < this.total) {
+      if (!this.loading && this.activities.length < this.total) {
         this.page++; await this.load(false)
       }
     },
-    goDetail(id) { uni.navigateTo({url:`/pages/activity/detail?id=${id}`}) },
+    goDetail(id) { uni.navigateTo({ url: `/pages/activity/detail?id=${id}` }) },
     signup(item) {
-      if(this.isFull(item)) { uni.showToast({title:'名额已满',icon:'none'}); return }
-      uni.navigateTo({url:`/pages/activity/detail?id=${item.id}`})
+      if (this.isFull(item)) { uni.showToast({ title: '名额已满', icon: 'none' }); return }
+      uni.navigateTo({ url: `/pages/activity/detail?id=${item.id}` })
     },
-    isFull(item) { return item.quota>0 && item.signup_count>=item.quota },
-    goHome() { uni.switchTab({url:'/pages/index/index'}) },
-    goService() { uni.switchTab({url:'/pages/material/list'}) },
-    goProfile() { uni.switchTab({url:'/pages/profile/index'}) },
+    isFull(item) { return item.quota > 0 && item.signup_count >= item.quota },
+    typeLabel(type) {
+      return { live: 'LIVE', closed: 'VIP', salon: '沙龙', camp: '训练营' }[type] || 'EVENT'
+    },
     formatTime(t) {
-      if(!t) return '时间待定'
-      return t.replace('T',' ').substring(0,16)
+      if (!t) return '时间待定'
+      const s = t.replace('T', ' ')
+      return s.substring(0, 16)
     }
   }
 }
 </script>
 
 <style scoped>
-.page { background: #f5f5f7; min-height: 100vh; }
-.header { height: 54px; padding: 12px 16px; background: #fff; border-bottom: 0.5px solid #e5e7eb; display: flex; align-items: center; }
-.title { font-size: 18px; font-weight: 800; color: #1a1a2e; }
+.page {
+  background: #f7f7f7;
+  min-height: 100vh;
+  padding-bottom: 56px;
+}
 
-.tabs { white-space: nowrap; padding: 10px 14px 6px; background: #fff; }
-.tab { display: inline-flex; align-items: center; height: 34px; padding: 0 16px; margin-right: 8px; border-radius: 10px; background: #f3f4f6; color: #64748b; font-size: 13px; font-weight: 600; }
-.tab.active { background: #ff6b35; color: #fff; }
+/* Tab */
+.tabs {
+  display: flex;
+  background: #fff;
+  border-bottom: 1px solid #f0f0f0;
+  padding: 0 16px;
+}
+.tab {
+  padding: 12px 16px;
+  font-size: 14px;
+  color: #888;
+  position: relative;
+}
+.tab.active {
+  color: #fa5714;
+  font-weight: 600;
+}
+.tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 3px;
+  background: #fa5714;
+  border-radius: 2px;
+}
 
-.search { margin: 10px 14px; height: 42px; padding: 0 14px; border-radius: 10px; background: #fff; border: 0.5px solid #e5e7eb; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.04); }
-.search-icon { font-size: 15px; }
-.search-input { flex: 1; height: 40px; font-size: 14px; color: #1a1a2e; }
-.ph { color: #c4c9d4; }
+/* 搜索 */
+.search-box {
+  margin: 12px 16px;
+  height: 36px;
+  background: #f5f5f5;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  gap: 8px;
+}
+.search-icon-text { font-size: 12px; color: #999; }
+.search-input { flex: 1; font-size: 14px; color: #333; height: 34px; }
+.placeholder { color: #bbb; }
 
-.list { height: calc(100vh - 54px - 56px - 62px - 56px); padding: 0 14px 20px; }
+/* 列表 */
+.list { padding: 0 16px 8px; }
 
-.card { background: #fff; border-radius: 14px; overflow: hidden; margin-bottom: 14px; box-shadow: 0 4px 16px rgba(0,0,0,.06); }
-.cover { height: 130px; position: relative; display: flex; align-items: center; justify-content: center; }
-.icon-text { font-size: 32px; font-weight: 900; color: rgba(255,255,255,.3); letter-spacing: 2px; }
-.cover-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 10px 14px; background: linear-gradient(transparent, rgba(0,0,0,.45)); }
-.cover-title { color: #fff; font-size: 15px; font-weight: 700; line-height: 1.4; display: block; }
+/* 卡片 */
+.card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
 
-.body { padding: 12px 14px 14px; }
-.info-row { display: flex; align-items: center; gap: 14px; margin-bottom: 6px; }
-.time { font-size: 12px; color: #6b7280; }
-.loc { font-size: 12px; color: #6b7280; }
-.count { font-size: 12px; color: #9ca3af; flex: 1; }
-.quota-tag { padding: 2px 8px; background: #fff7ed; border-radius: 4px; }
-.quota-tag text { font-size: 11px; color: #ff6b35; }
+.card-cover {
+  height: 140px;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 12px;
+}
+.card-cover-type {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255,255,255,.9);
+  background: rgba(0,0,0,.2);
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+}
+.card-cover-mask {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 24px 14px 12px;
+  background: linear-gradient(transparent, rgba(0,0,0,.5));
+}
+.card-cover-title {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+  display: block;
+}
 
-.btn { display: flex; align-items: center; justify-content: center; width: 100%; height: 40px; margin-top: 10px; border-radius: 10px; background: linear-gradient(135deg, #ff6b35, #ff8b5f); color: #fff; font-size: 14px; font-weight: 700; border: none; }
-.btn.full { background: #f3f4f6; color: #9ca3af; }
+.card-body { padding: 12px 14px; }
+.card-meta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 10px; }
+.meta-item { font-size: 12px; color: #888; }
 
-.empty { padding: 40px 0; text-align: center; color: #9ca3af; font-size: 14px; }
-.end { padding: 16px 0; text-align: center; color: #c4c9d4; font-size: 12px; }
-.tab-bar { position: fixed; bottom: 0; left: 0; right: 0; height: 56px; background: rgba(255,255,255,.96); border-top: 0.5px solid #e5e7eb; display: flex; align-items: center; justify-content: space-around; padding: 4px 0; }
-.btab { display: flex; flex-direction: column; align-items: center; gap: 2px; flex: 1; padding: 4px 0; }
-.btab.active .btab-icon, .btab.active .btab-label { color: #ff6b35; }
-.btab-icon { font-size: 20px; }
-.btab-label { font-size: 10px; color: #9ca3af; }
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.signup-count { font-size: 12px; color: #aaa; }
+.btn-wrap { flex-shrink: 0; }
+.signup-btn {
+  height: 30px;
+  padding: 0 16px;
+  background: #fa5714;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.signup-btn text { font-size: 13px; color: #fff; font-weight: 600; }
+.signup-btn.disabled { background: #e0e0e0; }
+.signup-btn.disabled text { color: #aaa; }
+
+/* 状态 */
+.loading, .load-end { padding: 20px 0; text-align: center; color: #aaa; font-size: 13px; }
+.empty-state { padding: 60px 0; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.empty-icon { font-size: 40px; }
+.empty-text { font-size: 14px; color: #aaa; }
 </style>
