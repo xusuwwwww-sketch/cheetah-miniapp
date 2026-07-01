@@ -104,6 +104,11 @@
 
 <script>
 import { api } from '../../utils/api.js'
+const imgActivity = require('@/static/icons-png/calendar-orange.png')
+const imgReport = require('@/static/icons-png/report-blue.png')
+const imgCase = require('@/static/icons-png/case-green.png')
+const imgMaterial = require('@/static/icons-png/folder-purple.png')
+const imgConsult = require('@/static/icons-png/consult-amber.png')
 export default {
   data() {
     return {
@@ -111,11 +116,11 @@ export default {
       communities: [],
       reports: [],
       entries: [
-        { key: 'activity', label: '报活动', icon: '/static/icons-png/calendar-orange.png', bg: '#fff3ec', isTab: true, path: '/pages/activity/list' },
-        { key: 'report', label: '查报告', icon: '/static/icons-png/report-blue.png', bg: '#ecf3ff', path: '/pages/report/list' },
-        { key: 'case', label: '案例库', icon: '/static/icons-png/case-green.png', bg: '#ecfff3', path: '' },
-        { key: 'material', label: '资料库', icon: '/static/icons-png/folder-purple.png', bg: '#f3ecff', path: '' },
-        { key: 'consult', label: '约咨询', icon: '/static/icons-png/consult-amber.png', bg: '#fffaec', path: '/pages/consult/index' },
+        { key: 'activity', label: '报活动', icon: imgActivity, bg: '#fff3ec', isTab: true, path: '/pages/activity/list' },
+        { key: 'report', label: '查报告', icon: imgReport, bg: '#ecf3ff', path: '/pages/report/list' },
+        { key: 'case', label: '案例库', icon: imgCase, bg: '#ecfff3', path: '' },
+        { key: 'material', label: '资料库', icon: imgMaterial, bg: '#f3ecff', path: '' },
+        { key: 'consult', label: '约咨询', icon: imgConsult, bg: '#fffaec', path: '/pages/consult/index' },
       ]
     }
   },
