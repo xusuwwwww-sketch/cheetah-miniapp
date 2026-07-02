@@ -7,9 +7,12 @@
       <swiper class="banner" autoplay circular :interval="4000" indicator-dots indicator-color="rgba(255,255,255,0.4)" indicator-active-color="#fff">
         <swiper-item v-for="(b, i) in banners" :key="i">
           <view class="banner-item" :style="{ background: b.gradient || 'linear-gradient(135deg, #ff6b35, #ff9a5c)' }">
-            <text class="banner-tag">{{ b.tag }}</text>
-            <text class="banner-title">{{ b.title }}</text>
-            <text class="banner-desc">{{ b.description }}</text>
+            <image v-if="b.cover_url" :src="b.cover_url" class="banner-cover-img" mode="aspectFill" />
+            <view v-else class="banner-text-wrap">
+              <text class="banner-tag" v-if="b.tag">{{ b.tag }}</text>
+              <text class="banner-title">{{ b.title }}</text>
+              <text class="banner-desc" v-if="b.description">{{ b.description }}</text>
+            </view>
           </view>
         </swiper-item>
       </swiper>
@@ -103,7 +106,9 @@ export default {
 .page { background: #f6f7fb; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
 .content { flex: 1; overflow: hidden; }
 .banner { height: 160px; margin: 8px 16px; border-radius: 12px; overflow: hidden; }
-.banner-item { height: 100%; padding: 20px; display: flex; flex-direction: column; justify-content: center; }
+.banner-item { height: 100%; position: relative; overflow: hidden; }
+.banner-cover-img { width: 100%; height: 100%; }
+.banner-text-wrap { padding: 20px; display: flex; flex-direction: column; justify-content: center; height: 100%; box-sizing: border-box; }
 .banner-tag { font-size: 11px; color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px; align-self: flex-start; margin-bottom: 6px; }
 .banner-title { font-size: 18px; font-weight: 600; color: #fff; margin-bottom: 4px; }
 .banner-desc { font-size: 12px; color: rgba(255,255,255,0.8); }
