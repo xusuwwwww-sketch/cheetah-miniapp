@@ -100,8 +100,8 @@ export default {
 </script>
 
 <style scoped>
-.page { background: #f6f7fb; min-height: 100vh; }
-.content { height: calc(100vh - 50px); }
+.page { background: #f6f7fb; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+.content { flex: 1; overflow: hidden; }
 .banner { height: 160px; margin: 8px 16px; border-radius: 12px; overflow: hidden; }
 .banner-item { height: 100%; padding: 20px; display: flex; flex-direction: column; justify-content: center; }
 .banner-tag { font-size: 11px; color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px; align-self: flex-start; margin-bottom: 6px; }

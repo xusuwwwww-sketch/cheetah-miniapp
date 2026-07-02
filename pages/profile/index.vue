@@ -60,12 +60,12 @@ export default {
       profile: null,
       stats: { signups: 0, favorites: 0, consults: 0 },
       menus: [
-        { label: '个人信息', icon: 'person', color: '#ff6b35', action: '' },
-        { label: '我的报名', icon: 'calendar', color: '#2563eb', action: '' },
-        { label: '我的资料', icon: 'folder', color: '#7c3aed', action: '' },
-        { label: '我的收藏', icon: 'heart', color: '#ef4444', action: '' },
-        { label: '约咨询记录', icon: 'chat', color: '#d97706', action: '' },
-        { label: '系统设置', icon: 'gear', color: '#6b7280', action: '' }
+        { label: '个人信息', icon: '👤', color: '#ff6b35', action: '' },
+        { label: '我的报名', icon: '📅', color: '#2563eb', action: '' },
+        { label: '我的资料', icon: '📂', color: '#7c3aed', action: '' },
+        { label: '我的收藏', icon: '⭐', color: '#ef4444', action: '' },
+        { label: '约咨询记录', icon: '💬', color: '#d97706', action: '' },
+        { label: '系统设置', icon: '⚙️', color: '#6b7280', action: '' }
       ]
     }
   },
