@@ -8,7 +8,7 @@
             <text class="type-label">{{ typeLabel(item.target_type) }}</text>
           </view>
           <view class="card-info">
-            <text class="card-id">内容 #{{ item.target_id }}</text>
+            <text class="card-id">{{ item.title || `内容 #${item.target_id}` }}</text>
             <text class="card-meta">{{ formatTime(item.created_at) }}</text>
           </view>
           <view class="cancel-btn" @tap.stop="removeFav(item)">
