@@ -123,7 +123,10 @@ export default {
     loadData() {
       if (!this.hasMore || this.loading) return
       this.loading = true
-      api.getMaterials({ content_type: this.currentType, page: this.page, size: 10 }).then(r => {
+      const req = this.currentType === 'report'
+        ? api.getReports({ page: this.page, size: 10 })
+        : api.getMaterials({ content_type: this.currentType, page: this.page, size: 10 })
+      req.then(r => {
         if (r.code === 0) {
           const items = r.data.list || []
           this.list = this.page === 1 ? items : [...this.list, ...items]
