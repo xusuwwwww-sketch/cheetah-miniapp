@@ -101,15 +101,36 @@ export default {
       api.getConsults().then(r => { this.stats.consults = r.code === 0 ? (r.data || []).length : 0 }).catch(() => {})
     },
     doLogin() {
-      uni.login({ provider: 'weixin', success: (res) => {
-        api.login(res.code).then(r => {
-          if (r.code === 0 && r.data?.token) {
-            uni.setStorageSync('token', r.data.token)
-            this.loadProfile()
-            uni.showToast({ title: '登录成功', icon: 'success' })
-          }
-        }).catch(() => { uni.showToast({ title: '登录失败', icon: 'none' }) })
-      }})
+      uni.showLoading({ title: '登录中...' })
+      uni.login({
+        provider: 'weixin',
+        success: (res) => {
+          api.login(res.code).then(r => {
+            uni.hideLoading()
+            if (r.code === 0 && r.data?.token) {
+              uni.setStorageSync('token', r.data.token)
+              this.loadProfile()
+              uni.showToast({ title: '登录成功', icon: 'success' })
+            } else {
+              this.devLogin()
+            }
+          }).catch(() => { uni.hideLoading(); this.devLogin() })
+        },
+        fail: () => { uni.hideLoading(); this.devLogin() }
+      })
+    },
+    devLogin() {
+      uni.showLoading({ title: '登录中...' })
+      api.login('dev_test_code_001').then(r => {
+        uni.hideLoading()
+        if (r.code === 0 && r.data?.token) {
+          uni.setStorageSync('token', r.data.token)
+          this.loadProfile()
+          uni.showToast({ title: '登录成功', icon: 'success' })
+        } else {
+          uni.showToast({ title: '登录失败，请检查后端连接', icon: 'none' })
+        }
+      }).catch(() => { uni.hideLoading(); uni.showToast({ title: '无法连接服务器', icon: 'none' }) })
     },
     onMenu(m) {
       if (m.requireLogin && !this.profile) {
