@@ -20,8 +20,10 @@
     <scroll-view scroll-y class="list" @scrolltolower="loadMore" refresher-enabled :refresher-triggered="refreshing" @refresherrefresh="onRefresh">
       <view class="card" v-for="a in list" :key="a.id" @tap="goDetail(a.id)">
         <view class="card-cover" :style="{ background: a.gradient || 'linear-gradient(135deg, #ff6b35, #ff9a5c)' }">
-          <text class="card-tag" v-if="a.type_name">{{ a.type_name }}</text>
-          <text class="card-cover-title">{{ a.title }}</text>
+          <image v-if="a.cover_url" :src="a.cover_url" class="card-cover-img" mode="aspectFill" />
+          <view v-else class="card-cover-text">
+            <text class="card-cover-title">{{ a.title }}</text>
+          </view>
         </view>
         <view class="card-body">
           <view class="card-row">
@@ -113,7 +115,9 @@ export default {
 .tab-text.active { color: #ff6b35; font-weight: 600; }
 .list { flex: 1; overflow: hidden; }
 .card { background: #fff; border-radius: 12px; margin: 8px 16px; overflow: hidden; }
-.card-cover { padding: 20px 16px; }
+.card-cover { position: relative; overflow: hidden; min-height: 80px; }
+.card-cover-img { width: 100%; height: 160px; display: block; }
+.card-cover-text { padding: 20px 16px; }
 .card-tag { font-size: 11px; color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px; display: inline-block; margin-bottom: 6px; }
 .card-cover-title { font-size: 16px; font-weight: 600; color: #fff; }
 .card-body { padding: 12px 16px; }
