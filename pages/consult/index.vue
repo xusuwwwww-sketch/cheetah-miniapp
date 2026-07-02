@@ -1,46 +1,97 @@
 <template>
   <view class="page">
-    <scroll-view scroll-y style="height: 100vh;">
-      <view class="form-wrap">
-        <view class="form-item">
-          <text class="label">姓名 <text class="req">*</text></text>
-          <input class="input" placeholder="请输入姓名" v-model="form.name" placeholder-style="color:#c0c4cc;" />
-        </view>
-        <view class="form-item">
-          <text class="label">手机号 <text class="req">*</text></text>
-          <input class="input" type="tel" placeholder="请输入手机号" v-model="form.phone" placeholder-style="color:#c0c4cc;" />
-        </view>
-        <view class="form-item">
-          <text class="label">行业 <text class="req">*</text></text>
-          <input class="input" placeholder="如：跨境电商、独立站、游戏出海" v-model="form.industry" placeholder-style="color:#c0c4cc;" />
-        </view>
-        <view class="form-item">
-          <text class="label">职位 <text class="opt">（选填）</text></text>
-          <input class="input" placeholder="如：市场总监、创始人" v-model="form.position" placeholder-style="color:#c0c4cc;" />
-        </view>
-        <view class="form-item">
-          <text class="label">公司名称 <text class="req">*</text></text>
-          <input class="input" placeholder="请输入公司名称" v-model="form.company" placeholder-style="color:#c0c4cc;" />
-        </view>
-        <view class="form-item">
-          <text class="label">月推广预算 <text class="req">*</text></text>
-          <input class="input" placeholder="如：5万以内 / 5-20万 / 20万以上" v-model="form.budget_info" placeholder-style="color:#c0c4cc;" />
-        </view>
-        <view class="form-item">
-          <text class="label">核心需求 <text class="req">*</text></text>
-          <textarea class="textarea" placeholder="简述核心需求，如：希望进入东南亚市场、提升ROAS等" v-model="form.core_need" placeholder-style="color:#c0c4cc;" />
-        </view>
-        <view class="form-item">
-          <text class="label">当前最大痛点 <text class="opt">（选填）</text></text>
-          <textarea class="textarea" placeholder="如：流量贵、转化低、不懂本地化" v-model="form.pain_point" placeholder-style="color:#c0c4cc;" />
-        </view>
+    <scroll-view scroll-y style="min-height: 100vh;">
+      <!-- 顶部说明 -->
+      <view class="page-header">
+        <text class="page-title">预约出海顾问</text>
+        <text class="page-desc">填写以下信息，专属顾问将在24小时内与您联系</text>
+      </view>
 
+      <!-- 表单卡片 -->
+      <view class="form-card">
+        <view class="form-item">
+          <view class="label-row">
+            <text class="label">姓名</text>
+            <text class="req-tag">必填</text>
+          </view>
+          <input class="input" placeholder="请输入您的姓名" v-model="form.name" placeholder-style="color:#c0c4cc;font-size:14px;" />
+        </view>
+        <view class="divider" />
+
+        <view class="form-item">
+          <view class="label-row">
+            <text class="label">手机号</text>
+            <text class="req-tag">必填</text>
+          </view>
+          <input class="input" type="tel" placeholder="请输入手机号" v-model="form.phone" placeholder-style="color:#c0c4cc;font-size:14px;" />
+        </view>
+        <view class="divider" />
+
+        <view class="form-item">
+          <view class="label-row">
+            <text class="label">所在行业</text>
+            <text class="req-tag">必填</text>
+          </view>
+          <input class="input" placeholder="如：跨境电商、独立站、游戏出海" v-model="form.industry" placeholder-style="color:#c0c4cc;font-size:14px;" />
+        </view>
+        <view class="divider" />
+
+        <view class="form-item">
+          <view class="label-row">
+            <text class="label">职位</text>
+            <text class="opt-tag">选填</text>
+          </view>
+          <input class="input" placeholder="如：市场总监、创始人" v-model="form.position" placeholder-style="color:#c0c4cc;font-size:14px;" />
+        </view>
+        <view class="divider" />
+
+        <view class="form-item">
+          <view class="label-row">
+            <text class="label">公司名称</text>
+            <text class="req-tag">必填</text>
+          </view>
+          <input class="input" placeholder="请输入公司名称" v-model="form.company" placeholder-style="color:#c0c4cc;font-size:14px;" />
+        </view>
+        <view class="divider" />
+
+        <view class="form-item">
+          <view class="label-row">
+            <text class="label">月推广预算</text>
+            <text class="req-tag">必填</text>
+          </view>
+          <input class="input" placeholder="如：5万以内 / 5-20万 / 20万以上" v-model="form.budget_info" placeholder-style="color:#c0c4cc;font-size:14px;" />
+        </view>
+      </view>
+
+      <!-- 大文本字段单独成卡片 -->
+      <view class="form-card" style="margin-top: 12px;">
+        <view class="form-item">
+          <view class="label-row">
+            <text class="label">核心需求</text>
+            <text class="req-tag">必填</text>
+          </view>
+          <textarea class="textarea" placeholder="简述您的核心需求，如：希望进入东南亚市场、提升广告ROAS等" v-model="form.core_need" placeholder-style="color:#c0c4cc;font-size:14px;" />
+        </view>
+        <view class="divider" />
+
+        <view class="form-item">
+          <view class="label-row">
+            <text class="label">当前最大痛点</text>
+            <text class="opt-tag">选填</text>
+          </view>
+          <textarea class="textarea" placeholder="如：流量贵、转化低、不懂本地化运营等" v-model="form.pain_point" placeholder-style="color:#c0c4cc;font-size:14px;" />
+        </view>
+      </view>
+
+      <!-- 提交 -->
+      <view class="submit-wrap">
         <view class="submit-btn" @tap="onSubmit">
           <text class="submit-text">提交预约</text>
         </view>
         <text class="hint">已有 2,000+ 品牌通过猎豹顾问加速出海</text>
       </view>
-      <view style="height: 80px;"></view>
+
+      <view style="height: 60px;"></view>
     </scroll-view>
   </view>
 </template>
@@ -55,13 +106,17 @@ export default {
   },
   methods: {
     onSubmit() {
-      if (!this.form.name) return uni.showToast({ title: '请填写姓名', icon: 'none' })
-      if (!this.form.phone) return uni.showToast({ title: '请填写手机号', icon: 'none' })
-      if (!this.form.industry) return uni.showToast({ title: '请填写行业', icon: 'none' })
-      if (!this.form.company) return uni.showToast({ title: '请填写公司名称', icon: 'none' })
-      if (!this.form.budget_info) return uni.showToast({ title: '请填写月推广预算', icon: 'none' })
-      if (!this.form.core_need) return uni.showToast({ title: '请填写核心需求', icon: 'none' })
-
+      const checks = [
+        [!this.form.name, '请填写姓名'],
+        [!this.form.phone, '请填写手机号'],
+        [!this.form.industry, '请填写所在行业'],
+        [!this.form.company, '请填写公司名称'],
+        [!this.form.budget_info, '请填写月推广预算'],
+        [!this.form.core_need, '请填写核心需求'],
+      ]
+      for (const [fail, msg] of checks) {
+        if (fail) return uni.showToast({ title: msg, icon: 'none' })
+      }
       uni.showLoading({ title: '提交中...' })
       api.submitConsult(this.form).then(r => {
         uni.hideLoading()
@@ -82,41 +137,54 @@ export default {
 
 <style scoped>
 .page { background: #f6f7fb; }
-.form-wrap { padding: 16px; }
-.form-item { margin-bottom: 16px; }
-.label { font-size: 14px; color: #1a1a2e; font-weight: 500; margin-bottom: 8px; display: block; }
-.req { color: #ef4444; font-size: 14px; }
-.opt { color: #9ca3af; font-size: 12px; font-weight: 400; }
-.input {
-  display: block;
+.page-header { padding: 20px 16px 12px; }
+.page-title { font-size: 18px; font-weight: 700; color: #1a1a2e; display: block; margin-bottom: 4px; }
+.page-desc { font-size: 13px; color: #6b7280; display: block; line-height: 1.5; }
+
+.form-card {
   background: #ffffff;
-  border: 1rpx solid #e5e7eb;
+  border-radius: 12px;
+  margin: 0 16px;
+  overflow: hidden;
+}
+.form-item { padding: 14px 16px; }
+.label-row { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; }
+.label { font-size: 14px; color: #1a1a2e; font-weight: 500; }
+.req-tag { font-size: 11px; color: #ff6b35; background: #fff3ee; padding: 1px 6px; border-radius: 4px; }
+.opt-tag { font-size: 11px; color: #9ca3af; background: #f3f4f6; padding: 1px 6px; border-radius: 4px; }
+
+.input {
+  width: 100%;
+  height: 40px;
+  background: #f6f7fb;
   border-radius: 8px;
-  padding: 12px;
+  padding: 0 12px;
   font-size: 14px;
   color: #1a1a2e;
-  height: 44px;
-  line-height: 20px;
+  border: none;
+  box-sizing: border-box;
 }
 .textarea {
-  display: block;
-  background: #ffffff;
-  border: 1rpx solid #e5e7eb;
+  width: 100%;
+  background: #f6f7fb;
   border-radius: 8px;
-  padding: 12px;
+  padding: 10px 12px;
   font-size: 14px;
   color: #1a1a2e;
   height: 88px;
-  line-height: 20px;
-  width: 100%;
+  border: none;
+  box-sizing: border-box;
+  line-height: 1.5;
 }
+.divider { height: 1px; background: #f3f4f6; margin: 0 16px; }
+
+.submit-wrap { padding: 20px 16px 0; }
 .submit-btn {
   background: #ff6b35;
   border-radius: 10px;
   padding: 15px;
   text-align: center;
-  margin-top: 8px;
 }
 .submit-text { color: #fff; font-size: 16px; font-weight: 600; }
-.hint { font-size: 12px; color: #9ca3af; text-align: center; display: block; margin-top: 12px; }
+.hint { font-size: 12px; color: #9ca3af; text-align: center; display: block; margin-top: 10px; }
 </style>
