@@ -19,7 +19,7 @@
         <view class="info-row">
           <text class="icon-text">📅</text>
           <text class="info-label">时间</text>
-          <text class="info-value">{{ detail.start_time }}</text>
+          <text class="info-value">{{ formatTime(detail.start_time) }}</text>
         </view>
         <view class="info-row" v-if="detail.location">
           <text class="icon-text">📍</text>
@@ -34,7 +34,7 @@
         <view class="info-row" v-if="detail.signup_deadline">
           <text class="icon-text">⏰</text>
           <text class="info-label">报名截止</text>
-          <text class="info-value">{{ detail.signup_deadline }}</text>
+          <text class="info-value">{{ formatTime(detail.signup_deadline) }}</text>
         </view>
         <view class="info-row">
           <text class="icon-text">👤</text>
@@ -71,6 +71,10 @@ export default {
   data() { return { id: '', detail: null, loading: true } },
   onLoad(e) { this.id = e.id; this.loadDetail() },
   methods: {
+    formatTime(t) {
+      if (!t) return ''
+      return t.replace('T', ' ').substring(0, 16).replace(/-/g, '/')
+    },
     loadDetail() {
       this.loading = true
       api.getActivityDetail(this.id).then(r => { if (r.code === 0) this.detail = r.data }).catch(() => {}).finally(() => { this.loading = false })

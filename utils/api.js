@@ -52,6 +52,7 @@ export const api = {
   viewReport: (id) => post(`/api/reports/${id}/view`),
   // 资料
   getMaterials: (params = {}) => get('/api/materials', params),
+  getMaterialCategories: () => get('/api/materials/categories'),
   getMaterialDetail: (id) => get(`/api/materials/${id}`),
   // 咨询
   submitConsult: (data) => post('/api/consult', data),

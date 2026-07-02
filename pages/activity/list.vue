@@ -29,7 +29,7 @@
         <view class="card-body">
           <view class="card-row">
             <text class="icon-text">📅</text>
-            <text class="card-meta">{{ a.start_time }}</text>
+            <text class="card-meta">{{ formatTime(a.start_time) }}</text>
           </view>
           <view class="card-row" v-if="a.location">
             <text class="icon-text">📍</text>
@@ -73,6 +73,10 @@ export default {
   },
   onShow() { this.page = 1; this.list = []; this.hasMore = true; this.loadData() },
   methods: {
+    formatTime(t) {
+      if (!t) return ''
+      return t.replace('T', ' ').substring(0, 16).replace(/-/g, '/')
+    },
     onSearch() { this.page = 1; this.list = []; this.hasMore = true; this.loadData() },
     onRefresh() { this.refreshing = true; this.page = 1; this.list = []; this.hasMore = true; this.loadData().then(() => { this.refreshing = false }) },
     loadMore() { if (this.hasMore && !this.loading) { this.page++; this.loadData() } },
