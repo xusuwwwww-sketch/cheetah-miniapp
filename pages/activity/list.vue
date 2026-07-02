@@ -45,19 +45,36 @@
       <view v-if="loading" class="empty"><text class="empty-text">加载中...</text></view>
       <view style="height: 70px;"></view>
     </scroll-view>
+    <!-- TabBar -->
+    <view class="tab-bar">
+      <view class="tab-item" @tap="goTab('/pages/index/index')">
+        <text class="tab-icon">🏠</text>
+        <text :class="['tab-text', currentTab==='/pages/index/index' ? 'tab-active' : '']">首页</text>
+      </view>
+      <view class="tab-item" @tap="goTab('/pages/activity/list')">
+        <text class="tab-icon">📅</text>
+        <text :class="['tab-text', currentTab==='/pages/activity/list' ? 'tab-active' : '']">活动</text>
+      </view>
+      <view class="tab-item" @tap="goTab('/pages/material/list')">
+        <text class="tab-icon">📂</text>
+        <text :class="['tab-text', currentTab==='/pages/material/list' ? 'tab-active' : '']">服务</text>
+      </view>
+      <view class="tab-item" @tap="goTab('/pages/profile/index')">
+        <text class="tab-icon">👤</text>
+        <text :class="['tab-text', currentTab==='/pages/profile/index' ? 'tab-active' : '']">我的</text>
+      </view>
+    </view>
 
-    <tab-bar current="/pages/activity/list" />
   </view>
 </template>
 
 <script>
 import { api } from '@/utils/api.js'
-import tabBar from '@/components/tab-bar.vue'
 
 export default {
-  components: { tabBar },
   data() {
     return {
+      currentTab: '/pages/activity/list',
       keyword: '',
       typeSlug: '',
       typeTabs: [
@@ -130,4 +147,9 @@ export default {
 .card-status.closed { color: #9ca3af; background: #f3f4f6; }
 .empty { padding: 40px; text-align: center; }
 .empty-text { font-size: 14px; color: #9ca3af; }
+.tab-bar { position: fixed; bottom: 0; left: 0; right: 0; height: 56px; background: #fff; display: flex; border-top: 1rpx solid #e5e7eb; z-index: 999; padding-bottom: env(safe-area-inset-bottom); }
+.tab-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
+.tab-icon { font-size: 20px; line-height: 1; }
+.tab-text { font-size: 10px; color: #9ca3af; }
+.tab-active { color: #ff6b35; }
 </style>
