@@ -50,7 +50,6 @@
       </view>
       <view style="height: 70px;"></view>
     </scroll-view>
-    </view>
 
   </view>
 </template>

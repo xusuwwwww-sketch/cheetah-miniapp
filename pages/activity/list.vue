@@ -45,7 +45,6 @@
       <view v-if="loading" class="empty"><text class="empty-text">加载中...</text></view>
       <view style="height: 70px;"></view>
     </scroll-view>
-    </view>
 
   </view>
 </template>
