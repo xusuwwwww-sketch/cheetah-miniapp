@@ -40,7 +40,7 @@
       </view>
       <view v-if="!list.length && !loading" class="empty"><text class="empty-text">暂无活动</text></view>
       <view v-if="loading" class="empty"><text class="empty-text">加载中...</text></view>
-      <view style="height: 100px;"></view>
+      <view style="height: 160rpx;"></view>
     </scroll-view>
 
   </view>
@@ -111,7 +111,7 @@ export default {
 .tab-item { padding: 8px 0; }
 .tab-text { font-size: 14px; color: #6b7280; }
 .tab-text.active { color: #ff6b35; font-weight: 600; }
-.list { height: calc(100vh - 160px); padding-bottom: 20rpx; }
+.list { height: calc(100vh - 160px); box-sizing: border-box; padding-bottom: 160rpx; }
 .card { background: #fff; border-radius: 12px; margin: 8px 16px; overflow: hidden; }
 .card-cover { padding: 20px 16px; }
 .card-tag { font-size: 11px; color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px; display: inline-block; margin-bottom: 6px; }
