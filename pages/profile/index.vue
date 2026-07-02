@@ -1,53 +1,64 @@
 <template>
   <view class="page">
+    <scroll-view scroll-y style="height: 100vh;">
 
-    <scroll-view scroll-y class="content">
-      <!-- 用户信息 -->
+      <!-- 用户信息卡片 -->
       <view class="profile-card" v-if="profile">
         <view class="avatar-wrap">
-          <text class="icon-text">👤</text>
+          <image v-if="profile.avatar" :src="profile.avatar" class="avatar-img" mode="aspectFill" />
+          <text v-else class="avatar-placeholder">{{ (profile.nickname || '用').slice(0,1) }}</text>
         </view>
-        <text class="nickname">{{ profile.nickname || '用户' }}</text>
-        <view class="badge" v-if="profile.level >= 2">
-          <text class="icon-text">⭐</text>
-          <text class="badge-text">LV{{ profile.level }}</text>
+        <view class="profile-info">
+          <text class="nickname">{{ profile.nickname || profile.name || '猎豹用户' }}</text>
+          <view class="level-badge">
+            <text class="level-text">{{ levelLabel }}</text>
+          </view>
         </view>
       </view>
 
-      <view class="profile-card" v-else @tap="doLogin">
+      <!-- 未登录 -->
+      <view class="profile-card login-card" v-else @tap="doLogin">
         <view class="avatar-wrap">
-          <text class="icon-text">👤</text>
+          <text class="avatar-placeholder">?</text>
         </view>
-        <text class="nickname">点击登录</text>
+        <view class="profile-info">
+          <text class="nickname">点击登录</text>
+          <text class="login-hint">登录后享受完整功能</text>
+        </view>
+        <text class="arrow">›</text>
       </view>
 
-      <!-- 统计 -->
-      <view class="stats" v-if="profile">
-        <view class="stat-item">
+      <!-- 统计（已登录才显示） -->
+      <view class="stats-card" v-if="profile">
+        <view class="stat-item" @tap="goPage('signups')">
           <text class="stat-num">{{ stats.signups }}</text>
           <text class="stat-label">已报名</text>
         </view>
-        <view class="stat-item">
+        <view class="stat-divider" />
+        <view class="stat-item" @tap="goPage('favorites')">
           <text class="stat-num">{{ stats.favorites }}</text>
           <text class="stat-label">已收藏</text>
         </view>
-        <view class="stat-item">
+        <view class="stat-divider" />
+        <view class="stat-item" @tap="goPage('consults')">
           <text class="stat-num">{{ stats.consults }}</text>
           <text class="stat-label">咨询记录</text>
         </view>
       </view>
 
-      <!-- 菜单 -->
-      <view class="menu-card">
-        <view class="menu-item" v-for="m in menus" :key="m.label" @tap="onMenu(m)">
-          {{ m.icon }}
-          <text class="menu-text">{{ m.label }}</text>
-          <text class="icon-text">›</text>
+      <!-- 菜单列表 -->
+      <view class="menu-section">
+        <view class="menu-item" v-for="m in menus" :key="m.key" @tap="onMenu(m)">
+          <view class="menu-icon-wrap" :style="{ background: m.bg }">
+            <text class="menu-icon">{{ m.icon }}</text>
+          </view>
+          <text class="menu-label">{{ m.label }}</text>
+          <text class="menu-arrow">›</text>
         </view>
       </view>
-      <view style="height: 70px;"></view>
-    </scroll-view>
 
+      <view style="height: 80px;"></view>
+    </scroll-view>
   </view>
 </template>
 
@@ -60,13 +71,18 @@ export default {
       profile: null,
       stats: { signups: 0, favorites: 0, consults: 0 },
       menus: [
-        { label: '个人信息', icon: '👤', color: '#ff6b35', action: '' },
-        { label: '我的报名', icon: '📅', color: '#2563eb', action: '' },
-        { label: '我的资料', icon: '📂', color: '#7c3aed', action: '' },
-        { label: '我的收藏', icon: '⭐', color: '#ef4444', action: '' },
-        { label: '约咨询记录', icon: '💬', color: '#d97706', action: '' },
-        { label: '系统设置', icon: '⚙️', color: '#6b7280', action: '' }
+        { key: 'profile',   label: '个人信息',   icon: '👤', bg: '#fff3ee', requireLogin: true },
+        { key: 'signups',   label: '我的报名',   icon: '📅', bg: '#eef3ff', requireLogin: true },
+        { key: 'downloads', label: '我的资料',   icon: '📂', bg: '#f3eeff', requireLogin: true },
+        { key: 'favorites', label: '我的收藏',   icon: '⭐', bg: '#fff9ec', requireLogin: true },
+        { key: 'consults',  label: '约咨询记录', icon: '💬', bg: '#ecfff3', requireLogin: true },
       ]
+    }
+  },
+  computed: {
+    levelLabel() {
+      const l = this.profile?.level || 1
+      return { 1: '普通用户', 2: '信息已完善', 3: '深度用户' }[l] || '普通用户'
     }
   },
   onShow() { this.loadProfile() },
@@ -87,34 +103,64 @@ export default {
     doLogin() {
       uni.login({ provider: 'weixin', success: (res) => {
         api.login(res.code).then(r => {
-          if (r.code === 0 && r.data && r.data.token) {
+          if (r.code === 0 && r.data?.token) {
             uni.setStorageSync('token', r.data.token)
             this.loadProfile()
             uni.showToast({ title: '登录成功', icon: 'success' })
           }
-        })
+        }).catch(() => { uni.showToast({ title: '登录失败', icon: 'none' }) })
       }})
     },
-    onMenu(m) { uni.showToast({ title: '开发中', icon: 'none' }) }
+    onMenu(m) {
+      if (m.requireLogin && !this.profile) {
+        return uni.showToast({ title: '请先登录', icon: 'none' })
+      }
+      this.goPage(m.key)
+    },
+    goPage(key) {
+      const routes = {
+        profile:   '/pages/profile/edit',
+        signups:   '/pages/profile/signups',
+        downloads: '/pages/profile/downloads',
+        favorites: '/pages/profile/favorites',
+        consults:  '/pages/profile/consults',
+      }
+      if (routes[key]) {
+        uni.navigateTo({ url: routes[key] })
+      } else {
+        uni.showToast({ title: '开发中', icon: 'none' })
+      }
+    }
   }
 }
 </script>
 
 <style scoped>
-.page { background: #f6f7fb; min-height: 100vh; }
-.content { height: calc(100vh - 100px); }
-.profile-card { background: linear-gradient(135deg, #ff6b35, #ff9a5c); margin: 8px 16px; border-radius: 12px; padding: 24px 20px; display: flex; flex-direction: column; align-items: center; }
-.avatar-wrap { width: 64px; height: 64px; border-radius: 50%; background: rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
-.nickname { font-size: 18px; font-weight: 600; color: #fff; }
-.badge { display: flex; align-items: center; gap: 4px; background: rgba(255,255,255,0.9); padding: 2px 8px; border-radius: 10px; margin-top: 6px; }
-.badge-text { font-size: 11px; color: #ff6b35; font-weight: 600; }
-.stats { display: flex; background: #fff; border-radius: 12px; margin: 12px 16px; padding: 16px; }
-.stat-item { flex: 1; display: flex; flex-direction: column; align-items: center; }
-.stat-num { font-size: 20px; font-weight: 700; color: #1a1a2e; }
-.stat-label { font-size: 12px; color: #9ca3af; margin-top: 4px; }
-.menu-card { background: #fff; border-radius: 12px; margin: 12px 16px; overflow: hidden; }
-.menu-item { display: flex; align-items: center; gap: 12px; padding: 16px; border-bottom: 1px solid #f3f4f6; }
-.menu-item:last-child { border-bottom: none; }
-.menu-text { flex: 1; font-size: 15px; color: #1a1a2e; }
+.page { background: #f6f7fb; }
 
+.profile-card { background: linear-gradient(135deg, #ff6b35, #ff9a5c); margin: 0 16px 12px; border-radius: 12px; padding: 20px 16px; display: flex; align-items: center; gap: 14px; }
+.login-card { cursor: pointer; }
+.avatar-wrap { width: 56px; height: 56px; border-radius: 50%; background: rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; }
+.avatar-img { width: 100%; height: 100%; }
+.avatar-placeholder { font-size: 22px; color: #fff; font-weight: 700; }
+.profile-info { flex: 1; }
+.nickname { font-size: 18px; font-weight: 700; color: #fff; display: block; margin-bottom: 4px; }
+.level-badge { display: inline-flex; background: rgba(255,255,255,0.25); border-radius: 10px; padding: 2px 8px; }
+.level-text { font-size: 11px; color: rgba(255,255,255,0.9); }
+.login-hint { font-size: 13px; color: rgba(255,255,255,0.8); display: block; margin-top: 2px; }
+.arrow { font-size: 20px; color: rgba(255,255,255,0.7); }
+
+.stats-card { background: #fff; border-radius: 12px; margin: 0 16px 12px; padding: 16px; display: flex; }
+.stat-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.stat-num { font-size: 22px; font-weight: 700; color: #1a1a2e; }
+.stat-label { font-size: 12px; color: #9ca3af; }
+.stat-divider { width: 1px; background: #f3f4f6; }
+
+.menu-section { background: #fff; border-radius: 12px; margin: 0 16px; overflow: hidden; }
+.menu-item { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-bottom: 1px solid #f6f7fb; }
+.menu-item:last-child { border-bottom: none; }
+.menu-icon-wrap { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.menu-icon { font-size: 18px; }
+.menu-label { flex: 1; font-size: 15px; color: #1a1a2e; font-weight: 500; }
+.menu-arrow { font-size: 18px; color: #c0c4cc; }
 </style>
