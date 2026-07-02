@@ -21,7 +21,7 @@
       <view class="grid">
         <view class="grid-item" v-for="(g, i) in grids" :key="i" @tap="onGrid(g)">
           <view class="grid-icon" :style="{ background: g.bg }">
-            <image class="grid-icon-img" :src="g.icon" mode="aspectFit"/>
+            <text class="grid-emoji">{{ g.icon }}</text>
           </view>
           <text class="grid-text">{{ g.text }}</text>
         </view>
@@ -77,11 +77,11 @@ export default {
       communities: [],
       reports: [],
       grids: [
-        { text: '报活动', icon: '/static/icons-png/calendar-orange.png', bg: '#ff6b35', url: '/pages/activity/list' },
-        { text: '查报告', icon: '/static/icons-png/report-blue.png', bg: '#2563eb', url: '/pages/report/list' },
-        { text: '案例库', icon: '/static/icons-png/case-green.png', bg: '#059669', url: '' },
-        { text: '资料库', icon: '/static/icons-png/folder-purple.png', bg: '#7c3aed', url: '/pages/material/list' },
-        { text: '约咨询', icon: '/static/icons-png/consult-amber.png', bg: '#d97706', url: '/pages/consult/index' }
+        { text: '报活动', icon: '📅', bg: '#ff6b35', url: '/pages/activity/list' },
+        { text: '查报告', icon: '📊', bg: '#2563eb', url: '/pages/report/list' },
+        { text: '案例库', icon: '🏆', bg: '#059669', url: '' },
+        { text: '资料库', icon: '📂', bg: '#7c3aed', url: '/pages/material/list' },
+        { text: '约咨询', icon: '💬', bg: '#d97706', url: '/pages/consult/index' }
       ]
     }
   },
@@ -115,7 +115,7 @@ export default {
 .grid { display: flex; flex-wrap: wrap; padding: 12px 16px; }
 .grid-item { width: 20%; display: flex; flex-direction: column; align-items: center; margin-bottom: 12px; }
 .grid-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 6px; }
-.grid-icon-img { width: 28px; height: 28px; }
+.grid-emoji { font-size: 24px; line-height: 1; }
 .grid-text { font-size: 12px; color: #1a1a2e; }
 .section { margin: 8px 16px; }
 .section-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
