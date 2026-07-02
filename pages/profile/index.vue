@@ -1,8 +1,5 @@
 <template>
   <view class="page">
-    <view class="nav-bar">
-      <text class="nav-title">我的</text>
-    </view>
 
     <scroll-view scroll-y class="content">
       <!-- 用户信息 -->
@@ -105,8 +102,6 @@ export default {
 
 <style scoped>
 .page { background: #f6f7fb; min-height: 100vh; }
-.nav-bar { padding: 16px; padding-top: 50px; }
-.nav-title { font-size: 20px; font-weight: 700; color: #1a1a2e; }
 .content { height: calc(100vh - 100px); }
 .profile-card { background: linear-gradient(135deg, #ff6b35, #ff9a5c); margin: 8px 16px; border-radius: 12px; padding: 24px 20px; display: flex; flex-direction: column; align-items: center; }
 .avatar-wrap { width: 64px; height: 64px; border-radius: 50%; background: rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }

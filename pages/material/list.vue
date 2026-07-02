@@ -65,8 +65,6 @@ export default {
 
 <style scoped>
 .page { background: #f6f7fb; min-height: 100vh; }
-.nav-bar { padding: 16px; padding-top: 50px; display: flex; align-items: center; justify-content: space-between; }
-.nav-title { font-size: 17px; font-weight: 600; color: #1a1a2e; }
 .tabs { white-space: nowrap; }
 .tab-list { display: flex; padding: 0 16px; gap: 16px; }
 .tab-item { padding: 8px 0; }

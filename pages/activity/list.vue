@@ -1,8 +1,5 @@
 <template>
   <view class="page">
-    <view class="nav-bar">
-      <text class="nav-title">活动</text>
-    </view>
 
     <!-- 搜索 -->
     <view class="search-bar">
@@ -107,8 +104,6 @@ export default {
 
 <style scoped>
 .page { background: #f6f7fb; min-height: 100vh; }
-.nav-bar { padding: 16px; padding-top: 50px; }
-.nav-title { font-size: 20px; font-weight: 700; color: #1a1a2e; }
 .search-bar { margin: 8px 16px; background: #fff; border-radius: 8px; padding: 10px 12px; display: flex; align-items: center; gap: 8px; }
 .search-input { flex: 1; font-size: 14px; }
 .tabs { white-space: nowrap; }
