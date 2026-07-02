@@ -137,7 +137,7 @@ export default {
       }).catch(() => { uni.hideLoading(); uni.showToast({ title: '网络异常', icon: 'none' }) })
     },
     goConsult() {
-      uni.switchTab({ url: '/pages/consult/index' })
+      uni.navigateTo({ url: '/pages/consult/index' })
     },
     toggleFav() {
       const token = uni.getStorageSync('token')

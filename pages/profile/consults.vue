@@ -47,7 +47,7 @@ export default {
   methods: {
     statusLabel(s) { return { 0: '待处理', 1: '已跟进', 2: '已完成', 3: '已取消' }[s] || '待处理' },
     formatTime(t) { return t ? t.replace('T', ' ').substring(0, 16).replace(/-/g, '/') : '' },
-    goConsult() { uni.switchTab({ url: '/pages/consult/index' }) }
+    goConsult() { uni.navigateTo({ url: '/pages/consult/index' }) }
   }
 }
 </script>
