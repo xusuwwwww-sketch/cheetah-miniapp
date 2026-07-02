@@ -58,7 +58,7 @@
         <view v-if="!reports.length" class="empty"><text class="empty-text">暂无报告</text></view>
       </view>
 
-      <view style="height: 70px;"></view>
+      <view style="height: 80px;"></view>
     </scroll-view>
 
   </view>
@@ -101,7 +101,7 @@ export default {
 
 <style scoped>
 .page { background: #f6f7fb; min-height: 100vh; }
-.content { height: calc(100vh - 60px); }
+.content { height: calc(100vh - 50px); }
 .banner { height: 160px; margin: 8px 16px; border-radius: 12px; overflow: hidden; }
 .banner-item { height: 100%; padding: 20px; display: flex; flex-direction: column; justify-content: center; }
 .banner-tag { font-size: 11px; color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px; align-self: flex-start; margin-bottom: 6px; }
