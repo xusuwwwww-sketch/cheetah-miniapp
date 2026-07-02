@@ -121,8 +121,8 @@ export default {
       api.submitConsult(this.form).then(r => {
         uni.hideLoading()
         if (r.code === 0) {
-          uni.showToast({ title: '预约成功！', icon: 'success' })
           this.form = { name: '', phone: '', industry: '', position: '', company: '', budget_info: '', core_need: '', pain_point: '' }
+          uni.navigateTo({ url: '/pages/consult/success' })
         } else {
           uni.showToast({ title: r.msg || '提交失败', icon: 'none' })
         }

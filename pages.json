@@ -92,6 +92,13 @@
       "style": {
         "navigationBarTitleText": "约咨询记录"
       }
+    },
+    {
+      "path": "pages/consult/success",
+      "style": {
+        "navigationBarTitleText": "预约成功",
+        "navigationBarBackgroundColor": "#ffffff"
+      }
     }
   ],
   "tabBar": {
