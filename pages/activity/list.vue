@@ -110,7 +110,7 @@ export default {
 </script>
 
 <style scoped>
-.page { background: #f6f7fb; min-height: 100vh; }
+.page { background: #f6f7fb; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
 .search-bar { margin: 8px 16px; background: #fff; border-radius: 8px; padding: 10px 12px; display: flex; align-items: center; gap: 8px; }
 .search-input { flex: 1; font-size: 14px; }
 .tabs { white-space: nowrap; }
@@ -118,7 +118,7 @@ export default {
 .tab-item { padding: 8px 0; }
 .tab-text { font-size: 14px; color: #6b7280; }
 .tab-text.active { color: #ff6b35; font-weight: 600; }
-.list { height: calc(100vh - 250px); box-sizing: border-box; padding-bottom: 160rpx; }
+.list { flex: 1; overflow: hidden; }
 .card { background: #fff; border-radius: 12px; margin: 8px 16px; overflow: hidden; }
 .card-cover { padding: 20px 16px; }
 .card-tag { font-size: 11px; color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px; display: inline-block; margin-bottom: 6px; }

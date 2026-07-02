@@ -66,13 +66,13 @@ export default {
 </script>
 
 <style scoped>
-.page { background: #f6f7fb; min-height: 100vh; }
+.page { background: #f6f7fb; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
 .tabs { white-space: nowrap; }
 .tab-list { display: flex; padding: 0 16px; gap: 16px; }
 .tab-item { padding: 8px 0; }
 .tab-text { font-size: 14px; color: #6b7280; }
 .tab-text.active { color: #ff6b35; font-weight: 600; }
-.list { height: calc(100vh - 230px); box-sizing: border-box; padding-bottom: 160rpx; }
+.list { flex: 1; overflow: hidden; }
 .card { background: #fff; border-radius: 12px; margin: 8px 16px; overflow: hidden; }
 .card-cover { height: 80px; display: flex; align-items: center; justify-content: center; }
 .card-body { padding: 12px 16px; }
