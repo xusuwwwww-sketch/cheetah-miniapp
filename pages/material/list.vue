@@ -1,10 +1,5 @@
 <template>
   <view class="page">
-    <view class="nav-bar" @tap="goBack">
-      <text class="icon-text">‹</text>
-      <text class="nav-title">资料库</text>
-      <view style="width: 20px;"></view>
-    </view>
 
     <!-- 分类 tabs -->
     <scroll-view scroll-x class="tabs">
