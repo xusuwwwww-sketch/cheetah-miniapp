@@ -28,7 +28,7 @@
       </view>
       <view v-if="!list.length && !loading" class="empty"><text class="empty-text">暂无资料</text></view>
       <view v-if="loading" class="empty"><text class="empty-text">加载中...</text></view>
-      <view style="height: 70px;"></view>
+      <view style="height: 100px;"></view>
     </scroll-view>
 
   </view>
@@ -65,7 +65,7 @@ export default {
 .tab-item { padding: 8px 0; }
 .tab-text { font-size: 14px; color: #6b7280; }
 .tab-text.active { color: #ff6b35; font-weight: 600; }
-.list { height: calc(100vh - 200px); }
+.list { height: calc(100vh - 160px); padding-bottom: 20rpx; }
 .card { background: #fff; border-radius: 12px; margin: 8px 16px; overflow: hidden; }
 .card-cover { height: 80px; display: flex; align-items: center; justify-content: center; }
 .card-body { padding: 12px 16px; }
