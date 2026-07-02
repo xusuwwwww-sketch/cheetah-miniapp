@@ -64,15 +64,18 @@
 
     <!-- 底部操作栏 -->
     <view class="bottom-bar" v-if="detail">
+      <view class="fav-icon" @tap="toggleFav">
+        <text class="fav-text">{{ favorited ? '❤️' : '🤍' }}</text>
+      </view>
       <!-- 报告/资料库：下载 -->
       <template v-if="type !== 'case'">
-        <view class="dl-btn" @tap="onDownload">
+        <view class="dl-btn" @tap="onDownload" style="flex:1">
           <text class="dl-text">⬇ 下载{{ type === 'report' ? '报告' : '资料' }}</text>
         </view>
       </template>
       <!-- 案例库：预约咨询 -->
       <template v-if="type === 'case'">
-        <view class="dl-btn consult-btn" @tap="goConsult">
+        <view class="dl-btn consult-btn" @tap="goConsult" style="flex:1">
           <text class="dl-text">💬 预约顾问咨询</text>
         </view>
       </template>
@@ -84,7 +87,7 @@
 import { api } from '@/utils/api.js'
 
 export default {
-  data() { return { id: '', type: 'material', detail: null, loading: true } },
+  data() { return { id: '', type: 'material', detail: null, loading: true, favorited: false } },
   computed: {
     defaultGradient() {
       return { report: 'linear-gradient(135deg, #2563eb, #60a5fa)', case: 'linear-gradient(135deg, #059669, #34d399)', material: 'linear-gradient(135deg, #7c3aed, #a78bfa)' }[this.type] || 'linear-gradient(135deg, #7c3aed, #a78bfa)'
@@ -125,6 +128,16 @@ export default {
     },
     goConsult() {
       uni.switchTab({ url: '/pages/consult/index' })
+    },
+    toggleFav() {
+      const token = uni.getStorageSync('token')
+      if (!token) return uni.showToast({ title: '请先登录', icon: 'none' })
+      api.toggleFavorite({ target_type: this.type, target_id: this.id }).then(r => {
+        if (r.code === 0) {
+          this.favorited = r.data?.favorited ?? !this.favorited
+          uni.showToast({ title: this.favorited ? '已收藏' : '已取消收藏', icon: 'none' })
+        }
+      }).catch(() => {})
     }
   }
 }
@@ -157,7 +170,9 @@ export default {
 .loading-wrap { padding: 100px; text-align: center; }
 .loading-text { font-size: 14px; color: #9ca3af; }
 
-.bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; padding: 12px 16px; background: #fff; border-top: 1px solid #e5e7eb; padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
+.bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; padding: 12px 16px; background: #fff; border-top: 1px solid #e5e7eb; padding-bottom: calc(12px + env(safe-area-inset-bottom)); display: flex; gap: 10px; align-items: center; }
+.fav-icon { width: 44px; height: 44px; border-radius: 10px; background: #f6f7fb; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.fav-text { font-size: 22px; }
 .dl-btn { border-radius: 10px; padding: 14px; text-align: center; background: #2563eb; }
 .dl-btn.consult-btn { background: #ff6b35; }
 .dl-text { color: #fff; font-size: 16px; font-weight: 600; }

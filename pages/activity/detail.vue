@@ -1,10 +1,10 @@
 <template>
   <view class="page">
     <!-- Nav -->
-    <view class="nav-bar" @tap="goBack">
-      <text class="icon-text">‹</text>
+    <view class="nav-bar">
+      <text class="icon-back" @tap="goBack">‹</text>
       <text class="nav-title">活动详情</text>
-      <view style="width: 20px;"></view>
+      <text class="fav-btn" @tap="toggleFav">{{ favorited ? '❤️' : '🤍' }}</text>
     </view>
 
     <scroll-view scroll-y class="content" v-if="detail">
@@ -68,7 +68,7 @@
 import { api } from '@/utils/api.js'
 
 export default {
-  data() { return { id: '', detail: null, loading: true } },
+  data() { return { id: '', detail: null, loading: true, favorited: false } },
   onLoad(e) { this.id = e.id; this.loadDetail() },
   methods: {
     formatTime(t) {
@@ -86,7 +86,17 @@ export default {
         else uni.showToast({ title: r.msg || '报名失败', icon: 'none' })
       }).catch(() => { uni.showToast({ title: '网络异常', icon: 'none' }) })
     },
-    goBack() { uni.navigateBack() }
+    goBack() { uni.navigateBack() },
+    toggleFav() {
+      const token = uni.getStorageSync('token')
+      if (!token) return uni.showToast({ title: '请先登录', icon: 'none' })
+      api.toggleFavorite({ target_type: 'activity', target_id: this.id }).then(r => {
+        if (r.code === 0) {
+          this.favorited = r.data?.favorited ?? !this.favorited
+          uni.showToast({ title: this.favorited ? '已收藏' : '已取消收藏', icon: 'none' })
+        }
+      }).catch(() => {})
+    }
   }
 }
 </script>
@@ -94,7 +104,9 @@ export default {
 <style scoped>
 .page { background: #f6f7fb; min-height: 100vh; }
 .nav-bar { padding: 16px; padding-top: 50px; display: flex; align-items: center; justify-content: space-between; }
+.icon-back { font-size: 24px; color: #1a1a2e; width: 24px; }
 .nav-title { font-size: 17px; font-weight: 600; color: #1a1a2e; }
+.fav-btn { font-size: 22px; width: 24px; text-align: right; }
 .content { height: calc(100vh - 90px); }
 .cover { padding: 30px 20px; }
 .cover-title { font-size: 20px; font-weight: 700; color: #fff; }
