@@ -1,91 +1,47 @@
 <template>
   <view class="page">
-    <view class="nav-bar">
-      <text class="icon-text">‹</text>
-      <text class="nav-title">约咨询</text>
-      <view style="width: 20px;"></view>
-    </view>
-
     <scroll-view scroll-y class="content">
-      <!-- 服务亮点 -->
-      <view class="intro-card">
-        <text class="intro-title">猎豹出海专业咨询</text>
-        <text class="intro-desc">为企业出海提供全链路解决方案</text>
+      <view class="form-card">
+        <text class="form-title">预约顾问咨询</text>
+        <text class="form-subtitle">填写信息，24小时内专属顾问与您联系</text>
+
+        <view class="form-item">
+          <text class="form-label">姓名 <text class="required">*</text></text>
+          <input class="form-input" placeholder="请输入姓名" v-model="form.name" />
+        </view>
+        <view class="form-item">
+          <text class="form-label">行业 <text class="required">*</text></text>
+          <input class="form-input" placeholder="如：跨境电商、独立站、游戏出海" v-model="form.industry" />
+        </view>
+        <view class="form-item">
+          <text class="form-label">职位</text>
+          <input class="form-input" placeholder="如：市场总监、创始人（选填）" v-model="form.position" />
+        </view>
+        <view class="form-item">
+          <text class="form-label">公司名称 <text class="required">*</text></text>
+          <input class="form-input" placeholder="请输入公司名称" v-model="form.company" />
+        </view>
+        <view class="form-item">
+          <text class="form-label">月推广预算 <text class="required">*</text></text>
+          <input class="form-input" placeholder="如：5万以内、5-20万、20万以上" v-model="form.budget_info" />
+        </view>
+        <view class="form-item">
+          <text class="form-label">核心需求 <text class="required">*</text></text>
+          <textarea class="form-textarea" placeholder="简述您的核心需求，如：希望进入东南亚市场、优化广告ROAS等" v-model="form.core_need" />
+        </view>
+        <view class="form-item">
+          <text class="form-label">当前最大痛点</text>
+          <textarea class="form-textarea" placeholder="如：流量贵、转化低、不懂本地化（选填）" v-model="form.pain_point" />
+        </view>
+
+        <view class="submit-btn" @tap="onSubmit">
+          <text class="submit-text">提交预约</text>
+        </view>
+        <text class="hint">已有 2,000+ 品牌通过猎豹顾问加速出海</text>
       </view>
 
-      <view class="features">
-        <view class="feature-item" v-for="f in features" :key="f.title">
-          <view class="feature-icon" :style="{ background: f.bg }">
-            {{ f.icon }}
-          </view>
-          <view class="feature-info">
-            <text class="feature-title">{{ f.title }}</text>
-            <text class="feature-desc">{{ f.desc }}</text>
-          </view>
-        </view>
-      </view>
-
-      <!-- 服务流程 -->
-      <view class="section">
-        <text class="section-title">服务流程</text>
-        <view class="steps">
-          <view class="step-item" v-for="(s, i) in steps" :key="i">
-            <view class="step-num">{{ i + 1 }}</view>
-            <text class="step-title">{{ s }}</text>
-          </view>
-        </view>
-      </view>
-      <view style="height: 90px;"></view>
+      <view style="height: 80px;"></view>
     </scroll-view>
-
-    <!-- 底部按钮 -->
-    <view class="bottom-bar">
-      <view class="btn" @tap="showModal = true">
-        <text class="icon-text">💬</text>
-        <text class="btn-text">  立即预约</text>
-      </view>
-    </view>
-
-    <!-- 表单弹窗 -->
-    <view class="modal-mask" v-if="showModal" @tap="showModal = false">
-      <view class="modal" @tap.stop>
-        <view class="modal-header">
-          <text class="modal-title">预约咨询</text>
-          <text class="icon-text" @tap="showModal = false">✕</text>
-        </view>
-        <view class="form">
-          <view class="form-item">
-            <text class="form-label">姓名 <text class="required">*</text></text>
-            <input class="form-input" placeholder="请输入姓名" v-model="form.name" />
-          </view>
-          <view class="form-item">
-            <text class="form-label">行业 <text class="required">*</text></text>
-            <input class="form-input" placeholder="如：跨境电商、独立站、游戏出海" v-model="form.industry" />
-          </view>
-          <view class="form-item">
-            <text class="form-label">职位</text>
-            <input class="form-input" placeholder="如：市场总监、创始人（选填）" v-model="form.position" />
-          </view>
-          <view class="form-item">
-            <text class="form-label">公司名称 <text class="required">*</text></text>
-            <input class="form-input" placeholder="请输入公司名称" v-model="form.company" />
-          </view>
-          <view class="form-item">
-            <text class="form-label">月推广预算 <text class="required">*</text></text>
-            <input class="form-input" placeholder="如：5万以内、5-20万、20万以上" v-model="form.budget_info" />
-          </view>
-          <view class="form-item">
-            <text class="form-label">核心需求 <text class="required">*</text></text>
-            <textarea class="form-textarea" placeholder="简述您的核心需求，如：希望进入东南亚市场、优化广告ROAS等" v-model="form.core_need" />
-          </view>
-          <view class="form-item">
-            <text class="form-label">当前最大痛点</text>
-            <textarea class="form-textarea" placeholder="如：流量贵、转化低、不懂本地化（选填）" v-model="form.pain_point" />
-          </view>
-          <view class="btn" @tap="onSubmit"><text class="btn-text">提交预约</text></view>
-        </view>
-      </view>
-    </view>
   </view>
 </template>
 
@@ -95,60 +51,48 @@ import { api } from '@/utils/api.js'
 export default {
   data() {
     return {
-      showModal: false,
-      form: { name: '', industry: '', position: '', company: '', budget_info: '', core_need: '', pain_point: '' },
-      features: [
-        { title: '市场分析', desc: '目标市场洞察与机会评估', icon: '📊', bg: '#ff6b35' },
-        { title: '竞品对标', desc: '竞争格局深度拆解', icon: '🔍', bg: '#2563eb' },
-        { title: '广告策略', desc: '获客渠道与投放优化', icon: '🎯', bg: '#059669' },
-        { title: '内容营销', desc: '品牌内容与社媒运营', icon: '✍️', bg: '#d97706' }
-      ],
-      steps: ['需求沟通', '方案定制', '深度咨询', '持续跟踪']
+      form: { name: '', industry: '', position: '', company: '', budget_info: '', core_need: '', pain_point: '' }
     }
   },
   methods: {
     onSubmit() {
       const { name, industry, company, budget_info, core_need } = this.form
-      if (!name || !industry || !company || !budget_info || !core_need) return uni.showToast({ title: '请填写必填项', icon: 'none' })
+      if (!name) return uni.showToast({ title: '请填写姓名', icon: 'none' })
+      if (!industry) return uni.showToast({ title: '请填写行业', icon: 'none' })
+      if (!company) return uni.showToast({ title: '请填写公司名称', icon: 'none' })
+      if (!budget_info) return uni.showToast({ title: '请填写月推广预算', icon: 'none' })
+      if (!core_need) return uni.showToast({ title: '请填写核心需求', icon: 'none' })
+
+      uni.showLoading({ title: '提交中...' })
       api.submitConsult(this.form).then(r => {
-        if (r.code === 0) { uni.showToast({ title: '预约成功', icon: 'success' }); this.showModal = false; this.form = { name: '', industry: '', position: '', company: '', budget_info: '', core_need: '', pain_point: '' } }
-        else uni.showToast({ title: r.msg || '提交失败', icon: 'none' })
-      }).catch(() => { uni.showToast({ title: '网络异常', icon: 'none' }) })
-    },
-    goBack() { uni.navigateBack() }
+        uni.hideLoading()
+        if (r.code === 0) {
+          uni.showToast({ title: '预约成功！', icon: 'success' })
+          this.form = { name: '', industry: '', position: '', company: '', budget_info: '', core_need: '', pain_point: '' }
+        } else {
+          uni.showToast({ title: r.msg || '提交失败', icon: 'none' })
+        }
+      }).catch(() => {
+        uni.hideLoading()
+        uni.showToast({ title: '网络异常，请重试', icon: 'none' })
+      })
+    }
   }
 }
 </script>
 
 <style scoped>
 .page { background: #f6f7fb; min-height: 100vh; }
-.nav-bar { padding: 16px; padding-top: 50px; display: flex; align-items: center; justify-content: space-between; }
-.nav-title { font-size: 17px; font-weight: 600; color: #1a1a2e; }
-.content { height: calc(100vh - 110px); }
-.intro-card { background: linear-gradient(135deg, #ff6b35, #ff9a5c); margin: 8px 16px; border-radius: 12px; padding: 24px 20px; }
-.intro-title { font-size: 20px; font-weight: 700; color: #fff; }
-.intro-desc { font-size: 13px; color: rgba(255,255,255,0.8); margin-top: 6px; }
-.features { display: flex; flex-wrap: wrap; padding: 12px 16px; gap: 10px; }
-.feature-item { width: calc(50% - 5px); background: #fff; border-radius: 12px; padding: 16px; display: flex; align-items: flex-start; gap: 10px; }
-.feature-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.feature-title { font-size: 14px; font-weight: 600; color: #1a1a2e; }
-.feature-desc { font-size: 12px; color: #6b7280; margin-top: 2px; }
-.section { margin: 12px 16px; }
-.section-title { font-size: 16px; font-weight: 600; color: #1a1a2e; margin-bottom: 12px; }
-.steps { display: flex; justify-content: space-between; background: #fff; border-radius: 12px; padding: 16px; }
-.step-item { flex: 1; display: flex; flex-direction: column; align-items: center; }
-.step-num { width: 28px; height: 28px; border-radius: 50%; background: #ff6b35; color: #fff; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; margin-bottom: 6px; }
-.step-title { font-size: 12px; color: #1a1a2e; }
-.bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; padding: 12px 16px; background: #fff; border-top: 1px solid #e5e7eb; padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
-.btn { background: #ff6b35; border-radius: 8px; padding: 14px; text-align: center; display: flex; align-items: center; justify-content: center; margin-top: 16px; }
-.btn-text { color: #fff; font-size: 16px; font-weight: 600; }
-.modal-mask { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; display: flex; align-items: flex-end; }
-.modal { background: #fff; border-radius: 16px 16px 0 0; width: 100%; padding: 20px; padding-bottom: calc(20px + env(safe-area-inset-bottom)); max-height: 85vh; overflow-y: auto; }
-.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-.modal-title { font-size: 18px; font-weight: 600; color: #1a1a2e; }
+.content { height: 100vh; }
+.form-card { background: #fff; margin: 16px; border-radius: 12px; padding: 24px 20px; }
+.form-title { font-size: 20px; font-weight: 700; color: #1a1a2e; display: block; margin-bottom: 6px; }
+.form-subtitle { font-size: 13px; color: #6b7280; display: block; margin-bottom: 24px; }
 .form-item { margin-bottom: 16px; }
 .form-label { font-size: 13px; color: #1a1a2e; font-weight: 500; margin-bottom: 6px; display: block; }
 .required { color: #ef4444; margin-left: 2px; }
-.form-input { background: #f6f7fb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px 12px; font-size: 14px; }
-.form-textarea { background: #f6f7fb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px 12px; font-size: 14px; height: 80px; width: 100%; }
+.form-input { background: #f6f7fb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px 12px; font-size: 14px; width: 100%; box-sizing: border-box; }
+.form-textarea { background: #f6f7fb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px 12px; font-size: 14px; height: 88px; width: 100%; box-sizing: border-box; }
+.submit-btn { background: #ff6b35; border-radius: 8px; padding: 14px; text-align: center; margin-top: 24px; }
+.submit-text { color: #fff; font-size: 16px; font-weight: 600; }
+.hint { font-size: 12px; color: #9ca3af; text-align: center; display: block; margin-top: 12px; }
 </style>
