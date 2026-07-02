@@ -44,7 +44,9 @@
     {
       "path": "pages/material/detail",
       "style": {
-        "navigationStyle": "custom"
+        "navigationBarTitleText": "详情",
+        "navigationBarBackgroundColor": "#ffffff",
+        "navigationBarTextStyle": "black"
       }
     },
     {
