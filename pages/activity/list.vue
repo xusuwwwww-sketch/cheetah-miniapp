@@ -48,19 +48,19 @@
     <!-- TabBar -->
     <view class="tab-bar">
       <view class="tab-item" @tap="goTab('/pages/index/index')">
-        <image class="tab-icon-img" :src="currentTab==='/pages/index/index' ? '/static/icons-png/home-orange.png' : '/static/icons-png/home-gray.png'" mode="aspectFit"/>
+        <image class="tab-icon-img" :src="currentTab==='/pages/index/index' ? '../../static/icons-png/home-orange.png' : '../../static/icons-png/home-gray.png'" mode="aspectFit"/>
         <text :class="['tab-text', currentTab==='/pages/index/index' ? 'tab-active' : '']">首页</text>
       </view>
       <view class="tab-item" @tap="goTab('/pages/activity/list')">
-        <image class="tab-icon-img" :src="currentTab==='/pages/activity/list' ? '/static/icons-png/calendar-orange.png' : '/static/icons-png/calendar-gray.png'" mode="aspectFit"/>
+        <image class="tab-icon-img" :src="currentTab==='/pages/activity/list' ? '../../static/icons-png/calendar-orange.png' : '../../static/icons-png/calendar-gray.png'" mode="aspectFit"/>
         <text :class="['tab-text', currentTab==='/pages/activity/list' ? 'tab-active' : '']">活动</text>
       </view>
       <view class="tab-item" @tap="goTab('/pages/material/list')">
-        <image class="tab-icon-img" :src="currentTab==='/pages/material/list' ? '/static/icons-png/folder-orange.png' : '/static/icons-png/folder-gray.png'" mode="aspectFit"/>
+        <image class="tab-icon-img" :src="currentTab==='/pages/material/list' ? '../../static/icons-png/folder-orange.png' : '../../static/icons-png/folder-gray.png'" mode="aspectFit"/>
         <text :class="['tab-text', currentTab==='/pages/material/list' ? 'tab-active' : '']">服务</text>
       </view>
       <view class="tab-item" @tap="goTab('/pages/profile/index')">
-        <image class="tab-icon-img" :src="currentTab==='/pages/profile/index' ? '/static/icons-png/user-orange.png' : '/static/icons-png/user-gray.png'" mode="aspectFit"/>
+        <image class="tab-icon-img" :src="currentTab==='/pages/profile/index' ? '../../static/icons-png/user-orange.png' : '../../static/icons-png/user-gray.png'" mode="aspectFit"/>
         <text :class="['tab-text', currentTab==='/pages/profile/index' ? 'tab-active' : '']">我的</text>
       </view>
     </view>
