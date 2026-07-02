@@ -12,8 +12,8 @@
         <view :class="['tab-item', { active: currentCat === '' }]" @tap="currentCat = ''; loadData()">
           <text :class="['tab-text', { active: currentCat === '' }]">全部</text>
         </view>
-        <view :class="['tab-item', { active: currentCat === c }]" v-for="c in categories" :key="c" @tap="currentCat = c; loadData()">
-          <text :class="['tab-text', { active: currentCat === c }]">{{ c }}</text>
+        <view :class="['tab-item', { active: currentCat === c.slug }]" v-for="c in categories" :key="c.id" @tap="currentCat = c.slug; loadData()">
+          <text :class="['tab-text', { active: currentCat === c.slug }]">{{ c.name }}</text>
         </view>
       </view>
     </scroll-view>
