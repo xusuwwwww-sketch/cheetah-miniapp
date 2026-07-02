@@ -37,7 +37,6 @@
                 <text class="icon-text">👥</text>
               </view>
               <text class="community-name">{{ c.title }}</text>
-              <text class="community-count">{{ c.member_count || 0 }}人</text>
             </view>
           </view>
         </scroll-view>
@@ -126,7 +125,6 @@ export default {
 .community-card { width: 100px; background: #fff; border-radius: 12px; padding: 12px 8px; display: flex; flex-direction: column; align-items: center; }
 .community-avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 6px; }
 .community-name { font-size: 13px; color: #1a1a2e; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 80px; }
-.community-count { font-size: 11px; color: #9ca3af; margin-top: 2px; }
 .report-card { background: #fff; border-radius: 12px; padding: 12px; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; }
 .report-thumb { width: 60px; height: 60px; border-radius: 8px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
 .report-info { flex: 1; min-width: 0; }
