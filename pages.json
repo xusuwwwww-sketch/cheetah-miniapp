@@ -4,14 +4,14 @@
   },
   "pages": [
     { "path": "pages/index/index", "style": { "navigationStyle": "custom" } },
-    { "path": "pages/activity/list", "style": { "navigationStyle": "custom" } },
+    { "path": "pages/activity/list", "style": { "navigationBarTitleText": "活动" } },
     { "path": "pages/activity/detail", "style": { "navigationStyle": "custom" } },
     { "path": "pages/report/list", "style": { "navigationStyle": "custom" } },
     { "path": "pages/report/detail", "style": { "navigationStyle": "custom" } },
-    { "path": "pages/material/list", "style": { "navigationStyle": "custom" } },
+    { "path": "pages/material/list", "style": { "navigationBarTitleText": "服务" } },
     { "path": "pages/material/detail", "style": { "navigationStyle": "custom" } },
     { "path": "pages/consult/index", "style": { "navigationStyle": "custom" } },
-    { "path": "pages/profile/index", "style": { "navigationStyle": "custom" } }
+    { "path": "pages/profile/index", "style": { "navigationBarTitleText": "我的" } }
   ],
   "tabBar": {
     "color": "#9ca3af",
