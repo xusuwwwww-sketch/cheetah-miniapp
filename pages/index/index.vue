@@ -1,7 +1,7 @@
 <template>
   <view class="page">
     <!-- 顶部品牌 -->
-    <view class="header">
+    <view class="header" :style="{ paddingTop: statusBarHeight + 'px' }">
       <text class="brand">猎豹出海工具箱</text>
     </view>
 
@@ -73,6 +73,7 @@ import { api } from '@/utils/api.js'
 export default {
   data() {
     return {
+      statusBarHeight: 0,
       banners: [],
       communities: [],
       reports: [],
@@ -85,6 +86,7 @@ export default {
       ]
     }
   },
+  onLoad() { const info = uni.getSystemInfoSync(); this.statusBarHeight = info.statusBarHeight || 0 },
   onShow() { this.loadData() },
   methods: {
     loadData() {
@@ -104,7 +106,7 @@ export default {
 
 <style scoped>
 .page { background: #f6f7fb; min-height: 100vh; }
-.header { padding: 16px 16px 8px; }
+.header { padding: 0 16px 8px; background: #fff; }
 .brand { font-size: 20px; font-weight: 700; color: #1a1a2e; }
 .content { height: calc(100vh - 60px); }
 .banner { height: 160px; margin: 8px 16px; border-radius: 12px; overflow: hidden; }
