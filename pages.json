@@ -13,6 +13,38 @@
     { "path": "pages/consult/index", "style": { "navigationStyle": "custom" } },
     { "path": "pages/profile/index", "style": { "navigationStyle": "custom" } }
   ],
+  "tabBar": {
+    "color": "#9ca3af",
+    "selectedColor": "#ff6b35",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "static/icons-png/home-gray.png",
+        "selectedIconPath": "static/icons-png/home-orange.png"
+      },
+      {
+        "pagePath": "pages/activity/list",
+        "text": "活动",
+        "iconPath": "static/icons-png/calendar-gray.png",
+        "selectedIconPath": "static/icons-png/calendar-orange.png"
+      },
+      {
+        "pagePath": "pages/material/list",
+        "text": "服务",
+        "iconPath": "static/icons-png/folder-gray.png",
+        "selectedIconPath": "static/icons-png/folder-orange.png"
+      },
+      {
+        "pagePath": "pages/profile/index",
+        "text": "我的",
+        "iconPath": "static/icons-png/user-gray.png",
+        "selectedIconPath": "static/icons-png/user-orange.png"
+      }
+    ]
+  },
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarBackgroundColor": "#ffffff",
