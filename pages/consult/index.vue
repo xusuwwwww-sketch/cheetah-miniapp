@@ -55,24 +55,32 @@
         </view>
         <view class="form">
           <view class="form-item">
-            <text class="form-label">姓名</text>
+            <text class="form-label">姓名 <text class="required">*</text></text>
             <input class="form-input" placeholder="请输入姓名" v-model="form.name" />
           </view>
           <view class="form-item">
-            <text class="form-label">手机号</text>
-            <input class="form-input" type="number" placeholder="请输入手机号" v-model="form.phone" />
+            <text class="form-label">行业 <text class="required">*</text></text>
+            <input class="form-input" placeholder="如：跨境电商、独立站、游戏出海" v-model="form.industry" />
           </view>
           <view class="form-item">
-            <text class="form-label">公司</text>
+            <text class="form-label">职位</text>
+            <input class="form-input" placeholder="如：市场总监、创始人（选填）" v-model="form.position" />
+          </view>
+          <view class="form-item">
+            <text class="form-label">公司名称 <text class="required">*</text></text>
             <input class="form-input" placeholder="请输入公司名称" v-model="form.company" />
           </view>
           <view class="form-item">
-            <text class="form-label">咨询主题</text>
-            <input class="form-input" placeholder="如：东南亚市场进入策略" v-model="form.topic" />
+            <text class="form-label">月推广预算 <text class="required">*</text></text>
+            <input class="form-input" placeholder="如：5万以内、5-20万、20万以上" v-model="form.budget_info" />
           </view>
           <view class="form-item">
-            <text class="form-label">备注</text>
-            <textarea class="form-textarea" placeholder="补充说明（选填）" v-model="form.note" />
+            <text class="form-label">核心需求 <text class="required">*</text></text>
+            <textarea class="form-textarea" placeholder="简述您的核心需求，如：希望进入东南亚市场、优化广告ROAS等" v-model="form.core_need" />
+          </view>
+          <view class="form-item">
+            <text class="form-label">当前最大痛点</text>
+            <textarea class="form-textarea" placeholder="如：流量贵、转化低、不懂本地化（选填）" v-model="form.pain_point" />
           </view>
           <view class="btn" @tap="onSubmit"><text class="btn-text">提交预约</text></view>
         </view>
@@ -88,7 +96,7 @@ export default {
   data() {
     return {
       showModal: false,
-      form: { name: '', phone: '', company: '', topic: '', note: '' },
+      form: { name: '', industry: '', position: '', company: '', budget_info: '', core_need: '', pain_point: '' },
       features: [
         { title: '市场分析', desc: '目标市场洞察与机会评估', icon: '📊', bg: '#ff6b35' },
         { title: '竞品对标', desc: '竞争格局深度拆解', icon: '🔍', bg: '#2563eb' },
@@ -100,10 +108,10 @@ export default {
   },
   methods: {
     onSubmit() {
-      const { name, phone, company, topic } = this.form
-      if (!name || !phone || !topic) return uni.showToast({ title: '请填写必填项', icon: 'none' })
+      const { name, industry, company, budget_info, core_need } = this.form
+      if (!name || !industry || !company || !budget_info || !core_need) return uni.showToast({ title: '请填写必填项', icon: 'none' })
       api.submitConsult(this.form).then(r => {
-        if (r.code === 0) { uni.showToast({ title: '预约成功', icon: 'success' }); this.showModal = false; this.form = { name: '', phone: '', company: '', topic: '', note: '' } }
+        if (r.code === 0) { uni.showToast({ title: '预约成功', icon: 'success' }); this.showModal = false; this.form = { name: '', industry: '', position: '', company: '', budget_info: '', core_need: '', pain_point: '' } }
         else uni.showToast({ title: r.msg || '提交失败', icon: 'none' })
       }).catch(() => { uni.showToast({ title: '网络异常', icon: 'none' }) })
     },
@@ -140,6 +148,7 @@ export default {
 .modal-title { font-size: 18px; font-weight: 600; color: #1a1a2e; }
 .form-item { margin-bottom: 16px; }
 .form-label { font-size: 13px; color: #1a1a2e; font-weight: 500; margin-bottom: 6px; display: block; }
+.required { color: #ef4444; margin-left: 2px; }
 .form-input { background: #f6f7fb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px 12px; font-size: 14px; }
 .form-textarea { background: #f6f7fb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px 12px; font-size: 14px; height: 80px; width: 100%; }
 </style>
