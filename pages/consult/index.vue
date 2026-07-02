@@ -1,15 +1,14 @@
 <template>
   <view class="page">
     <scroll-view scroll-y style="height: 100vh;">
-      <view class="header">
-        <text class="title">预约顾问咨询</text>
-        <text class="subtitle">填写信息，24小时内专属顾问与您联系</text>
-      </view>
-
       <view class="form-wrap">
         <view class="form-item">
           <text class="label">姓名 <text class="req">*</text></text>
           <input class="input" placeholder="请输入姓名" v-model="form.name" placeholder-style="color:#c0c4cc;" />
+        </view>
+        <view class="form-item">
+          <text class="label">手机号 <text class="req">*</text></text>
+          <input class="input" type="tel" placeholder="请输入手机号" v-model="form.phone" placeholder-style="color:#c0c4cc;" />
         </view>
         <view class="form-item">
           <text class="label">行业 <text class="req">*</text></text>
@@ -51,12 +50,13 @@ import { api } from '@/utils/api.js'
 export default {
   data() {
     return {
-      form: { name: '', industry: '', position: '', company: '', budget_info: '', core_need: '', pain_point: '' }
+      form: { name: '', phone: '', industry: '', position: '', company: '', budget_info: '', core_need: '', pain_point: '' }
     }
   },
   methods: {
     onSubmit() {
       if (!this.form.name) return uni.showToast({ title: '请填写姓名', icon: 'none' })
+      if (!this.form.phone) return uni.showToast({ title: '请填写手机号', icon: 'none' })
       if (!this.form.industry) return uni.showToast({ title: '请填写行业', icon: 'none' })
       if (!this.form.company) return uni.showToast({ title: '请填写公司名称', icon: 'none' })
       if (!this.form.budget_info) return uni.showToast({ title: '请填写月推广预算', icon: 'none' })
@@ -67,7 +67,7 @@ export default {
         uni.hideLoading()
         if (r.code === 0) {
           uni.showToast({ title: '预约成功！', icon: 'success' })
-          this.form = { name: '', industry: '', position: '', company: '', budget_info: '', core_need: '', pain_point: '' }
+          this.form = { name: '', phone: '', industry: '', position: '', company: '', budget_info: '', core_need: '', pain_point: '' }
         } else {
           uni.showToast({ title: r.msg || '提交失败', icon: 'none' })
         }
@@ -82,9 +82,6 @@ export default {
 
 <style scoped>
 .page { background: #f6f7fb; }
-.header { padding: 20px 16px 0; }
-.title { font-size: 20px; font-weight: 700; color: #1a1a2e; display: block; margin-bottom: 4px; }
-.subtitle { font-size: 13px; color: #6b7280; display: block; }
 .form-wrap { padding: 16px; }
 .form-item { margin-bottom: 16px; }
 .label { font-size: 14px; color: #1a1a2e; font-weight: 500; margin-bottom: 8px; display: block; }

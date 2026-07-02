@@ -50,7 +50,9 @@
     {
       "path": "pages/consult/index",
       "style": {
-        "navigationStyle": "custom"
+        "navigationBarTitleText": "预约咨询",
+        "navigationBarBackgroundColor": "#ffffff",
+        "navigationBarTextStyle": "black"
       }
     },
     {
