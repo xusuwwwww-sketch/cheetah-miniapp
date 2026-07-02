@@ -1,7 +1,7 @@
 <template>
   <view class="page">
     <view class="nav-bar" @tap="goBack">
-      <uni-icons type="back" size="20" color="#1a1a2e" />
+      <text class="icon-text">‹</text>
       <text class="nav-title">行业报告</text>
       <view style="width: 20px;"></view>
     </view>
@@ -25,7 +25,7 @@
     <scroll-view scroll-y class="list" @scrolltolower="loadMore" refresher-enabled :refresher-triggered="refreshing" @refresherrefresh="onRefresh">
       <view class="card" v-for="r in list" :key="r.id" @tap="goDetail(r.id)">
         <view class="card-cover" :style="{ background: r.gradient || 'linear-gradient(135deg, #2563eb, #60a5fa)' }">
-          <uni-icons type="bars" size="24" color="rgba(255,255,255,0.8)" />
+          <text class="icon-text">📊</text>
           <text :class="['card-price', { free: r.is_free }]">{{ r.is_free ? '免费' : '付费' }}</text>
         </view>
         <view class="card-body">

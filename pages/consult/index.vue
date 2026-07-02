@@ -1,7 +1,7 @@
 <template>
   <view class="page">
     <view class="nav-bar">
-      <uni-icons type="back" size="20" color="#1a1a2e" @tap="goBack" />
+      <text class="icon-text">‹</text>
       <text class="nav-title">约咨询</text>
       <view style="width: 20px;"></view>
     </view>
@@ -16,7 +16,7 @@
       <view class="features">
         <view class="feature-item" v-for="f in features" :key="f.title">
           <view class="feature-icon" :style="{ background: f.bg }">
-            <uni-icons :type="f.icon" size="22" color="#fff" />
+            {{ f.icon }}
           </view>
           <view class="feature-info">
             <text class="feature-title">{{ f.title }}</text>
@@ -41,7 +41,7 @@
     <!-- 底部按钮 -->
     <view class="bottom-bar">
       <view class="btn" @tap="showModal = true">
-        <uni-icons type="chat" size="18" color="#fff" />
+        <text class="icon-text">💬</text>
         <text class="btn-text">  立即预约</text>
       </view>
     </view>
@@ -51,7 +51,7 @@
       <view class="modal" @tap.stop>
         <view class="modal-header">
           <text class="modal-title">预约咨询</text>
-          <uni-icons type="close" size="20" color="#9ca3af" @tap="showModal = false" />
+          <text class="icon-text" @tap="showModal = false">✕</text>
         </view>
         <view class="form">
           <view class="form-item">
@@ -90,10 +90,10 @@ export default {
       showModal: false,
       form: { name: '', phone: '', company: '', topic: '', note: '' },
       features: [
-        { title: '市场分析', desc: '目标市场洞察与机会评估', icon: 'chart', bg: '#ff6b35' },
-        { title: '竞品对标', desc: '竞争格局深度拆解', icon: 'eye', bg: '#2563eb' },
-        { title: '广告策略', desc: '获客渠道与投放优化', icon: 'flag', bg: '#059669' },
-        { title: '内容营销', desc: '品牌内容与社媒运营', icon: 'compose', bg: '#d97706' }
+        { title: '市场分析', desc: '目标市场洞察与机会评估', icon: '📊', bg: '#ff6b35' },
+        { title: '竞品对标', desc: '竞争格局深度拆解', icon: '🔍', bg: '#2563eb' },
+        { title: '广告策略', desc: '获客渠道与投放优化', icon: '🎯', bg: '#059669' },
+        { title: '内容营销', desc: '品牌内容与社媒运营', icon: '✍️', bg: '#d97706' }
       ],
       steps: ['需求沟通', '方案定制', '深度咨询', '持续跟踪']
     }

@@ -1,22 +1,22 @@
 <template>
   <view class="page">
     <view class="nav-bar" @tap="goBack">
-      <uni-icons type="back" size="20" color="#1a1a2e" />
+      <text class="icon-text">‹</text>
       <text class="nav-title">报告详情</text>
       <view style="width: 20px;"></view>
     </view>
 
     <scroll-view scroll-y class="content" v-if="detail">
       <view class="cover" :style="{ background: detail.gradient || 'linear-gradient(135deg, #2563eb, #60a5fa)' }">
-        <uni-icons type="bars" size="32" color="rgba(255,255,255,0.8)" />
+        <text class="icon-text">📊</text>
         <text class="cover-title">{{ detail.title }}</text>
       </view>
 
       <view class="info-card">
-        <view class="info-row"><uni-icons type="staff" size="16" color="#2563eb" /><text class="info-label">来源</text><text class="info-value">{{ detail.source || '-' }}</text></view>
-        <view class="info-row"><uni-icons type="calendar" size="16" color="#2563eb" /><text class="info-label">年份</text><text class="info-value">{{ detail.year || '-' }}</text></view>
-        <view class="info-row"><uni-icons type="flag" size="16" color="#2563eb" /><text class="info-label">行业</text><text class="info-value">{{ detail.industry || '-' }}</text></view>
-        <view class="info-row"><uni-icons type="location" size="16" color="#2563eb" /><text class="info-label">地区</text><text class="info-value">{{ detail.region || '-' }}</text></view>
+        <view class="info-row"><text class="icon-text">👥</text><text class="info-label">来源</text><text class="info-value">{{ detail.source || '-' }}</text></view>
+        <view class="info-row"><text class="icon-text">📅</text><text class="info-label">年份</text><text class="info-value">{{ detail.year || '-' }}</text></view>
+        <view class="info-row"><text class="icon-text">🏷</text><text class="info-label">行业</text><text class="info-value">{{ detail.industry || '-' }}</text></view>
+        <view class="info-row"><text class="icon-text">📍</text><text class="info-label">地区</text><text class="info-value">{{ detail.region || '-' }}</text></view>
       </view>
 
       <view class="desc-card" v-if="detail.summary">
@@ -30,7 +30,7 @@
 
     <view class="bottom-bar" v-if="detail">
       <view class="btn" @tap="onDownload">
-        <uni-icons type="download" size="18" color="#fff" />
+        <text class="icon-text">⬇</text>
         <text class="btn-text">  下载报告</text>
       </view>
     </view>

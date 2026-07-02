@@ -8,18 +8,18 @@
       <!-- 用户信息 -->
       <view class="profile-card" v-if="profile">
         <view class="avatar-wrap">
-          <uni-icons type="person" size="40" color="#fff" />
+          <text class="icon-text">👤</text>
         </view>
         <text class="nickname">{{ profile.nickname || '用户' }}</text>
         <view class="badge" v-if="profile.level >= 2">
-          <uni-icons type="star" size="12" color="#ff6b35" />
+          <text class="icon-text">⭐</text>
           <text class="badge-text">LV{{ profile.level }}</text>
         </view>
       </view>
 
       <view class="profile-card" v-else @tap="doLogin">
         <view class="avatar-wrap">
-          <uni-icons type="person" size="40" color="#fff" />
+          <text class="icon-text">👤</text>
         </view>
         <text class="nickname">点击登录</text>
       </view>
@@ -43,9 +43,9 @@
       <!-- 菜单 -->
       <view class="menu-card">
         <view class="menu-item" v-for="m in menus" :key="m.label" @tap="onMenu(m)">
-          <uni-icons :type="m.icon" size="18" :color="m.color" />
+          {{ m.icon }}
           <text class="menu-text">{{ m.label }}</text>
-          <uni-icons type="right" size="16" color="#9ca3af" />
+          <text class="icon-text">›</text>
         </view>
       </view>
       <view style="height: 70px;"></view>

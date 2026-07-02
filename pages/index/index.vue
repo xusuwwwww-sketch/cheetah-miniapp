@@ -21,7 +21,7 @@
       <view class="grid">
         <view class="grid-item" v-for="(g, i) in grids" :key="i" @tap="onGrid(g)">
           <view class="grid-icon" :style="{ background: g.bg }">
-            <uni-icons :type="g.icon" size="28" color="#fff" />
+            <text class="grid-emoji">{{ g.icon }}</text>
           </view>
           <text class="grid-text">{{ g.text }}</text>
         </view>
@@ -34,7 +34,7 @@
           <view class="community-list">
             <view class="community-card" v-for="c in communities" :key="c.id">
               <view class="community-avatar" :style="{ background: c.icon_color || '#ff6b35' }">
-                <uni-icons type="staff" size="20" color="#fff" />
+                <text class="icon-text">👥</text>
               </view>
               <text class="community-name">{{ c.title }}</text>
               <text class="community-count">{{ c.member_count || 0 }}人</text>
@@ -51,7 +51,7 @@
         </view>
         <view class="report-card" v-for="r in reports" :key="r.id" @tap="goReportDetail(r.id)">
           <view class="report-thumb" :style="{ background: r.gradient || 'linear-gradient(135deg, #2563eb, #60a5fa)' }">
-            <uni-icons type="bars" size="24" color="rgba(255,255,255,0.8)" />
+            <text class="icon-text">📊</text>
           </view>
           <view class="report-info">
             <text class="report-title">{{ r.title }}</text>
@@ -80,11 +80,11 @@ export default {
       communities: [],
       reports: [],
       grids: [
-        { text: '报活动', icon: 'calendar', bg: '#ff6b35', url: '/pages/activity/list' },
-        { text: '查报告', icon: 'bars', bg: '#2563eb', url: '/pages/report/list' },
-        { text: '案例库', icon: 'star', bg: '#059669', url: '' },
-        { text: '资料库', icon: 'folder', bg: '#7c3aed', url: '/pages/material/list' },
-        { text: '约咨询', icon: 'chat', bg: '#d97706', url: '/pages/consult/index' }
+        { text: '报活动', icon: '📅', bg: '#ff6b35', url: '/pages/activity/list' },
+        { text: '查报告', icon: '📊', bg: '#2563eb', url: '/pages/report/list' },
+        { text: '案例库', icon: '⭐', bg: '#059669', url: '' },
+        { text: '资料库', icon: '📂', bg: '#7c3aed', url: '/pages/material/list' },
+        { text: '约咨询', icon: '💬', bg: '#d97706', url: '/pages/consult/index' }
       ]
     }
   },
@@ -118,6 +118,7 @@ export default {
 .grid { display: flex; flex-wrap: wrap; padding: 12px 16px; }
 .grid-item { width: 20%; display: flex; flex-direction: column; align-items: center; margin-bottom: 12px; }
 .grid-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 6px; }
+.grid-emoji { font-size: 24px; line-height: 1; }
 .grid-text { font-size: 12px; color: #1a1a2e; }
 .section { margin: 8px 16px; }
 .section-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }

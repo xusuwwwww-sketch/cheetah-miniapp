@@ -6,7 +6,7 @@
 
     <!-- 搜索 -->
     <view class="search-bar">
-      <uni-icons type="search" size="16" color="#9ca3af" />
+      <text class="icon-text">🔍</text>
       <input class="search-input" placeholder="搜索活动" v-model="keyword" @confirm="onSearch" />
     </view>
 
@@ -28,11 +28,11 @@
         </view>
         <view class="card-body">
           <view class="card-row">
-            <uni-icons type="calendar" size="14" color="#9ca3af" />
+            <text class="icon-text">📅</text>
             <text class="card-meta">{{ a.start_time }}</text>
           </view>
           <view class="card-row" v-if="a.location">
-            <uni-icons type="location" size="14" color="#9ca3af" />
+            <text class="icon-text">📍</text>
             <text class="card-meta">{{ a.location }}</text>
           </view>
           <view class="card-footer">

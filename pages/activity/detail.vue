@@ -2,7 +2,7 @@
   <view class="page">
     <!-- Nav -->
     <view class="nav-bar" @tap="goBack">
-      <uni-icons type="back" size="20" color="#1a1a2e" />
+      <text class="icon-text">‹</text>
       <text class="nav-title">活动详情</text>
       <view style="width: 20px;"></view>
     </view>
@@ -17,27 +17,27 @@
       <!-- 信息 -->
       <view class="info-card">
         <view class="info-row">
-          <uni-icons type="calendar" size="16" color="#ff6b35" />
+          <text class="icon-text">📅</text>
           <text class="info-label">时间</text>
           <text class="info-value">{{ detail.start_time }}</text>
         </view>
         <view class="info-row" v-if="detail.location">
-          <uni-icons type="location" size="16" color="#ff6b35" />
+          <text class="icon-text">📍</text>
           <text class="info-label">地点</text>
           <text class="info-value">{{ detail.location }}</text>
         </view>
         <view class="info-row" v-if="detail.organizer">
-          <uni-icons type="staff" size="16" color="#ff6b35" />
+          <text class="icon-text">👥</text>
           <text class="info-label">主办方</text>
           <text class="info-value">{{ detail.organizer }}</text>
         </view>
         <view class="info-row" v-if="detail.signup_deadline">
-          <uni-icons type="clock" size="16" color="#ff6b35" />
+          <text class="icon-text">⏰</text>
           <text class="info-label">报名截止</text>
           <text class="info-value">{{ detail.signup_deadline }}</text>
         </view>
         <view class="info-row">
-          <uni-icons type="person" size="16" color="#ff6b35" />
+          <text class="icon-text">👤</text>
           <text class="info-label">名额</text>
           <text class="info-value">{{ detail.signup_count || 0 }}/{{ detail.quota || '不限' }}</text>
         </view>

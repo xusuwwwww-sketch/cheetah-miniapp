@@ -1,21 +1,21 @@
 <template>
   <view class="page">
     <view class="nav-bar" @tap="goBack">
-      <uni-icons type="back" size="20" color="#1a1a2e" />
+      <text class="icon-text">‹</text>
       <text class="nav-title">资料详情</text>
       <view style="width: 20px;"></view>
     </view>
 
     <scroll-view scroll-y class="content" v-if="detail">
       <view class="cover" :style="{ background: detail.gradient || 'linear-gradient(135deg, #7c3aed, #a78bfa)' }">
-        <uni-icons type="folder" size="32" color="rgba(255,255,255,0.8)" />
+        <text class="icon-text">📂</text>
         <text class="cover-title">{{ detail.title }}</text>
       </view>
 
       <view class="info-card">
-        <view class="info-row" v-if="detail.author"><uni-icons type="person" size="16" color="#7c3aed" /><text class="info-label">作者</text><text class="info-value">{{ detail.author }}</text></view>
-        <view class="info-row" v-if="detail.file_size"><uni-icons type="paperplane" size="16" color="#7c3aed" /><text class="info-label">大小</text><text class="info-value">{{ detail.file_size }}</text></view>
-        <view class="info-row" v-if="detail.category"><uni-icons type="tag" size="16" color="#7c3aed" /><text class="info-label">分类</text><text class="info-value">{{ detail.category }}</text></view>
+        <view class="info-row" v-if="detail.author"><text class="icon-text">👤</text><text class="info-label">作者</text><text class="info-value">{{ detail.author }}</text></view>
+        <view class="info-row" v-if="detail.file_size"><text class="icon-text">📄</text><text class="info-label">大小</text><text class="info-value">{{ detail.file_size }}</text></view>
+        <view class="info-row" v-if="detail.category"><text class="icon-text">🏷</text><text class="info-label">分类</text><text class="info-value">{{ detail.category }}</text></view>
       </view>
 
       <view class="desc-card" v-if="detail.description">
@@ -29,7 +29,7 @@
 
     <view class="bottom-bar" v-if="detail">
       <view class="btn" @tap="onDownload">
-        <uni-icons type="download" size="18" color="#fff" />
+        <text class="icon-text">⬇</text>
         <text class="btn-text">  下载资料</text>
       </view>
     </view>

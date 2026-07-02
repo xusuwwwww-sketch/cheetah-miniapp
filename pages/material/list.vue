@@ -1,7 +1,7 @@
 <template>
   <view class="page">
     <view class="nav-bar" @tap="goBack">
-      <uni-icons type="back" size="20" color="#1a1a2e" />
+      <text class="icon-text">‹</text>
       <text class="nav-title">资料库</text>
       <view style="width: 20px;"></view>
     </view>
@@ -21,7 +21,7 @@
     <scroll-view scroll-y class="list" @scrolltolower="loadMore" refresher-enabled :refresher-triggered="refreshing" @refresherrefresh="onRefresh">
       <view class="card" v-for="m in list" :key="m.id" @tap="goDetail(m.id)">
         <view class="card-cover" :style="{ background: m.gradient || 'linear-gradient(135deg, #7c3aed, #a78bfa)' }">
-          <uni-icons type="folder" size="24" color="rgba(255,255,255,0.8)" />
+          <text class="icon-text">📂</text>
         </view>
         <view class="card-body">
           <text class="card-title">{{ m.title }}</text>
