@@ -50,7 +50,7 @@
       <view class="menu-section">
         <view class="menu-item" v-for="m in menus" :key="m.key" @tap="onMenu(m)">
           <view class="menu-icon-wrap" :style="{ background: m.bg }">
-            <text class="menu-icon">{{ m.icon }}</text>
+            <image class="menu-icon-img" :src="m.icon" mode="aspectFit" />
           </view>
           <text class="menu-label">{{ m.label }}</text>
           <text class="menu-arrow">›</text>
@@ -71,11 +71,11 @@ export default {
       profile: null,
       stats: { signups: 0, favorites: 0, consults: 0 },
       menus: [
-        { key: 'profile',   label: '个人信息',   icon: '👤', bg: '#fff3ee', requireLogin: true },
-        { key: 'signups',   label: '我的报名',   icon: '📅', bg: '#eef3ff', requireLogin: true },
-        { key: 'downloads', label: '我的资料',   icon: '📂', bg: '#f3eeff', requireLogin: true },
-        { key: 'favorites', label: '我的收藏',   icon: '⭐', bg: '#fff9ec', requireLogin: true },
-        { key: 'consults',  label: '约咨询记录', icon: '💬', bg: '#ecfff3', requireLogin: true },
+        { key: 'profile',   label: '个人信息',   icon: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0yMCAyMXYtMmE0IDQgMCAwIDAtNC00SDhhNCA0IDAgMCAwLTQgNHYyIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSI3IiByPSI0Ii8+PC9zdmc+', bg: '#fff3ee', requireLogin: true },
+        { key: 'signups',   label: '我的报名',   icon: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxyZWN0IHg9IjMiIHk9IjQiIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgcng9IjIiLz48bGluZSB4MT0iMTYiIHkxPSIyIiB4Mj0iMTYiIHkyPSI2Ii8+PGxpbmUgeDE9IjgiIHkxPSIyIiB4Mj0iOCIgeTI9IjYiLz48bGluZSB4MT0iMyIgeTE9IjEwIiB4Mj0iMjEiIHkyPSIxMCIvPjxsaW5lIHgxPSI4IiB5MT0iMTQiIHgyPSIxNiIgeTI9IjE0Ii8+PC9zdmc+', bg: '#eef3ff', requireLogin: true },
+        { key: 'downloads', label: '我的资料',   icon: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0yMSAxNXY0YTIgMiAwIDAgMS0yIDJINWEyIDIgMCAwIDEtMi0ydi00Ii8+PHBvbHlsaW5lIHBvaW50cz0iNyAxMCAxMiAxNSAxNyAxMCIvPjxsaW5lIHgxPSIxMiIgeTE9IjE1IiB4Mj0iMTIiIHkyPSIzIi8+PC9zdmc+', bg: '#f3eeff', requireLogin: true },
+        { key: 'favorites', label: '我的收藏',   icon: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0yMC44NCA0LjYxYTUuNSA1LjUgMCAwIDAtNy43OCAwTDEyIDUuNjdsLTEuMDYtMS4wNmE1LjUgNS41IDAgMCAwLTcuNzggNy43OGwxLjA2IDEuMDZMMTIgMjEuMjNsNy43OC03Ljc4IDEuMDYtMS4wNmE1LjUgNS41IDAgMCAwIDAtNy43OHoiLz48L3N2Zz4=', bg: '#fff9ec', requireLogin: true },
+        { key: 'consults',  label: '约咨询记录', icon: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0yMSAxNWEyIDIgMCAwIDEtMiAySDdsLTQgNFY1YTIgMiAwIDAgMSAyLTJoMTRhMiAyIDAgMCAxIDIgMnoiLz48bGluZSB4MT0iOSIgeTE9IjEwIiB4Mj0iMTUiIHkyPSIxMCIvPjxsaW5lIHgxPSIxMiIgeTE9IjciIHgyPSIxMiIgeTI9IjEzIi8+PC9zdmc+', bg: '#ecfff3', requireLogin: true },
       ]
     }
   },
@@ -181,7 +181,7 @@ export default {
 .menu-item { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-bottom: 1px solid #f6f7fb; }
 .menu-item:last-child { border-bottom: none; }
 .menu-icon-wrap { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.menu-icon { font-size: 18px; }
+.menu-icon-img { width: 20px; height: 20px; }
 .menu-label { flex: 1; font-size: 15px; color: #1a1a2e; font-weight: 500; }
 .menu-arrow { font-size: 18px; color: #c0c4cc; }
 </style>
