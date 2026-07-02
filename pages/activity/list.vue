@@ -113,7 +113,7 @@ export default {
 .tab-item { padding: 8px 0; }
 .tab-text { font-size: 14px; color: #6b7280; }
 .tab-text.active { color: #ff6b35; font-weight: 600; }
-.list { flex: 1; overflow: hidden; }
+.list { flex: 1; min-height: 0; }
 .card { background: #fff; border-radius: 12px; margin: 8px 16px; overflow: hidden; }
 .card-cover { position: relative; overflow: hidden; min-height: 80px; }
 .card-cover-img { width: 100%; height: 160px; display: block; }
