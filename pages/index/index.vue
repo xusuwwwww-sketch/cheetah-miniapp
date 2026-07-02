@@ -66,19 +66,19 @@
     <!-- TabBar -->
     <view class="tab-bar">
       <view class="tab-item" @tap="goTab('/pages/index/index')">
-        <image class="tab-icon-img" :src="currentTab==='/pages/index/index' ? '../../static/icons-png/home-orange.png' : '../../static/icons-png/home-gray.png'" mode="aspectFit"/>
+        <image class="tab-icon-img" :src="currentTab==='/pages/index/index' ? '/static/icons-png/home-orange.png' : '/static/icons-png/home-gray.png'" mode="aspectFit"/>
         <text :class="['tab-text', currentTab==='/pages/index/index' ? 'tab-active' : '']">首页</text>
       </view>
       <view class="tab-item" @tap="goTab('/pages/activity/list')">
-        <image class="tab-icon-img" :src="currentTab==='/pages/activity/list' ? '../../static/icons-png/calendar-orange.png' : '../../static/icons-png/calendar-gray.png'" mode="aspectFit"/>
+        <image class="tab-icon-img" :src="currentTab==='/pages/activity/list' ? '/static/icons-png/calendar-orange.png' : '/static/icons-png/calendar-gray.png'" mode="aspectFit"/>
         <text :class="['tab-text', currentTab==='/pages/activity/list' ? 'tab-active' : '']">活动</text>
       </view>
       <view class="tab-item" @tap="goTab('/pages/material/list')">
-        <image class="tab-icon-img" :src="currentTab==='/pages/material/list' ? '../../static/icons-png/folder-orange.png' : '../../static/icons-png/folder-gray.png'" mode="aspectFit"/>
+        <image class="tab-icon-img" :src="currentTab==='/pages/material/list' ? '/static/icons-png/folder-orange.png' : '/static/icons-png/folder-gray.png'" mode="aspectFit"/>
         <text :class="['tab-text', currentTab==='/pages/material/list' ? 'tab-active' : '']">服务</text>
       </view>
       <view class="tab-item" @tap="goTab('/pages/profile/index')">
-        <image class="tab-icon-img" :src="currentTab==='/pages/profile/index' ? '../../static/icons-png/user-orange.png' : '../../static/icons-png/user-gray.png'" mode="aspectFit"/>
+        <image class="tab-icon-img" :src="currentTab==='/pages/profile/index' ? '/static/icons-png/user-orange.png' : '/static/icons-png/user-gray.png'" mode="aspectFit"/>
         <text :class="['tab-text', currentTab==='/pages/profile/index' ? 'tab-active' : '']">我的</text>
       </view>
     </view>
@@ -97,11 +97,11 @@ export default {
       communities: [],
       reports: [],
       grids: [
-        { text: '报活动', icon: '../../static/icons-png/calendar-orange.png', bg: '#ff6b35', url: '/pages/activity/list' },
-        { text: '查报告', icon: '../../static/icons-png/report-blue.png', bg: '#2563eb', url: '/pages/report/list' },
-        { text: '案例库', icon: '../../static/icons-png/case-green.png', bg: '#059669', url: '' },
-        { text: '资料库', icon: '../../static/icons-png/folder-purple.png', bg: '#7c3aed', url: '/pages/material/list' },
-        { text: '约咨询', icon: '../../static/icons-png/consult-amber.png', bg: '#d97706', url: '/pages/consult/index' }
+        { text: '报活动', icon: '/static/icons-png/calendar-orange.png', bg: '#ff6b35', url: '/pages/activity/list' },
+        { text: '查报告', icon: '/static/icons-png/report-blue.png', bg: '#2563eb', url: '/pages/report/list' },
+        { text: '案例库', icon: '/static/icons-png/case-green.png', bg: '#059669', url: '' },
+        { text: '资料库', icon: '/static/icons-png/folder-purple.png', bg: '#7c3aed', url: '/pages/material/list' },
+        { text: '约咨询', icon: '/static/icons-png/consult-amber.png', bg: '#d97706', url: '/pages/consult/index' }
       ]
     }
   },
