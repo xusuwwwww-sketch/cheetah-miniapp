@@ -1,13 +1,6 @@
 <template>
   <view class="page">
 
-    <!-- Banner -->
-    <view class="page-banner" style="background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);">
-      <text class="banner-tag">精选资料</text>
-      <text class="banner-title">出海知识库</text>
-      <text class="banner-desc">媒体投放 · 龙虾工具 · FastGrow</text>
-    </view>
-
     <!-- 分类 tabs -->
     <scroll-view scroll-x class="tabs">
       <view class="tab-list">
@@ -82,8 +75,4 @@ export default {
 .empty { padding: 40px; text-align: center; }
 .empty-text { font-size: 14px; color: #9ca3af; }
 
-.page-banner { padding: 20px 16px 24px; }
-.banner-tag { display: block; font-size: 11px; color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px; width: fit-content; margin-bottom: 8px; }
-.banner-title { display: block; font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 4px; }
-.banner-desc { display: block; font-size: 13px; color: rgba(255,255,255,0.8); }
 </style>

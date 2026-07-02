@@ -1,13 +1,6 @@
 <template>
   <view class="page">
 
-    <!-- Banner -->
-    <view class="page-banner" style="background: linear-gradient(135deg, #ff6b35 0%, #ff9a5c 100%);">
-      <text class="banner-tag">精彩活动</text>
-      <text class="banner-title">出海增长·线上线下</text>
-      <text class="banner-desc">直播 · 沙龙 · 闭门会 · 训练营</text>
-    </view>
-
     <!-- 搜索 -->
     <view class="search-bar">
       <text class="icon-text">🔍</text>
@@ -134,8 +127,4 @@ export default {
 .empty { padding: 40px; text-align: center; }
 .empty-text { font-size: 14px; color: #9ca3af; }
 
-.page-banner { padding: 20px 16px 24px; }
-.banner-tag { display: block; font-size: 11px; color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px; width: fit-content; margin-bottom: 8px; }
-.banner-title { display: block; font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 4px; }
-.banner-desc { display: block; font-size: 13px; color: rgba(255,255,255,0.8); }
 </style>
