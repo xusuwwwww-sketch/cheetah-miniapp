@@ -93,11 +93,12 @@ export default {
     }
   },
   onShow() {
-    // 支持从首页带参数跳转
-    const pages = getCurrentPages()
-    const current = pages[pages.length - 1]
-    const type = current?.options?.type
-    if (type) this.currentType = type
+    // 从 storage 读取首页传过来的 tab 类型
+    const type = uni.getStorageSync('serviceTab')
+    if (type) {
+      this.currentType = type
+      uni.removeStorageSync('serviceTab')
+    }
     this.resetAndLoad()
   },
   methods: {
