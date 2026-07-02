@@ -1,15 +1,21 @@
 {
   "name": "猎豹出海工具箱",
-  "appid": "touristappid",
+  "appid": "wx2e6caf0fa63d052c",
   "description": "",
   "versionName": "1.0.0",
   "versionCode": "100",
   "transformPx": false,
   "mp-weixin": {
-    "appid": "touristappid",
-    "setting": { "urlCheck": false },
+    "appid": "wx2e6caf0fa63d052c",
+    "setting": {
+      "urlCheck": false
+    },
     "usingComponents": true,
     "lazyCodeLoading": "requiredComponents"
   },
-  "h5": { "devServer": { "port": 5173 } }
+  "h5": {
+    "devServer": {
+      "port": 5173
+    }
+  }
 }
