@@ -77,7 +77,13 @@ export default {
     },
     loadDetail() {
       this.loading = true
-      api.getActivityDetail(this.id).then(r => { if (r.code === 0) this.detail = r.data }).catch(() => {}).finally(() => { this.loading = false })
+      api.getActivityDetail(this.id).then(r => {
+        if (r.code === 0) {
+          this.detail = r.data
+          const key = `fav_activity_${this.id}`
+          this.favorited = !!uni.getStorageSync(key)
+        }
+      }).catch(() => {}).finally(() => { this.loading = false })
     },
     onSignup() {
       if (!this.detail || this.detail.status === 'ended' || this.detail.status === 'full') return
@@ -93,6 +99,8 @@ export default {
       api.toggleFavorite({ target_type: 'activity', target_id: this.id }).then(r => {
         if (r.code === 0) {
           this.favorited = r.data?.favorited ?? !this.favorited
+          const key = `fav_activity_${this.id}`
+          this.favorited ? uni.setStorageSync(key, 1) : uni.removeStorageSync(key)
           uni.showToast({ title: this.favorited ? '已收藏' : '已取消收藏', icon: 'none' })
         }
       }).catch(() => {})

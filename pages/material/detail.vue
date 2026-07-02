@@ -105,7 +105,17 @@ export default {
         ? api.getReportDetail(this.id)
         : api.getMaterialDetail(this.id)
       req.then(r => {
-        if (r.code === 0) this.detail = r.data
+        if (r.code === 0) {
+          this.detail = r.data
+          // 同步收藏状态（detail接口返回了favorited字段）
+          if (r.data.favorited !== undefined) {
+            this.favorited = !!r.data.favorited
+          } else {
+            // 未登录时查本地缓存
+            const key = `fav_${this.type}_${this.id}`
+            this.favorited = !!uni.getStorageSync(key)
+          }
+        }
       }).catch(() => {}).finally(() => { this.loading = false })
     },
     onDownload() {
@@ -135,6 +145,8 @@ export default {
       api.toggleFavorite({ target_type: this.type, target_id: this.id }).then(r => {
         if (r.code === 0) {
           this.favorited = r.data?.favorited ?? !this.favorited
+          const key = `fav_${this.type}_${this.id}`
+          this.favorited ? uni.setStorageSync(key, 1) : uni.removeStorageSync(key)
           uni.showToast({ title: this.favorited ? '已收藏' : '已取消收藏', icon: 'none' })
         }
       }).catch(() => {})
