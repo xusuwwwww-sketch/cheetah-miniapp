@@ -8,7 +8,8 @@
   "mp-weixin": {
     "appid": "touristappid",
     "setting": { "urlCheck": false },
-    "usingComponents": true
+    "usingComponents": true,
+    "lazyCodeLoading": "requiredComponents"
   },
   "h5": { "devServer": { "port": 5173 } }
 }
