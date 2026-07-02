@@ -71,6 +71,7 @@ export const api = {
   // 社群
   joinCommunity: (data) => post('/api/config/communities/join', data),
   getTags: (params = {}) => get('/api/config/tags', params),
+  getPopup: () => get('/api/config/popup'),
 }
 
 export default api

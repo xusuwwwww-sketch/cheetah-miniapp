@@ -63,6 +63,41 @@
       <view style="height: 80px;"></view>
     </scroll-view>
 
+    <!-- 启动弹窗 -->
+    <view class="popup-mask" v-if="showPopup && popup" @tap="closePopup">
+      <view class="popup-box" @tap.stop>
+        <!-- 关闭按钮 -->
+        <view class="popup-close" @tap="closePopup">✕</view>
+
+        <!-- 封面图 -->
+        <view class="popup-cover" :style="{ background: popup.gradient || 'linear-gradient(135deg, #ff6b35, #ff9a5c)' }">
+          <image v-if="popup.cover_url" :src="popup.cover_url" class="popup-cover-img" mode="aspectFill" />
+          <view v-else class="popup-cover-text">
+            <text class="popup-title-big">{{ popup.title }}</text>
+          </view>
+        </view>
+
+        <!-- 内容区 -->
+        <view class="popup-content">
+          <text class="popup-title">{{ popup.title }}</text>
+          <text class="popup-desc" v-if="popup.description">{{ popup.description }}</text>
+
+          <!-- 今日不再提醒 -->
+          <view class="popup-remind" @tap="popupNoRemind = !popupNoRemind" v-if="popup.show_once">
+            <view :class="['remind-check', { checked: popupNoRemind }]">
+              <text v-if="popupNoRemind" class="check-icon">✓</text>
+            </view>
+            <text class="remind-text">今日内不再提醒</text>
+          </view>
+
+          <!-- 按钮 -->
+          <view class="popup-btn" @tap="onPopupAction">
+            <text class="popup-btn-text">{{ popup.btn_text || '立即查看' }}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
   </view>
 </template>
 
@@ -73,6 +108,9 @@ export default {
   data() {
     return {
       banners: [],
+      popup: null,
+      showPopup: false,
+      popupNoRemind: false,
       communities: [],
       reports: [],
       grids: [
@@ -84,7 +122,10 @@ export default {
       ]
     }
   },
-  onShow() { this.loadData() },
+  onShow() {
+    this.loadData()
+    this.checkPopup()
+  },
   methods: {
     loadData() {
       api.getBanners().then(r => { if (r.code === 0) this.banners = r.data }).catch(() => {})
@@ -106,7 +147,38 @@ export default {
       uni.setStorageSync('serviceTab', 'report')
       uni.switchTab({ url: '/pages/material/list' })
     },
-    goReportDetail(id) { uni.navigateTo({ url: `/pages/material/detail?id=${id}&type=report` }) }
+    goReportDetail(id) { uni.navigateTo({ url: `/pages/material/detail?id=${id}&type=report` }) },
+    checkPopup() {
+      api.getPopup().then(r => {
+        if (r.code === 0 && r.data) {
+          const p = r.data
+          // 今日不再提醒逻辑
+          if (p.show_once) {
+            const key = `popup_seen_${p.id}_${new Date().toDateString()}`
+            if (uni.getStorageSync(key)) return
+          }
+          this.popup = p
+          this.showPopup = true
+          this.popupNoRemind = false
+        }
+      }).catch(() => {})
+    },
+    closePopup() {
+      if (this.popupNoRemind && this.popup?.show_once) {
+        const key = `popup_seen_${this.popup.id}_${new Date().toDateString()}`
+        uni.setStorageSync(key, 1)
+      }
+      this.showPopup = false
+    },
+    onPopupAction() {
+      this.closePopup()
+      const p = this.popup
+      if (!p) return
+      if (p.link_type === 'activity' && p.link_id) uni.navigateTo({ url: `/pages/activity/detail?id=${p.link_id}` })
+      else if (p.link_type === 'report' && p.link_id) uni.navigateTo({ url: `/pages/material/detail?id=${p.link_id}&type=report` })
+      else if (['material', 'case'].includes(p.link_type) && p.link_id) uni.navigateTo({ url: `/pages/material/detail?id=${p.link_id}&type=${p.link_type}` })
+      else if (p.link_type === 'url' && p.link_url) uni.navigateTo({ url: p.link_url })
+    }
   }
 }
 </script>
@@ -142,5 +214,24 @@ export default {
 .report-meta { font-size: 11px; color: #9ca3af; margin-top: 4px; }
 .empty { padding: 30px; text-align: center; }
 .empty-text { font-size: 14px; color: #9ca3af; }
+
+/* 弹窗样式 */
+.popup-mask { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.popup-box { background: #fff; border-radius: 16px; width: 100%; max-width: 320px; overflow: hidden; position: relative; }
+.popup-close { position: absolute; top: 12px; right: 12px; width: 28px; height: 28px; background: rgba(0,0,0,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 10; font-size: 14px; color: #fff; }
+.popup-cover { height: 200px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.popup-cover-img { width: 100%; height: 100%; }
+.popup-cover-text { padding: 20px; text-align: center; }
+.popup-title-big { font-size: 22px; font-weight: 700; color: #fff; line-height: 1.4; }
+.popup-content { padding: 16px; }
+.popup-title { font-size: 16px; font-weight: 700; color: #1a1a2e; display: block; margin-bottom: 6px; }
+.popup-desc { font-size: 13px; color: #6b7280; line-height: 1.6; display: block; margin-bottom: 14px; }
+.popup-remind { display: flex; align-items: center; gap: 6px; margin-bottom: 12px; }
+.remind-check { width: 18px; height: 18px; border: 1.5px solid #e5e7eb; border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.remind-check.checked { background: #ff6b35; border-color: #ff6b35; }
+.check-icon { font-size: 12px; color: #fff; }
+.remind-text { font-size: 13px; color: #9ca3af; }
+.popup-btn { background: #ff6b35; border-radius: 10px; padding: 13px; text-align: center; }
+.popup-btn-text { color: #fff; font-size: 15px; font-weight: 600; }
 
 </style>
