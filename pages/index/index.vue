@@ -33,8 +33,8 @@
         <scroll-view scroll-x class="community-scroll">
           <view class="community-list">
             <view class="community-card" v-for="c in communities" :key="c.id" @tap="openQR(c)">
-              <view class="community-avatar" :style="{ background: c.icon_color || '#ff6b35' }">
-                <text class="icon-text">👥</text>
+              <view class="community-avatar" :style="{  background: c.icon_color || '#ff6b35' }">
+                <image class="community-icon-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0xNyAyMXYtMmE0IDQgMCAwIDAtNC00SDVhNCA0IDAgMCAwLTQgNHYyIi8+PGNpcmNsZSBjeD0iOSIgY3k9IjciIHI9IjQiLz48cGF0aCBkPSJNMjMgMjF2LTJhNCA0IDAgMCAwLTMtMy44NyIvPjxwYXRoIGQ9Ik0xNiAzLjEzYTQgNCAwIDAgMSAwIDcuNzUiLz48L3N2Zz4=" mode="aspectFit" />
               </view>
               <text class="community-name">{{ c.title }}</text>
             </view>
@@ -228,6 +228,7 @@ export default {
 .community-list { display: flex; gap: 12px; }
 .community-card { width: 80px; flex-shrink: 0; background: #fff; border-radius: 12px; padding: 12px 6px; display: flex; flex-direction: column; align-items: center; }
 .community-avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 6px; }
+.community-icon-img { width: 20px; height: 20px; }
 .community-name { font-size: 12px; color: #1a1a2e; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; text-align: center; }
 .report-card { background: #fff; border-radius: 12px; padding: 12px; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; }
 .report-thumb { width: 60px; height: 60px; border-radius: 8px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
