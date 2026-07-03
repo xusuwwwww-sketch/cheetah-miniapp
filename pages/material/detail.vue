@@ -62,7 +62,7 @@
     <!-- 底部操作栏 -->
     <view class="bottom-bar" v-if="detail">
       <view class="fav-icon" @tap="toggleFav">
-        <text class="fav-text">{{ favorited ? '❤️' : '🤍' }}</text>
+        <image class="fav-img" :src="favorited ? 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2ZmNmIzNSIgc3Ryb2tlPSIjZmY2YjM1IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTIwLjg0IDQuNjFhNS41IDUuNSAwIDAgMC03Ljc4IDBMMTIgNS42N2wtMS4wNi0xLjA2YTUuNSA1LjUgMCAwIDAtNy43OCA3Ljc4bDEuMDYgMS4wNkwxMiAyMS4yM2w3Ljc4LTcuNzggMS4wNi0xLjA2YTUuNSA1LjUgMCAwIDAgMC03Ljc4eiIvPjwvc3ZnPg==' : 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmY2YjM1IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTIwLjg0IDQuNjFhNS41IDUuNSAwIDAgMC03Ljc4IDBMMTIgNS42N2wtMS4wNi0xLjA2YTUuNSA1LjUgMCAwIDAtNy43OCA3Ljc4bDEuMDYgMS4wNkwxMiAyMS4yM2w3Ljc4LTcuNzggMS4wNi0xLjA2YTUuNSA1LjUgMCAwIDAgMC03Ljc4eiIvPjwvc3ZnPg=='" mode="aspectFit" />
       </view>
       <!-- 报告/资料库：下载 -->
       <template v-if="type !== 'case'">
@@ -73,7 +73,7 @@
       <!-- 案例库：预约咨询 -->
       <template v-if="type === 'case'">
         <view class="dl-btn consult-btn" @tap="goConsult" style="flex:1">
-          <text class="dl-text">💬 预约顾问咨询</text>
+          <text class="dl-text">预约顾问咨询</text>
         </view>
       </template>
     </view>
@@ -196,7 +196,7 @@ export default {
 
 .bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; padding: 12px 16px; background: #fff; border-top: 1px solid #e5e7eb; padding-bottom: calc(12px + env(safe-area-inset-bottom)); display: flex; gap: 10px; align-items: center; }
 .fav-icon { width: 44px; height: 44px; border-radius: 10px; background: #f6f7fb; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.fav-text { font-size: 22px; }
+.fav-img { width: 24px; height: 24px; }
 .dl-btn { border-radius: 10px; padding: 14px; text-align: center; background: #2563eb; }
 .dl-btn.consult-btn { background: #ff6b35; }
 .dl-text { color: #fff; font-size: 16px; font-weight: 600; }
