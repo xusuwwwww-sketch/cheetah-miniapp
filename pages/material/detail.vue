@@ -77,6 +77,36 @@
         </view>
       </template>
     </view>
+
+    <!-- 留资弹窗（下载前填写基础信息） -->
+    <view class="lead-mask" v-if="showLeadForm" @tap="showLeadForm = false">
+      <view class="lead-box" @tap.stop>
+        <text class="lead-title">完善信息后免费下载</text>
+        <text class="lead-desc">填写以下信息即可下载全部资料</text>
+        <view class="lead-form">
+          <view class="lead-item">
+            <text class="lead-label">姓名 <text style="color:#ef4444">*</text></text>
+            <input class="lead-input" placeholder="请输入姓名" v-model="leadForm.name" placeholder-style="color:#c0c4cc;" />
+          </view>
+          <view class="lead-item">
+            <text class="lead-label">行业 <text style="color:#ef4444">*</text></text>
+            <input class="lead-input" placeholder="如：跨境电商、游戏出海" v-model="leadForm.industry" placeholder-style="color:#c0c4cc;" />
+          </view>
+          <view class="lead-item">
+            <text class="lead-label">职位</text>
+            <input class="lead-input" placeholder="如：市场总监（选填）" v-model="leadForm.position" placeholder-style="color:#c0c4cc;" />
+          </view>
+          <view class="lead-item">
+            <text class="lead-label">邮箱 <text style="color:#ef4444">*</text></text>
+            <input class="lead-input" type="email" placeholder="请输入邮箱" v-model="leadForm.email" placeholder-style="color:#c0c4cc;" />
+          </view>
+          <view class="lead-btn" @tap="submitLead">
+            <text class="lead-btn-text">{{ leadSubmitting ? '提交中...' : '立即下载' }}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
   </view>
 </template>
 
@@ -84,7 +114,7 @@
 import { api } from '@/utils/api.js'
 
 export default {
-  data() { return { id: '', type: 'material', detail: null, loading: true, favorited: false } },
+  data() { return { id: '', type: 'material', detail: null, loading: true, favorited: false, showLeadForm: false, leadForm: { name: '', industry: '', position: '', email: '' }, leadSubmitting: false } },
   computed: {
     defaultGradient() {
       return { report: 'linear-gradient(135deg, #2563eb, #60a5fa)', case: 'linear-gradient(135deg, #059669, #34d399)', material: 'linear-gradient(135deg, #7c3aed, #a78bfa)' }[this.type] || 'linear-gradient(135deg, #7c3aed, #a78bfa)'
@@ -141,15 +171,7 @@ export default {
           uni.downloadFile({ url: r.data.file_url, success(res) { uni.openDocument({ filePath: res.tempFilePath }) } })
           // #endif
         } else if (r.code === 403) {
-          uni.showModal({
-            title: '需要完善信息',
-            content: '下载资料需要先完善基础信息（姓名、行业、职位、邮箱）',
-            confirmText: '去完善',
-            cancelText: '取消',
-            success: (res) => {
-              if (res.confirm) uni.navigateTo({ url: '/pages/profile/edit' })
-            }
-          })
+          this.showLeadForm = true
         } else {
           uni.showToast({ title: r.msg || '下载失败', icon: 'none' })
         }
@@ -157,6 +179,21 @@ export default {
     },
     goConsult() {
       uni.navigateTo({ url: '/pages/consult/index' })
+    },
+    submitLead() {
+      const { name, industry, email } = this.leadForm
+      if (!name || !industry || !email) return uni.showToast({ title: '请填写必填项', icon: 'none' })
+      this.leadSubmitting = true
+      api.updateBasic(this.leadForm).then(r => {
+        this.leadSubmitting = false
+        if (r.code === 0) {
+          uni.showToast({ title: '信息已完善，正在下载', icon: 'success' })
+          this.showLeadForm = false
+          setTimeout(() => this.onDownload(), 1000)
+        } else {
+          uni.showToast({ title: r.msg || '提交失败', icon: 'none' })
+        }
+      }).catch(() => { this.leadSubmitting = false; uni.showToast({ title: '网络异常', icon: 'none' }) })
     },
     toggleFav() {
       const token = uni.getStorageSync('token')
@@ -209,3 +246,14 @@ export default {
 .dl-btn.consult-btn { background: #ff6b35; }
 .dl-text { color: #fff; font-size: 16px; font-weight: 600; }
 </style>
+
+.lead-mask { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.55); z-index: 9999; display: flex; align-items: flex-end; }
+.lead-box { background: #fff; border-radius: 16px 16px 0 0; width: 100%; padding: 24px 20px; padding-bottom: calc(24px + env(safe-area-inset-bottom)); }
+.lead-title { font-size: 18px; font-weight: 700; color: #1a1a2e; display: block; margin-bottom: 4px; }
+.lead-desc { font-size: 13px; color: #9ca3af; display: block; margin-bottom: 16px; }
+.lead-form { display: flex; flex-direction: column; gap: 12px; }
+.lead-item { display: flex; flex-direction: column; gap: 6px; }
+.lead-label { font-size: 13px; color: #6b7280; font-weight: 500; }
+.lead-input { background: #f6f7fb; border-radius: 8px; padding: 10px 12px; font-size: 14px; color: #1a1a2e; height: 40px; }
+.lead-btn { background: #ff6b35; border-radius: 10px; padding: 14px; text-align: center; margin-top: 4px; }
+.lead-btn-text { color: #fff; font-size: 16px; font-weight: 600; }
