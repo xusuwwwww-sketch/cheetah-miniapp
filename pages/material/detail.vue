@@ -83,7 +83,7 @@
       <view class="lead-box" @tap.stop>
         <text class="lead-title">填写信息免费下载</text>
         <text class="lead-desc">填写以下信息，即可下载全部免费资料</text>
-        <scroll-view scroll-y style="max-height:65vh;">
+        <scroll-view scroll-y style="flex:1;overflow:hidden;padding:0 20px 20px;">
           <view class="lead-form">
             <view class="lead-item">
               <text class="lead-label">姓名 <text style="color:#ef4444">*</text></text>
@@ -268,9 +268,9 @@ export default {
 </style>
 
 .lead-mask { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 10000; display: flex; align-items: flex-end; }
-.lead-box { background: #fff; border-radius: 16px 16px 0 0; width: 100%; padding: 24px 20px; padding-bottom: calc(24px + env(safe-area-inset-bottom)); }
-.lead-title { font-size: 18px; font-weight: 700; color: #1a1a2e; display: block; margin-bottom: 4px; }
-.lead-desc { font-size: 13px; color: #9ca3af; display: block; margin-bottom: 16px; }
+.lead-box { background: #fff; border-radius: 16px 16px 0 0; width: 100%; max-height: 85vh; display: flex; flex-direction: column; padding-bottom: env(safe-area-inset-bottom); }
+.lead-title { font-size: 18px; font-weight: 700; color: #1a1a2e; display: block; margin-bottom: 4px; padding: 24px 20px 0; }
+.lead-desc { font-size: 13px; color: #9ca3af; display: block; margin-bottom: 16px; padding: 0 20px; }
 .lead-form { display: flex; flex-direction: column; gap: 12px; }
 .lead-item { display: flex; flex-direction: column; gap: 6px; }
 .lead-label { font-size: 13px; color: #6b7280; font-weight: 500; }
