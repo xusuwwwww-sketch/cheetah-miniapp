@@ -147,11 +147,15 @@ export default {
     },
     onGrid(g) {
       if (!g.url) return uni.showToast({ title: '开发中，敬请期待', icon: 'none' })
-      // tabBar 页面不支持带参数的 navigateTo，用 storage 传递 tab 类型
-      if (g.url.includes('/pages/material/list')) {
-        const type = g.url.includes('type=') ? g.url.split('type=')[1] : 'material'
-        uni.setStorageSync('serviceTab', type)
-        uni.switchTab({ url: '/pages/material/list' })
+      // tabBar 页面必须用 switchTab
+      const tabPages = ['/pages/activity/list', '/pages/material/list', '/pages/profile/index', '/pages/consult/index']
+      const baseUrl = g.url.split('?')[0]
+      if (tabPages.includes(baseUrl)) {
+        if (g.url.includes('/pages/material/list')) {
+          const type = g.url.includes('type=') ? g.url.split('type=')[1] : 'material'
+          uni.setStorageSync('serviceTab', type)
+        }
+        uni.switchTab({ url: baseUrl })
       } else {
         uni.navigateTo({ url: g.url })
       }

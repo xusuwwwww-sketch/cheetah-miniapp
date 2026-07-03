@@ -61,7 +61,7 @@ export default {
         { label: '直播', value: 'live' },
         { label: '沙龙', value: 'salon' },
         { label: '闭门会', value: 'closed' },
-        { label: '训练营', value: 'bootcamp' }
+        { label: '训练营', value: 'camp' }
       ],
       list: [],
       page: 1,
