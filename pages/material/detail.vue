@@ -4,9 +4,6 @@
       <!-- 封面 -->
       <view class="cover" :style="{ background: detail.gradient || defaultGradient }">
         <image v-if="detail.cover_url" :src="detail.cover_url" class="cover-img" mode="aspectFill" />
-        <view v-else class="cover-text">
-          <text class="cover-title">{{ detail.title }}</text>
-        </view>
       </view>
 
       <!-- 标题卡片 -->
