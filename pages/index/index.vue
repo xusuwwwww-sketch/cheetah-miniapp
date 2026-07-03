@@ -222,9 +222,9 @@ export default {
 .section-more { font-size: 12px; color: #ff6b35; }
 .community-scroll { white-space: nowrap; }
 .community-list { display: flex; gap: 12px; }
-.community-card { width: 100px; background: #fff; border-radius: 12px; padding: 12px 8px; display: flex; flex-direction: column; align-items: center; }
+.community-card { width: 80px; flex-shrink: 0; background: #fff; border-radius: 12px; padding: 12px 6px; display: flex; flex-direction: column; align-items: center; }
 .community-avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 6px; }
-.community-name { font-size: 13px; color: #1a1a2e; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 80px; }
+.community-name { font-size: 12px; color: #1a1a2e; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; text-align: center; }
 .report-card { background: #fff; border-radius: 12px; padding: 12px; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; }
 .report-thumb { width: 60px; height: 60px; border-radius: 8px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
 .report-info { flex: 1; min-width: 0; }
