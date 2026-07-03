@@ -32,7 +32,7 @@
         <view class="section-head"><text class="section-title">热门社群</text></view>
         <scroll-view scroll-x class="community-scroll">
           <view class="community-list">
-            <view class="community-card" v-for="c in communities" :key="c.id">
+            <view class="community-card" v-for="c in communities" :key="c.id" @tap="openQR(c)">
               <view class="community-avatar" :style="{ background: c.icon_color || '#ff6b35' }">
                 <text class="icon-text">👥</text>
               </view>
@@ -62,6 +62,17 @@
 
       <view style="height: 80px;"></view>
     </scroll-view>
+
+    <!-- 社群二维码弹窗 -->
+    <view class="popup-mask" v-if="showQR && selectedCommunity" @tap="showQR = false">
+      <view class="qr-box" @tap.stop>
+        <view class="qr-close" @tap="showQR = false">✕</view>
+        <text class="qr-title">{{ selectedCommunity.title }}</text>
+        <text class="qr-desc">长按二维码识别加入</text>
+        <image :src="selectedCommunity.qr_url" class="qr-img" mode="aspectFit" />
+        <text class="qr-hint">长按图片 → 识别图中二维码</text>
+      </view>
+    </view>
 
     <!-- 启动弹窗 -->
     <view class="popup-mask" v-if="showPopup && popup" @tap="closePopup">
@@ -108,6 +119,8 @@ export default {
   data() {
     return {
       banners: [],
+      selectedCommunity: null,
+      showQR: false,
       popup: null,
       showPopup: false,
       popupNoRemind: false,
@@ -148,6 +161,11 @@ export default {
       uni.switchTab({ url: '/pages/material/list' })
     },
     goReportDetail(id) { uni.navigateTo({ url: `/pages/material/detail?id=${id}&type=report` }) },
+    openQR(community) {
+      if (!community.qr_url) return uni.showToast({ title: '二维码暂未配置', icon: 'none' })
+      this.selectedCommunity = community
+      this.showQR = true
+    },
     checkPopup() {
       api.getPopup().then(r => {
         if (r.code === 0 && r.data) {
@@ -233,5 +251,13 @@ export default {
 .remind-text { font-size: 13px; color: #9ca3af; }
 .popup-btn { background: #ff6b35; border-radius: 10px; padding: 13px; text-align: center; }
 .popup-btn-text { color: #fff; font-size: 15px; font-weight: 600; }
+
+/* 社群二维码弹窗 */
+.qr-box { background: #fff; border-radius: 16px; padding: 24px 20px; width: 280px; display: flex; flex-direction: column; align-items: center; position: relative; }
+.qr-close { position: absolute; top: 12px; right: 12px; width: 28px; height: 28px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #6b7280; }
+.qr-title { font-size: 17px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+.qr-desc { font-size: 13px; color: #6b7280; margin-bottom: 16px; }
+.qr-img { width: 200px; height: 200px; border-radius: 8px; }
+.qr-hint { font-size: 12px; color: #9ca3af; margin-top: 12px; }
 
 </style>
