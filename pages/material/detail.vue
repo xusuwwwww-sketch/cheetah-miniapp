@@ -97,6 +97,11 @@ export default {
     this.id = e.id
     this.type = e.type || 'material'
     this.loadDetail()
+    // 埋点：阅读事件
+    const token = uni.getStorageSync('token')
+    if (token) {
+      api.trackView && api.trackView({ target_type: this.type, target_id: e.id }).catch(() => {})
+    }
   },
   methods: {
     cleanContent(html) {

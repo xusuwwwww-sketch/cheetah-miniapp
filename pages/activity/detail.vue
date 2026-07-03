@@ -69,7 +69,12 @@ import { api } from '@/utils/api.js'
 
 export default {
   data() { return { id: '', detail: null, loading: true, favorited: false } },
-  onLoad(e) { this.id = e.id; this.loadDetail() },
+  onLoad(e) {
+    this.id = e.id
+    this.loadDetail()
+    const token = uni.getStorageSync('token')
+    if (token) api.trackView && api.trackView({ target_type: 'activity', target_id: e.id }).catch(() => {})
+  },
   methods: {
     formatTime(t) {
       if (!t) return ''
