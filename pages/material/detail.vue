@@ -188,7 +188,7 @@ export default {
 .info-label { font-size: 13px; color: #9ca3af; width: 70px; flex-shrink: 0; }
 .info-value { font-size: 14px; color: #1a1a2e; flex: 1; }
 
-.section-card { background: #fff; margin: 12px 16px; border-radius: 12px; padding: 16px; overflow: hidden; }
+.section-card { background: #fff; margin: 12px 16px; border-radius: 12px; padding: 16px; }
 .section-title { font-size: 15px; font-weight: 600; color: #1a1a2e; display: block; margin-bottom: 10px; }
 .section-text { font-size: 14px; color: #6b7280; line-height: 1.8; white-space: pre-wrap; }
 .rich-content { font-size: 14px; color: #4b5563; line-height: 1.8; display: block; }
