@@ -106,11 +106,12 @@ export default {
   methods: {
     cleanContent(html) {
       if (!html) return ''
-      // 移除图片内联 style/width/height，让 CSS max-width:100% 生效
+      // 先清除所有内联尺寸，再加微信小程序兼容的内联样式
       return html
         .replace(/<img([^>]*)\sstyle="[^"]*"([^>]*)\/?>/gi, '<img$1$2/>')
         .replace(/<img([^>]*)\swidth="[^"]*"([^>]*)\/?>/gi, '<img$1$2/>')
         .replace(/<img([^>]*)\sheight="[^"]*"([^>]*)\/?>/gi, '<img$1$2/>')
+        .replace(/<img([^>]*)\/>/gi, '<img$1 style="max-width:100%;height:auto;display:block;" />')
     },
     loadDetail() {
       this.loading = true
