@@ -191,7 +191,7 @@ export default {
 .info-card { background: #fff; margin: 12px 16px; border-radius: 12px; padding: 4px 16px; }
 .info-row { display: flex; align-items: center; padding: 12px 0; border-bottom: 1px solid #f3f4f6; }
 .info-row:last-child { border-bottom: none; }
-.info-label { font-size: 13px; color: #9ca3af; width: 40px; flex-shrink: 0; }
+.info-label { font-size: 13px; color: #9ca3af; width: 56px; flex-shrink: 0; }
 .info-value { font-size: 14px; color: #1a1a2e; flex: 1; }
 
 .section-card { background: #fff; margin: 12px 16px; border-radius: 12px; padding: 16px; }
