@@ -1,6 +1,6 @@
 <template>
   <view class="page">
-    <scroll-view scroll-y style="height: 100vh;" v-if="detail">
+    <scroll-view scroll-y style="height: calc(100vh - 80px);" v-if="detail">
       <!-- 封面 -->
       <view class="cover" :style="{ background: detail.gradient || defaultGradient }">
         <image v-if="detail.cover_url" :src="detail.cover_url" class="cover-img" mode="aspectFill" />
@@ -54,7 +54,7 @@
         <rich-text class="rich-content" :nodes="detail.content" />
       </view>
 
-      <view style="height: 130px;"></view>
+      <view style="height: 40px;"></view>
     </scroll-view>
 
     <!-- 加载中 -->
