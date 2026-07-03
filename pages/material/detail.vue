@@ -51,7 +51,7 @@
       <!-- 案例正文 -->
       <view class="section-card" v-if="type === 'case' && detail.content">
         <text class="section-title">案例详情</text>
-        <rich-text class="rich-content" :nodes="detail.content" />
+        <rich-text class="rich-content" :nodes="cleanContent(detail.content)" />
       </view>
 
       <view style="height: 40px;"></view>
@@ -99,6 +99,14 @@ export default {
     this.loadDetail()
   },
   methods: {
+    cleanContent(html) {
+      if (!html) return ''
+      // 移除图片内联 style/width/height，让 CSS max-width:100% 生效
+      return html
+        .replace(/<img([^>]*)\sstyle="[^"]*"([^>]*)\/?>/gi, '<img$1$2/>')
+        .replace(/<img([^>]*)\swidth="[^"]*"([^>]*)\/?>/gi, '<img$1$2/>')
+        .replace(/<img([^>]*)\sheight="[^"]*"([^>]*)\/?>/gi, '<img$1$2/>')
+    },
     loadDetail() {
       this.loading = true
       const req = this.type === 'report'
