@@ -152,12 +152,12 @@ export default {
 .h-card { background: #fff; border-radius: 12px; margin: 10px 16px; display: flex; gap: 12px; padding: 12px; overflow: hidden; }
 .h-thumb { width: 80px; height: 80px; border-radius: 8px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
 .h-thumb-img { width: 100%; height: 100%; }
-.h-thumb-label { font-size: 11px; color: rgba(255,255,255,0.7); font-weight: 700; }
+.h-thumb-label { font-size: 12px; color: rgba(255,255,255,0.7); font-weight: 700; }
 .h-info { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 4px; }
 .h-title { font-size: 14px; font-weight: 600; color: #1a1a2e; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .h-meta { font-size: 12px; color: #9ca3af; margin-top: 4px; }
 .h-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; }
-.h-size { font-size: 11px; color: #9ca3af; }
+.h-size { font-size: 12px; color: #9ca3af; }
 .dl-btn { background: #ff6b35; border-radius: 8px; padding: 8px 12px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; align-self: center; }
 .dl-text { font-size: 12px; color: #fff; font-weight: 500; }
 

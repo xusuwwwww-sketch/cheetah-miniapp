@@ -98,7 +98,7 @@
               <input class="lead-input" placeholder="如：跨境电商、游戏出海" v-model="leadForm.industry" placeholder-style="color:#c0c4cc;" />
             </view>
             <view class="lead-item">
-              <text class="lead-label">职位 <text style="color:#9ca3af;font-size:11px;">选填</text></text>
+              <text class="lead-label">职位 <text style="color:#9ca3af;font-size:12px;">选填</text></text>
               <input class="lead-input" placeholder="如：市场总监、创始人" v-model="leadForm.position" placeholder-style="color:#c0c4cc;" />
             </view>
             <view class="lead-item">

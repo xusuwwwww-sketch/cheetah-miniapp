@@ -167,7 +167,7 @@ export default {
 .profile-info { flex: 1; }
 .nickname { font-size: 18px; font-weight: 700; color: #fff; display: block; margin-bottom: 4px; }
 .level-badge { display: inline-flex; background: rgba(255,255,255,0.25); border-radius: 10px; padding: 2px 8px; }
-.level-text { font-size: 11px; color: rgba(255,255,255,0.9); }
+.level-text { font-size: 12px; color: rgba(255,255,255,0.9); }
 .login-hint { font-size: 13px; color: rgba(255,255,255,0.8); display: block; margin-top: 2px; }
 .arrow { font-size: 20px; color: rgba(255,255,255,0.7); }
 

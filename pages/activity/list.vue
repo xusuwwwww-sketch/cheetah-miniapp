@@ -118,14 +118,14 @@ export default {
 .card-cover { position: relative; overflow: hidden; min-height: 80px; }
 .card-cover-img { width: 100%; height: 160px; display: block; }
 .card-cover-text { padding: 20px 16px; }
-.card-tag { font-size: 11px; color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px; display: inline-block; margin-bottom: 6px; }
+.card-tag { font-size: 12px; color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px; display: inline-block; margin-bottom: 6px; }
 .card-cover-title { font-size: 16px; font-weight: 600; color: #fff; }
 .card-body { padding: 12px 16px; }
 .card-row { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
 .card-meta { font-size: 12px; color: #6b7280; }
 .card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
 .card-count { font-size: 12px; color: #9ca3af; }
-.card-status { font-size: 11px; padding: 2px 8px; border-radius: 4px; }
+.card-status { font-size: 12px; padding: 2px 8px; border-radius: 4px; }
 .card-status.open { color: #059669; background: #ecfdf5; }
 .card-status.closed { color: #9ca3af; background: #f3f4f6; }
 .empty { padding: 40px; text-align: center; }

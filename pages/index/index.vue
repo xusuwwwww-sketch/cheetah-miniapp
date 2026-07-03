@@ -212,7 +212,7 @@ export default {
 .banner-item { height: 100%; position: relative; overflow: hidden; }
 .banner-cover-img { width: 100%; height: 100%; }
 .banner-text-wrap { padding: 20px; display: flex; flex-direction: column; justify-content: center; height: 100%; box-sizing: border-box; }
-.banner-tag { font-size: 11px; color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px; align-self: flex-start; margin-bottom: 6px; }
+.banner-tag { font-size: 12px; color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px; align-self: flex-start; margin-bottom: 6px; }
 .banner-title { font-size: 18px; font-weight: 600; color: #fff; margin-bottom: 4px; }
 .banner-desc { font-size: 12px; color: rgba(255,255,255,0.8); }
 .grid { display: flex; flex-wrap: wrap; padding: 12px 16px; }
@@ -226,15 +226,15 @@ export default {
 .section-more { font-size: 12px; color: #ff6b35; }
 .community-scroll { white-space: nowrap; }
 .community-list { display: flex; gap: 12px; }
-.community-card { width: 80px; flex-shrink: 0; background: #fff; border-radius: 12px; padding: 12px 6px; display: flex; flex-direction: column; align-items: center; }
+.community-card { width: 80px; flex-shrink: 0; background: #fff; border-radius: 12px; padding: 12px 8px; display: flex; flex-direction: column; align-items: center; min-height: 80px; justify-content: center; }
 .community-avatar { width: 40px; height: 40px; border-radius: 50%; background: #fff3ee; display: flex; align-items: center; justify-content: center; margin-bottom: 6px; }
 .community-icon-img { width: 20px; height: 20px; }
 .community-name { font-size: 12px; color: #1a1a2e; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; text-align: center; }
 .report-card { background: #fff; border-radius: 12px; padding: 12px; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; }
-.report-thumb { width: 60px; height: 60px; border-radius: 8px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.report-thumb { width: 80px; height: 80px; border-radius: 8px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
 .report-info { flex: 1; min-width: 0; }
 .report-title { font-size: 14px; color: #1a1a2e; font-weight: 500; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.report-meta { font-size: 11px; color: #9ca3af; margin-top: 4px; }
+.report-meta { font-size: 12px; color: #9ca3af; margin-top: 4px; }
 .empty { padding: 30px; text-align: center; }
 .empty-text { font-size: 14px; color: #9ca3af; }
 

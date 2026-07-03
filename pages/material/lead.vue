@@ -8,14 +8,17 @@
         <view class="form-item">
           <text class="label">姓名 <text class="req">*</text></text>
           <input class="input" placeholder="请输入姓名" v-model="form.name" placeholder-style="color:#c0c4cc;" />
+        <text v-if="errors.name" class="field-error">{{ errors.name }}</text>
         </view>
         <view class="form-item">
           <text class="label">手机号 <text class="req">*</text></text>
           <input class="input" type="tel" placeholder="请输入手机号" v-model="form.phone" placeholder-style="color:#c0c4cc;" />
+        <text v-if="errors.phone" class="field-error">{{ errors.phone }}</text>
         </view>
         <view class="form-item">
           <text class="label">所在行业 <text class="req">*</text></text>
           <input class="input" placeholder="如：跨境电商、游戏出海" v-model="form.industry" placeholder-style="color:#c0c4cc;" />
+        <text v-if="errors.industry" class="field-error">{{ errors.industry }}</text>
         </view>
         <view class="form-item">
           <text class="label">职位 <text class="opt">（选填）</text></text>
@@ -24,14 +27,17 @@
         <view class="form-item">
           <text class="label">公司名称 <text class="req">*</text></text>
           <input class="input" placeholder="请输入公司名称" v-model="form.company" placeholder-style="color:#c0c4cc;" />
+        <text v-if="errors.company" class="field-error">{{ errors.company }}</text>
         </view>
         <view class="form-item">
           <text class="label">月推广预算 <text class="req">*</text></text>
           <input class="input" placeholder="如：5万以内 / 5-20万 / 20万以上" v-model="form.budget_info" placeholder-style="color:#c0c4cc;" />
+        <text v-if="errors.budget_info" class="field-error">{{ errors.budget_info }}</text>
         </view>
         <view class="form-item">
           <text class="label">核心需求 <text class="req">*</text></text>
           <textarea class="textarea" placeholder="简述核心需求" v-model="form.core_need" placeholder-style="color:#c0c4cc;" />
+        <text v-if="errors.core_need" class="field-error">{{ errors.core_need }}</text>
         </view>
 
         <view class="submit-btn" @tap="onSubmit">
@@ -52,6 +58,7 @@ export default {
       materialId: '',
       materialType: 'material',
       submitting: false,
+      errors: {},
       form: { name: '', phone: '', industry: '', position: '', company: '', budget_info: '', core_need: '' }
     }
   },
@@ -113,4 +120,5 @@ export default {
 .textarea { display: block; background: #ffffff; border: 1rpx solid #e5e7eb; border-radius: 8px; padding: 12px; font-size: 14px; color: #1a1a2e; height: 88px; line-height: 20px; width: 100%; }
 .submit-btn { background: #ff6b35; border-radius: 10px; padding: 15px; text-align: center; margin-top: 8px; }
 .submit-text { color: #fff; font-size: 16px; font-weight: 600; }
+.field-error { font-size: 12px; color: #ef4444; margin-top: 4px; display: block; }
 </style>

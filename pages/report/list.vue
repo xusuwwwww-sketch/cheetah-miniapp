@@ -84,7 +84,7 @@ export default {
 .list { height: calc(100vh - 160px); }
 .card { background: #fff; border-radius: 12px; margin: 8px 16px; overflow: hidden; }
 .card-cover { height: 100px; display: flex; align-items: center; justify-content: center; position: relative; }
-.card-price { position: absolute; top: 8px; right: 8px; font-size: 11px; color: #ff6b35; background: rgba(255,255,255,0.9); padding: 2px 8px; border-radius: 4px; }
+.card-price { position: absolute; top: 8px; right: 8px; font-size: 12px; color: #ff6b35; background: rgba(255,255,255,0.9); padding: 2px 8px; border-radius: 4px; }
 .card-price.free { color: #059669; }
 .card-body { padding: 12px 16px; }
 .card-title { font-size: 15px; font-weight: 500; color: #1a1a2e; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }

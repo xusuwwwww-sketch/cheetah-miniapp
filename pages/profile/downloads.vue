@@ -40,7 +40,7 @@ export default {
 .card-info { flex: 1; }
 .card-title { font-size: 14px; font-weight: 600; color: #1a1a2e; display: block; margin-bottom: 3px; }
 .card-meta { font-size: 12px; color: #9ca3af; display: block; }
-.card-type { font-size: 11px; color: #7c3aed; background: #f3eeff; padding: 2px 6px; border-radius: 4px; margin-top: 4px; display: inline-block; }
+.card-type { font-size: 12px; color: #7c3aed; background: #f3eeff; padding: 2px 6px; border-radius: 4px; margin-top: 4px; display: inline-block; }
 .empty { padding: 80px; text-align: center; }
 .empty-text { font-size: 14px; color: #9ca3af; }
 </style>
