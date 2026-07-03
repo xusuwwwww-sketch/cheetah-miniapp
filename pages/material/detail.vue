@@ -51,7 +51,7 @@
       <!-- 案例正文 -->
       <view class="section-card" v-if="type === 'case' && detail.content">
         <text class="section-title">案例详情</text>
-        <text class="section-text">{{ detail.content }}</text>
+        <rich-text class="rich-content" :nodes="detail.content" />
       </view>
 
       <view style="height: 90px;"></view>
@@ -178,6 +178,7 @@ export default {
 .section-card { background: #fff; margin: 12px 16px; border-radius: 12px; padding: 16px; }
 .section-title { font-size: 15px; font-weight: 600; color: #1a1a2e; display: block; margin-bottom: 10px; }
 .section-text { font-size: 14px; color: #6b7280; line-height: 1.8; white-space: pre-wrap; }
+.rich-content { font-size: 14px; color: #4b5563; line-height: 1.8; display: block; }
 
 .loading-wrap { padding: 100px; text-align: center; }
 .loading-text { font-size: 14px; color: #9ca3af; }
