@@ -144,6 +144,14 @@ export default {
       api.trackView && api.trackView({ target_type: this.type, target_id: e.id }).catch(() => {})
     }
   },
+  onShow() {
+    // 从留资页返回后自动触发下载
+    const triggerId = uni.getStorageSync('trigger_download')
+    if (triggerId && triggerId === this.id) {
+      uni.removeStorageSync('trigger_download')
+      setTimeout(() => this.onDownload(), 300)
+    }
+  },
   methods: {
     cleanContent(html) {
       if (!html) return ''
@@ -185,7 +193,7 @@ export default {
           uni.downloadFile({ url: r.data.file_url, success(res) { uni.openDocument({ filePath: res.tempFilePath }) } })
           // #endif
         } else if (r.code === 403) {
-          this.showLeadForm = true
+          uni.navigateTo({ url: `/pages/material/lead?id=${this.id}&type=${this.type}` })
         } else {
           uni.showToast({ title: r.msg || '下载失败', icon: 'none' })
         }
