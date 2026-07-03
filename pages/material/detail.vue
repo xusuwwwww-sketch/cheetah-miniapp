@@ -54,7 +54,7 @@
         <rich-text class="rich-content" :nodes="detail.content" />
       </view>
 
-      <view style="height: 90px;"></view>
+      <view style="height: 130px;"></view>
     </scroll-view>
 
     <!-- 加载中 -->
