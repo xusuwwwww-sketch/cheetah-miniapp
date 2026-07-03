@@ -141,7 +141,15 @@ export default {
           uni.downloadFile({ url: r.data.file_url, success(res) { uni.openDocument({ filePath: res.tempFilePath }) } })
           // #endif
         } else if (r.code === 403) {
-          uni.showToast({ title: '请先完善基础信息', icon: 'none' })
+          uni.showModal({
+            title: '需要完善信息',
+            content: '下载资料需要先完善基础信息（姓名、行业、职位、邮箱）',
+            confirmText: '去完善',
+            cancelText: '取消',
+            success: (res) => {
+              if (res.confirm) uni.navigateTo({ url: '/pages/profile/edit' })
+            }
+          })
         } else {
           uni.showToast({ title: r.msg || '下载失败', icon: 'none' })
         }
