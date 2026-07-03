@@ -109,6 +109,7 @@ export default {
       const checks = [
         [!this.form.name, '请填写姓名'],
         [!this.form.phone, '请填写手机号'],
+        [this.form.phone && !/^(1[3-9]\d{9}|\+?\d{7,15})$/.test(this.form.phone), '手机号格式不正确'],
         [!this.form.industry, '请填写所在行业'],
         [!this.form.company, '请填写公司名称'],
         [!this.form.budget_info, '请填写月推广预算'],

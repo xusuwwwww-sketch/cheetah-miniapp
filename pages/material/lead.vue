@@ -64,6 +64,8 @@ export default {
       const { name, phone, industry, company, budget_info, core_need } = this.form
       if (!name) return uni.showToast({ title: '请填写姓名', icon: 'none' })
       if (!phone) return uni.showToast({ title: '请填写手机号', icon: 'none' })
+      if (!/^(1[3-9]\d{9}|\+?\d{7,15})$/.test(phone)) return uni.showToast({ title: '手机号格式不正确', icon: 'none' })
+      if (!/^(1[3-9]\d{9}|\+?\d{7,15}$)/.test(phone)) return uni.showToast({ title: '手机号格式不正确', icon: 'none' })
       if (!industry) return uni.showToast({ title: '请填写所在行业', icon: 'none' })
       if (!company) return uni.showToast({ title: '请填写公司名称', icon: 'none' })
       if (!budget_info) return uni.showToast({ title: '请填写月推广预算', icon: 'none' })
