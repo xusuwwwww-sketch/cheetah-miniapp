@@ -60,7 +60,7 @@
     </view>
 
     <!-- 底部操作栏 -->
-    <view class="bottom-bar" v-if="detail && !showLeadForm">
+    <view class="bottom-bar" v-if="detail">
       <view class="fav-icon" @tap="toggleFav">
         <image class="fav-img" :src="favorited ? 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2ZmNmIzNSIgc3Ryb2tlPSIjZmY2YjM1IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTIwLjg0IDQuNjFhNS41IDUuNSAwIDAgMC03Ljc4IDBMMTIgNS42N2wtMS4wNi0xLjA2YTUuNSA1LjUgMCAwIDAtNy43OCA3Ljc4bDEuMDYgMS4wNkwxMiAyMS4yM2w3Ljc4LTcuNzggMS4wNi0xLjA2YTUuNSA1LjUgMCAwIDAgMC03Ljc4eiIvPjwvc3ZnPg==' : 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmY2YjM1IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTIwLjg0IDQuNjFhNS41IDUuNSAwIDAgMC03Ljc4IDBMMTIgNS42N2wtMS4wNi0xLjA2YTUuNSA1LjUgMCAwIDAtNy43OCA3Ljc4bDEuMDYgMS4wNkwxMiAyMS4yM2w3Ljc4LTcuNzggMS4wNi0xLjA2YTUuNSA1LjUgMCAwIDAgMC03Ljc4eiIvPjwvc3ZnPg=='" mode="aspectFit" />
       </view>
@@ -77,50 +77,6 @@
         </view>
       </template>
     </view>
-
-    <!-- 留资弹窗（下载前填写基础信息） -->
-    <view class="lead-mask" v-if="showLeadForm" @tap="showLeadForm = false">
-      <view class="lead-box" @tap.stop>
-        <text class="lead-title">填写信息免费下载</text>
-        <text class="lead-desc">填写以下信息，即可下载全部免费资料</text>
-        <scroll-view scroll-y style="flex:1;overflow:hidden;padding:0 20px 20px;">
-          <view class="lead-form">
-            <view class="lead-item">
-              <text class="lead-label">姓名 <text style="color:#ef4444">*</text></text>
-              <input class="lead-input" placeholder="请输入姓名" v-model="leadForm.name" placeholder-style="color:#c0c4cc;" />
-            </view>
-            <view class="lead-item">
-              <text class="lead-label">手机号 <text style="color:#ef4444">*</text></text>
-              <input class="lead-input" type="tel" placeholder="请输入手机号" v-model="leadForm.phone" placeholder-style="color:#c0c4cc;" />
-            </view>
-            <view class="lead-item">
-              <text class="lead-label">所在行业 <text style="color:#ef4444">*</text></text>
-              <input class="lead-input" placeholder="如：跨境电商、游戏出海" v-model="leadForm.industry" placeholder-style="color:#c0c4cc;" />
-            </view>
-            <view class="lead-item">
-              <text class="lead-label">职位 <text style="color:#9ca3af;font-size:12px;">选填</text></text>
-              <input class="lead-input" placeholder="如：市场总监、创始人" v-model="leadForm.position" placeholder-style="color:#c0c4cc;" />
-            </view>
-            <view class="lead-item">
-              <text class="lead-label">公司名称 <text style="color:#ef4444">*</text></text>
-              <input class="lead-input" placeholder="请输入公司名称" v-model="leadForm.company" placeholder-style="color:#c0c4cc;" />
-            </view>
-            <view class="lead-item">
-              <text class="lead-label">月推广预算 <text style="color:#ef4444">*</text></text>
-              <input class="lead-input" placeholder="如：5万以内 / 5-20万 / 20万以上" v-model="leadForm.budget_info" placeholder-style="color:#c0c4cc;" />
-            </view>
-            <view class="lead-item">
-              <text class="lead-label">核心需求 <text style="color:#ef4444">*</text></text>
-              <textarea class="lead-textarea" placeholder="简述核心需求" v-model="leadForm.core_need" placeholder-style="color:#c0c4cc;" />
-            </view>
-            <view class="lead-btn" @tap="submitLead">
-              <text class="lead-btn-text">{{ leadSubmitting ? '提交中...' : '立即下载' }}</text>
-            </view>
-          </view>
-        </scroll-view>
-      </view>
-    </view>
-
   </view>
 </template>
 
@@ -128,7 +84,7 @@
 import { api } from '@/utils/api.js'
 
 export default {
-  data() { return { id: '', type: 'material', detail: null, loading: true, favorited: false, showLeadForm: false, leadForm: { name: '', phone: '', industry: '', position: '', company: '', budget_info: '', core_need: '' }, leadSubmitting: false } },
+  data() { return { id: '', type: 'material', detail: null, loading: true, favorited: false } },
   computed: {
     defaultGradient() {
       return { report: 'linear-gradient(135deg, #2563eb, #60a5fa)', case: 'linear-gradient(135deg, #059669, #34d399)', material: 'linear-gradient(135deg, #7c3aed, #a78bfa)' }[this.type] || 'linear-gradient(135deg, #7c3aed, #a78bfa)'
@@ -202,27 +158,6 @@ export default {
     goConsult() {
       uni.navigateTo({ url: '/pages/consult/index' })
     },
-    submitLead() {
-      const { name, phone, industry, company, budget_info, core_need } = this.leadForm
-      if (!name || !phone || !industry || !company || !budget_info || !core_need) {
-        return uni.showToast({ title: '请填写必填项', icon: 'none' })
-      }
-      this.leadSubmitting = true
-      // 先更新基础信息（Lv2），再用 submitConsult 保存完整留资
-      api.updateBasic(this.leadForm).then(r => {
-        if (r.code === 0) {
-          // 同时提交完整留资记录
-          api.submitConsult({ ...this.leadForm, topic: '下载资料留资' }).catch(() => {})
-          this.leadSubmitting = false
-          uni.showToast({ title: '信息已完善，正在下载', icon: 'success' })
-          this.showLeadForm = false
-          setTimeout(() => this.onDownload(), 1000)
-        } else {
-          this.leadSubmitting = false
-          uni.showToast({ title: r.msg || '提交失败', icon: 'none' })
-        }
-      }).catch(() => { this.leadSubmitting = false; uni.showToast({ title: '网络异常', icon: 'none' }) })
-    },
     toggleFav() {
       const token = uni.getStorageSync('token')
       if (!token) return uni.showToast({ title: '请先登录', icon: 'none' })
@@ -275,14 +210,3 @@ export default {
 .dl-text { color: #fff; font-size: 16px; font-weight: 600; }
 </style>
 
-.lead-mask { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 10000; display: flex; align-items: flex-end; }
-.lead-box { background: #fff; border-radius: 16px 16px 0 0; width: 100%; max-height: 85vh; display: flex; flex-direction: column; padding-bottom: env(safe-area-inset-bottom); }
-.lead-title { font-size: 18px; font-weight: 700; color: #1a1a2e; display: block; margin-bottom: 4px; padding: 24px 20px 0; }
-.lead-desc { font-size: 13px; color: #9ca3af; display: block; margin-bottom: 16px; padding: 0 20px; }
-.lead-form { display: flex; flex-direction: column; gap: 12px; }
-.lead-item { display: flex; flex-direction: column; gap: 6px; }
-.lead-label { font-size: 13px; color: #6b7280; font-weight: 500; }
-.lead-input { background: #f6f7fb; border-radius: 8px; padding: 10px 12px; font-size: 14px; color: #1a1a2e; height: 40px; }
-.lead-btn { background: #ff6b35; border-radius: 10px; padding: 14px; text-align: center; margin-top: 4px; }
-.lead-btn-text { color: #fff; font-size: 16px; font-weight: 600; }
-.lead-textarea { background: #f6f7fb; border-radius: 8px; padding: 10px 12px; font-size: 14px; color: #1a1a2e; height: 72px; width: 100%; }

@@ -24,18 +24,6 @@
       }
     },
     {
-      "path": "pages/report/list",
-      "style": {
-        "navigationStyle": "custom"
-      }
-    },
-    {
-      "path": "pages/report/detail",
-      "style": {
-        "navigationStyle": "custom"
-      }
-    },
-    {
       "path": "pages/material/list",
       "style": {
         "navigationBarTitleText": "服务"
