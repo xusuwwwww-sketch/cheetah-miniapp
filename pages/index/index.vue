@@ -20,7 +20,7 @@
       <!-- 功能入口 -->
       <view class="grid">
         <view class="grid-item" v-for="(g, i) in grids" :key="i" @tap="onGrid(g)">
-          <view class="grid-icon" :style="{ background: g.bg }">
+          <view class="grid-icon">
             <image class="grid-svg" :src="g.icon" mode="aspectFit" />
           </view>
           <text class="grid-text">{{ g.text }}</text>
@@ -217,7 +217,7 @@ export default {
 .banner-desc { font-size: 12px; color: rgba(255,255,255,0.8); }
 .grid { display: flex; flex-wrap: wrap; padding: 12px 16px; }
 .grid-item { width: 20%; display: flex; flex-direction: column; align-items: center; margin-bottom: 12px; }
-.grid-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 6px; }
+.grid-icon { width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; margin-bottom: 6px; }
 .grid-svg { width: 28px; height: 28px; }
 .grid-text { font-size: 12px; color: #1a1a2e; }
 .section { margin: 8px 16px; }
