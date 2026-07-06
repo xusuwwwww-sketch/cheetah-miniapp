@@ -217,8 +217,8 @@ export default {
 .banner-desc { font-size: 12px; color: rgba(255,255,255,0.8); }
 .grid { display: flex; flex-wrap: wrap; padding: 12px 16px; }
 .grid-item { width: 20%; display: flex; flex-direction: column; align-items: center; margin-bottom: 12px; }
-.grid-icon { width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; margin-bottom: 6px; }
-.grid-svg { width: 28px; height: 28px; }
+.grid-icon { width: 72px; height: 72px; display: flex; align-items: center; justify-content: center; margin-bottom: 6px; }
+.grid-svg { width: 64px; height: 64px; }
 .grid-text { font-size: 12px; color: #1a1a2e; }
 .section { margin: 8px 16px; }
 .section-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
