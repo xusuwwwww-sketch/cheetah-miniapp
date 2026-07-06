@@ -218,7 +218,7 @@ export default {
 .grid { display: flex; flex-wrap: wrap; padding: 12px 16px; }
 .grid-item { width: 20%; display: flex; flex-direction: column; align-items: center; margin-bottom: 12px; }
 .grid-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 6px; }
-.grid-svg { width: 24px; height: 24px; }
+.grid-svg { width: 20px; height: 20px; }
 .grid-text { font-size: 12px; color: #1a1a2e; }
 .section { margin: 8px 16px; }
 .section-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
