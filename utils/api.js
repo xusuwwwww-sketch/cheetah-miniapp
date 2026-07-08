@@ -1,4 +1,4 @@
-const BASE_URL = 'http://82.157.51.70'
+const BASE_URL = 'https://overseas-miniapp.cmcm.com'
 
 const getToken = () => {
   try { return uni.getStorageSync('token') || '' } catch(e) { return '' }
